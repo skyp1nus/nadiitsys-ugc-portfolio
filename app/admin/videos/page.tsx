@@ -1,4 +1,7 @@
-// TODO: implement in step 6 — admin videos editor
+import { loadVideos } from "@/lib/content";
+import { VideosEditor } from "@/components/admin/VideosEditor";
+
 export default function VideosPage() {
-  return <main />;
+  const data = loadVideos();
+  return <VideosEditor initial={data} />;
 }
