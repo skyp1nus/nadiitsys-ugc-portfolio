@@ -1,3 +1,17 @@
-# TODO: finalize in step 9
 name = "nadiitsys"
+main = ".open-next/worker.js"
 compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "nadiitsys"
+
+# Optional: enable R2-based incremental cache (create bucket first with `wrangler r2 bucket create nadiitsys-opennext-cache`)
+# [[r2_buckets]]
+# binding = "NEXT_INC_CACHE_R2_BUCKET"
+# bucket_name = "nadiitsys-opennext-cache"
