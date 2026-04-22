@@ -1,5 +1,27 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-22T00:00:00.000Z",
-  "videos": []
+  "updatedAt": "2026-04-22T21:00:00.000Z",
+  "videos": [
+    {
+      "id": "velvet-lip-look-2026",
+      "category": "beauty",
+      "title": "Velvet Lip Look 2026",
+      "description": "Soft matte finish with a deep burgundy — perfect for spring evenings.",
+      "instagramUrl": "https://www.instagram.com/reel/placeholder-beauty/",
+      "posterKey": "posters/velvet-lip-look-2026.jpg",
+      "publishedAt": "2026-04-10T12:00:00.000Z",
+      "tags": ["makeup", "lips", "beauty"]
+    },
+    {
+      "id": "paris-spring-2026",
+      "category": "travel",
+      "title": "Paris in Spring",
+      "description": "Golden hour walks through Montmartre — cobblestones, croissants, and cherry blossoms.",
+      "instagramUrl": "https://www.instagram.com/reel/placeholder-travel/",
+      "posterKey": "posters/paris-spring-2026.jpg",
+      "fallbackVideoKey": "videos/paris-spring-2026.mp4",
+      "publishedAt": "2026-04-15T09:00:00.000Z",
+      "tags": ["paris", "travel", "spring"]
+    }
+  ]
 }
