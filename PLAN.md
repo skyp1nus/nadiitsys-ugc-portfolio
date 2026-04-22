@@ -1,0 +1,38 @@
+# PLAN.md — nadiitsys.com: трекер гочей
+
+## 10 ключових гочей з архітектурного документа
+
+Джерело: `Nadiitsys.com Architecture.md`, розділ «Ключові гочі, які легко прогавити».
+
+| # | Гоча | Статус | Де враховано |
+|---|------|--------|--------------|
+| 1 | **Vercel Hobby забороняє комерційне використання** — UGC-портфоліо з брендовими колаборами = порушення ToS | ✅ враховано | Хостинг — Cloudflare Pages (комерційне використання дозволено без обмежень). `wrangler.toml`, `.github/workflows/deploy.yml` |
+| 2 | **Supabase паузить проєкт після 7 днів неактивності** — при <1k відвідувачів реальний ризик падіння сайту | ✅ враховано | БД взагалі відсутня — контент зберігається в `content/videos.json` у репозиторії. Нуль ризику автопаузи |
+| 3 | **GitHub Pages — один кастомний домен на репозиторій** — унеможливлює схему `nadiitsys.com` + `admin.nadiitsys.com` з одного репо | ✅ враховано | Cloudflare Pages підтримує 100 кастомних доменів на проєкт. Субдомен `admin` через middleware rewrite в одному деплої |
+| 4 | **Mux Free — жорсткий ліміт 10 відео-активів** — 30 відео не влізуть | ✅ враховано | Mux не використовується. Відео — Instagram embed (blockquote, click-to-load). Постери — Cloudflare R2. `components/VideoCard.tsx` |
+| 5 | **PlanetScale прибрав free tier 8 квітня 2024** — мінімум $39/міс | ✅ неактуально | PlanetScale не розглядався. SQL-БД взагалі не використовується — контент у `content/videos.json` |
+| 6 | **Lucia Auth депрекована в березні 2025** — у нові проєкти не брати | ✅ враховано | Auth реалізована вручну: `jose` (JWT HS256) + `bcryptjs`. `lib/auth.ts`. Ніяких auth-фреймворків |
+| 7 | **`output: 'export'` несумісний з middleware, API Routes, Server Actions** — ламає всю архітектуру | ✅ враховано | `output: 'export'` **явно відсутній** у `next.config.ts`. Адаптер `@opennextjs/cloudflare` обробляє гібридний білд (статика + Pages Functions). `next.config.ts`, `wrangler.toml` |
+| 8 | **Next.js CVE-2025-29927** — middleware auth bypass (березень 2025) | ✅ враховано | Аутентифікація не покладається виключно на middleware — перевірка JWT відбувається також у `app/admin/layout.tsx` (Server Component) і `app/api/admin/save/route.ts` (`requireAdmin`). Дотримання принципу defense-in-depth |
+| 9 | **Apex-домен на Cloudflare вимагає делегування nameservers на CF** — CNAME-only не підтримується на apex | ✅ враховано | Задокументовано в `README.md` (розділ «Deploy»): apex `nadiitsys.com` вимагає NS-делегування на CF; субдомен `admin.nadiitsys.com` — звичайний CNAME |
+| 10 | **ImageKit free tier** — розбіжності між офіційними (20 ГБ) і сторонніми джерелами (3 ГБ) | ✅ неактуально | ImageKit не використовується. Постери — Cloudflare R2 (10 ГБ безкоштовно, 0$ egress — перевірено). `NEXT_PUBLIC_R2_PUBLIC_URL` env-var |
+
+---
+
+## Статус реалізації (оновлюється після кожного кроку)
+
+| Крок | Опис | Статус |
+|------|------|--------|
+| 0 | Прочитав MD, створив PLAN.md | ✅ Готово |
+| 1 | Init Next.js + Tailwind v4 + залежності | ⬜ Очікує підтвердження |
+| 2 | Структура директорій | ⬜ |
+| 3 | Типи + videos.json + content loader | ⬜ |
+| 4 | Middleware (host-based routing) | ⬜ |
+| 5 | Auth (jose + bcryptjs + rate-limit) | ⬜ |
+| 6 | Admin UI (VideoEditor MVP) | ⬜ |
+| 7 | Save API з Octokit + Zod | ⬜ |
+| 8 | Публічні сторінки + VideoCard click-to-load | ⬜ |
+| 9 | next.config + wrangler.toml + scripts | ⬜ |
+| 10 | GitHub Actions CI/CD | ⬜ |
+| 11 | .env.example + README | ⬜ |
+| 12 | Санітарні перевірки (lint/tsc/build/smoke) | ⬜ |
