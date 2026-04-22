@@ -24,15 +24,21 @@
 | Крок | Опис | Статус |
 |------|------|--------|
 | 0 | Прочитав MD, створив PLAN.md | ✅ Готово |
-| 1 | Init Next.js + Tailwind v4 + залежності | ⬜ Очікує підтвердження |
-| 2 | Структура директорій | ⬜ |
-| 3 | Типи + videos.json + content loader | ⬜ |
-| 4 | Middleware (host-based routing) | ⬜ |
-| 5 | Auth (jose + bcryptjs + rate-limit) | ⬜ |
-| 6 | Admin UI (VideoEditor MVP) | ⬜ |
-| 7 | Save API з Octokit + Zod | ⬜ |
-| 8 | Публічні сторінки + VideoCard click-to-load | ⬜ |
-| 9 | next.config + wrangler.toml + scripts | ⬜ |
-| 10 | GitHub Actions CI/CD | ⬜ |
-| 11 | .env.example + README | ⬜ |
-| 12 | Санітарні перевірки (lint/tsc/build/smoke) | ⬜ |
+| 1 | Init Next.js 16 + Tailwind v4 + залежності | ✅ `chore: bootstrap Next.js + Tailwind v4 + deps` |
+| 2 | Структура директорій | ✅ `chore: scaffold directory tree and stub files` |
+| 3 | Типи + videos.json + content loader | ✅ `feat(content): video types, seed JSON, bundled loader` |
+| 4 | Proxy (host-based routing) | ✅ `feat(middleware): host-based admin routing` |
+| 5 | Auth (jose + bcryptjs + rate-limit) | ✅ `feat(auth): JWT session, bcrypt, rate-limit, login/logout routes` |
+| 6 | Admin UI (VideosEditor MVP) | ✅ `feat(admin): videos editor MVP` |
+| 7 | Save API з Octokit + Zod | ✅ `feat(api): save route with Zod validation and Octokit commit` |
+| 8 | Публічні сторінки + VideoCard click-to-load | ✅ `feat(public): beauty/travel pages, VideoCard click-to-load embed` |
+| 9 | next.config + wrangler.toml + scripts | ✅ `chore(cf): next.config, wrangler.toml, updated .gitignore` |
+| 10 | GitHub Actions CI/CD | ✅ `ci: deploy workflow with lint/typecheck gate` |
+| 11 | .env.example + README | ✅ `docs: env.example with all required variables` |
+| 12 | Санітарні перевірки | ✅ lint ✓ tsc ✓ build ✓ smoke: admin→login 307 ✓, public /admin 404 ✓, rate-limit 429 ✓ |
+
+## Відкриті нюанси (знайдено під час реалізації)
+
+- **Next.js 16 перейменував `middleware.ts` → `proxy.ts`** та `export function middleware` → `export function proxy`. Виправлено, білд чистий.
+- **`@opennextjs/cloudflare` деплоїть як Worker**, а не Pages static. `wrangler deploy` (не `pages deploy`). `wrangler.toml` містить `main = ".open-next/worker.js"`.
+- **`app/admin/page.tsx`** потрібна для того, щоб layout-guard спрацьовував при заходи на `admin.localhost/` (без неї Next.js повертав 404 до запуску layout).
