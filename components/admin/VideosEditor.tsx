@@ -158,7 +158,7 @@ export function VideosEditor({ initial }: { initial: VideosFile }) {
           </tbody>
         </table>
         {videos.length === 0 && (
-          <p className="text-gray-400 text-sm text-center py-8">No videos yet — click "+ Add row"</p>
+          <p className="text-gray-400 text-sm text-center py-8">No videos yet — click &quot;+ Add row&quot;</p>
         )}
       </div>
     </div>
