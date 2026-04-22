@@ -1,4 +1,74 @@
+# nadiitsys.com — UGC Portfolio
 
+Beauty & travel content creator portfolio built on a zero-cost stack.
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, TypeScript strict) |
+| Styling | Tailwind CSS v4 |
+| Runtime (local/CI) | Bun |
+| Hosting | Cloudflare Pages |
+| CF adapter | `@opennextjs/cloudflare` |
+| Content | `content/videos.json` in-repo |
+| Auth | `jose` (JWT HS256) + `bcryptjs` |
+| GitHub API | `@octokit/rest` |
+| Media storage | Cloudflare R2 |
+
+## Local development
+
+```bash
+bun install
+bun run dev        # http://localhost:3000  — public site
+```
+
+### Two-host setup (admin subdomain)
+
+The admin panel is served at `admin.nadiitsys.com` in production, and at `admin.localhost:3000` locally via the middleware host-based rewrite.
+
+**macOS** — `*.localhost` resolves to `127.0.0.1` automatically (mDNSResponder). No `/etc/hosts` change needed.
+
+**Linux** — add one line to `/etc/hosts`:
+```
+127.0.0.1  admin.localhost
+```
+
+Then open `http://admin.localhost:3000` to access the admin panel locally.
+
+## Generating ADMIN_PASSWORD_HASH
+
+Run once and paste the result into your environment variables:
+
+```bash
+bun -e "console.log(require('bcryptjs').hashSync('your_password', 12))"
+```
+
+## Deploy
+
+Deployment runs automatically via GitHub Actions on every push to `main`.
+
+Manual deploy:
+```bash
+bun run deploy     # runs opennextjs-cloudflare build + wrangler deploy
+```
+
+## Required secrets
+
+Set these in **Cloudflare Pages** dashboard (Settings → Environment variables) and in **GitHub repository** secrets:
+
+| Secret | Where | Description |
+|---|---|---|
+| `AUTH_SECRET` | CF Pages + GitHub | 32+ byte random string for JWT signing |
+| `ADMIN_PASSWORD_HASH` | CF Pages | bcryptjs hash of admin password |
+| `GH_TOKEN` | CF Pages | Fine-grained PAT, `contents:write` on this repo only |
+| `GH_OWNER` | CF Pages | GitHub repo owner username |
+| `GH_REPO` | CF Pages | GitHub repo name |
+| `NEXT_PUBLIC_R2_PUBLIC_URL` | CF Pages + GitHub | Public R2 base URL (e.g. `https://media.nadiitsys.com`) |
+| `CLOUDFLARE_API_TOKEN` | GitHub | CF API token with Pages:Edit permission |
+| `CLOUDFLARE_ACCOUNT_ID` | GitHub | Your Cloudflare account ID |
+
+---
 
 ## License
 
