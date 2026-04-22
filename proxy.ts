@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const ROOT = "nadiitsys.com";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const host = (req.headers.get("host") ?? "").replace(/:\d+$/, "");
   const url = req.nextUrl.clone();
 
