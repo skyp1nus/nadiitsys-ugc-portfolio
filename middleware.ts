@@ -8,10 +8,16 @@ export function middleware(req: NextRequest) {
 
   const isAdmin = host === `admin.${ROOT}` || host === "admin.localhost";
 
+  // Forward pathname so Server Components can read it without usePathname()
+  const reqHeaders = new Headers(req.headers);
+  reqHeaders.set("x-pathname", url.pathname);
+
   if (isAdmin) {
-    if (url.pathname.startsWith("/admin")) return NextResponse.next();
+    if (url.pathname.startsWith("/admin")) {
+      return NextResponse.next({ request: { headers: reqHeaders } });
+    }
     url.pathname = `/admin${url.pathname}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: reqHeaders } });
   }
 
   // Block direct access to /admin/* on the public domain
@@ -19,7 +25,7 @@ export function middleware(req: NextRequest) {
     return new NextResponse("Not found", { status: 404 });
   }
 
-  return NextResponse.next();
+  return NextResponse.next({ request: { headers: reqHeaders } });
 }
 
 export const config = {

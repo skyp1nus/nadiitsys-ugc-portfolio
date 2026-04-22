@@ -1,4 +1,14 @@
-// TODO: implement in step 5 — POST /api/auth/logout clears session cookie
-export async function POST() {
-  return new Response("TODO", { status: 501 });
+import { NextResponse } from "next/server";
+import { SESSION_COOKIE } from "@/lib/auth";
+
+export async function POST(): Promise<Response> {
+  const res = NextResponse.json({ ok: true });
+  res.cookies.set(SESSION_COOKIE, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+  return res;
 }
