@@ -27,11 +27,10 @@ bun run dev        # http://localhost:3000  — public site
 
 The admin panel is served at `admin.nadiitsys.com` in production, and at `admin.localhost:3000` locally via the middleware host-based rewrite.
 
-**macOS** — `*.localhost` resolves to `127.0.0.1` automatically (mDNSResponder). No `/etc/hosts` change needed.
+Add one line to `/etc/hosts` (required on macOS Safari/Firefox and all Linux browsers — Chrome is the only browser that resolves `*.localhost` automatically):
 
-**Linux** — add one line to `/etc/hosts`:
-```
-127.0.0.1  admin.localhost
+```bash
+sudo sh -c 'echo "127.0.0.1 admin.localhost" >> /etc/hosts'
 ```
 
 Then open `http://admin.localhost:3000` to access the admin panel locally.
