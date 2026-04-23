@@ -43,6 +43,16 @@ Run once and paste the result into your environment variables:
 bun -e "console.log(require('bcryptjs').hashSync('your_password', 12))"
 ```
 
+**Important:** when storing the hash in `.env.local`, escape every `$` as `\$` —
+Next.js performs variable expansion on `.env*` files and will silently mangle
+unescaped bcrypt hashes. Example:
+
+```
+ADMIN_PASSWORD_HASH=\$2b\$12\$rNDjKq...rest_of_hash
+```
+
+(In Cloudflare Pages dashboard the value goes in unescaped — only `.env.local` needs the backslashes.)
+
 ## Deploy
 
 Deployment runs automatically via GitHub Actions on every push to `main`.
