@@ -20,7 +20,7 @@ export default function LoginPage() {
         body: JSON.stringify({ password }),
       });
       if (res.ok) {
-        router.push("/admin/videos");
+        router.push("/videos");
       } else if (res.status === 429) {
         setError("Too many attempts. Try again in 15 minutes.");
       } else {

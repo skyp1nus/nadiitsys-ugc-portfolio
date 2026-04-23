@@ -9,12 +9,14 @@ export default async function AdminLayout({
 }) {
   // The login route has its own layout (app/admin/login/layout.tsx) without a guard,
   // but Next.js still renders this parent layout. We skip the check for the login path.
+  // x-pathname is set by proxy.ts to the rewritten internal path (e.g., /admin/login).
   const hdrs = await headers();
-  const pathname = hdrs.get("x-invoke-path") ?? hdrs.get("x-pathname") ?? "";
+  const pathname = hdrs.get("x-pathname") ?? "";
 
   if (!pathname.startsWith("/admin/login")) {
     const ok = await getSession();
-    if (!ok) redirect("/admin/login");
+    // Redirect to the user-facing path (admin host strips the /admin prefix).
+    if (!ok) redirect("/login");
   }
 
   return <>{children}</>;
