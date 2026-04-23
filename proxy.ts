@@ -5,18 +5,17 @@ const ROOT = "nadiitsys.com";
 export function proxy(req: NextRequest) {
   const host = (req.headers.get("host") ?? "").replace(/:\d+$/, "");
   const url = req.nextUrl.clone();
+  const reqHeaders = new Headers(req.headers);
 
   const isAdmin = host === `admin.${ROOT}` || host === "admin.localhost";
 
-  // Forward pathname so Server Components can read it without usePathname()
-  const reqHeaders = new Headers(req.headers);
-  reqHeaders.set("x-pathname", url.pathname);
-
   if (isAdmin) {
     if (url.pathname.startsWith("/admin")) {
+      reqHeaders.set("x-pathname", url.pathname);
       return NextResponse.next({ request: { headers: reqHeaders } });
     }
     url.pathname = `/admin${url.pathname}`;
+    reqHeaders.set("x-pathname", url.pathname);
     return NextResponse.rewrite(url, { request: { headers: reqHeaders } });
   }
 
@@ -25,6 +24,7 @@ export function proxy(req: NextRequest) {
     return new NextResponse("Not found", { status: 404 });
   }
 
+  reqHeaders.set("x-pathname", url.pathname);
   return NextResponse.next({ request: { headers: reqHeaders } });
 }
 
