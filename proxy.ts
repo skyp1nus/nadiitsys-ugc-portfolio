@@ -10,7 +10,7 @@ export function proxy(req: NextRequest) {
   const isAdmin = host === `admin.${ROOT}` || host === "admin.localhost";
 
   if (isAdmin) {
-    if (url.pathname.startsWith("/admin")) {
+    if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/")) {
       reqHeaders.set("x-pathname", url.pathname);
       return NextResponse.next({ request: { headers: reqHeaders } });
     }
