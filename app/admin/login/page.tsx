@@ -40,7 +40,9 @@ export default function LoginPage() {
         className="bg-white p-8 rounded-xl shadow-sm w-full max-w-sm flex flex-col gap-4"
       >
         <h1 className="text-xl font-semibold text-gray-900">Admin login</h1>
+        <label htmlFor="admin-password" className="sr-only">Password</label>
         <input
+          id="admin-password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
