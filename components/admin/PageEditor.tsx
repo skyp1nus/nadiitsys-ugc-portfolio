@@ -1,20 +1,20 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { TravelPage } from "@/types/travel";
+import type { TravelPageInput as TravelPage } from "@/lib/schemas/travel-page";
 import {
   AdminShell,
   type PageLink,
   type SaveState,
   type TabItem,
 } from "@/components/admin/AdminShell";
-import { ProfileTab } from "./tabs/ProfileTab";
-import { HotelsTab } from "./tabs/HotelsTab";
-import { CountriesTab } from "./tabs/CountriesTab";
-import { PhotosTab } from "./tabs/PhotosTab";
-import { ReelsTab } from "./tabs/ReelsTab";
-import { LanguagesTab } from "./tabs/LanguagesTab";
-import { ContactTab } from "./tabs/ContactTab";
+import { ProfileTab } from "@/components/admin/travel/tabs/ProfileTab";
+import { HotelsTab } from "@/components/admin/travel/tabs/HotelsTab";
+import { CountriesTab } from "@/components/admin/travel/tabs/CountriesTab";
+import { PhotosTab } from "@/components/admin/travel/tabs/PhotosTab";
+import { ReelsTab } from "@/components/admin/travel/tabs/ReelsTab";
+import { LanguagesTab } from "@/components/admin/travel/tabs/LanguagesTab";
+import { ContactTab } from "@/components/admin/travel/tabs/ContactTab";
 
 type TabKey =
   | "profile"
@@ -61,12 +61,24 @@ const TABS_ORDER: TabKey[] = [
   "contact",
 ];
 
+export type PageSlug = "travel" | "beauty";
+
 const PAGES: PageLink[] = [
   { slug: "travel", label: "Travel", href: "/admin/travel" },
-  { slug: "videos", label: "Videos · Beauty", href: "/admin/videos" },
+  { slug: "beauty", label: "Beauty", href: "/admin/beauty" },
 ];
 
-export function TravelEditor({ initial }: { initial: TravelPage }) {
+const PAGE_TITLES: Record<PageSlug, string> = {
+  travel: "Travel",
+  beauty: "Beauty",
+};
+
+interface PageEditorProps {
+  slug: PageSlug;
+  initial: TravelPage;
+}
+
+export function PageEditor({ slug, initial }: PageEditorProps) {
   const [data, setData] = useState<TravelPage>(initial);
   const [activeTab, setActiveTab] = useState<TabKey>("profile");
   const [saveState, setSaveState] = useState<SaveState>("idle");
@@ -83,7 +95,7 @@ export function TravelEditor({ initial }: { initial: TravelPage }) {
   const doSave = useCallback(
     async (payload: TravelPage, silent: boolean) => {
       try {
-        const res = await fetch("/api/admin/save-page/travel", {
+        const res = await fetch(`/api/admin/save-page/${slug}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -103,7 +115,7 @@ export function TravelEditor({ initial }: { initial: TravelPage }) {
         setSaveMessage(err instanceof Error ? err.message : "Network error");
       }
     },
-    [showToast]
+    [showToast, slug]
   );
 
   useEffect(() => {
@@ -134,9 +146,12 @@ export function TravelEditor({ initial }: { initial: TravelPage }) {
     badge: badgeFor(k, data),
   }));
 
+  const pageTitle = PAGE_TITLES[slug];
+  const previewHref = slug === "travel" ? "/travel" : "/beauty";
+
   const crumb = (
     <>
-      Admin <span style={{ margin: "0 6px", color: "var(--ink-3)" }}>/</span> Travel{" "}
+      Admin <span style={{ margin: "0 6px", color: "var(--ink-3)" }}>/</span> {pageTitle}{" "}
       <span style={{ margin: "0 6px", color: "var(--ink-3)" }}>/</span>{" "}
       <strong>{TAB_LABELS[activeTab]}</strong>
     </>
@@ -145,9 +160,9 @@ export function TravelEditor({ initial }: { initial: TravelPage }) {
   return (
     <>
       <AdminShell
-        brand={{ title: "Travel", subtitle: "Media Kit" }}
+        brand={{ title: pageTitle, subtitle: "Media Kit" }}
         pages={PAGES}
-        currentPageSlug="travel"
+        currentPageSlug={slug}
         tabs={tabs}
         activeTab={activeTab}
         onTabChange={(k) => setActiveTab(k as TabKey)}
@@ -155,7 +170,7 @@ export function TravelEditor({ initial }: { initial: TravelPage }) {
         saveState={saveState}
         saveMessage={saveMessage}
         onSave={manualSave}
-        openPreviewHref="/travel"
+        openPreviewHref={previewHref}
       >
         <h2>{TAB_LABELS[activeTab]}</h2>
         <p className="section-desc">{TAB_DESC[activeTab]}</p>

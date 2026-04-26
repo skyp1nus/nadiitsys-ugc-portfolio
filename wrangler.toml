@@ -11,7 +11,7 @@ binding = "ASSETS"
 binding = "WORKER_SELF_REFERENCE"
 service = "nadiitsys"
 
-# Optional: enable R2-based incremental cache (create bucket first with `wrangler r2 bucket create nadiitsys-opennext-cache`)
-# [[r2_buckets]]
-# binding = "NEXT_INC_CACHE_R2_BUCKET"
-# bucket_name = "nadiitsys-opennext-cache"
+[[d1_databases]]
+binding = "DB"
+database_name = "nadiitsys"
+database_id = "a3d23bab-6cc7-4314-b624-9ec031040e99"
