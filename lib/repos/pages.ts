@@ -18,7 +18,13 @@ export async function getPage(slug: PageSlug): Promise<TravelPageInput | null> {
 
   if (!row) return null;
 
-  const parsed = JSON.parse(row.data);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(row.data);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    throw new Error(`Corrupt JSON in pages row "${slug}": ${msg}`);
+  }
   return TravelPageSchema.parse(parsed);
 }
 
