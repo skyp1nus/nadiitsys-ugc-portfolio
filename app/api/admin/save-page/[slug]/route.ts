@@ -32,8 +32,9 @@ export async function POST(
 
   const parsed = TravelPageSchema.safeParse(body);
   if (!parsed.success) {
+    console.error(`[save-page/${slug}] validation failed:`, parsed.error.flatten());
     return NextResponse.json(
-      { ok: false, error: parsed.error.flatten() },
+      { ok: false, error: "Validation failed" },
       { status: 400 }
     );
   }
