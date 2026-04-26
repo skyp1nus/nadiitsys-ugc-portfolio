@@ -4,7 +4,11 @@ import { cookies } from "next/headers";
 
 export const SESSION_COOKIE = "nd_session";
 
-const secret = new TextEncoder().encode(process.env.AUTH_SECRET ?? "dev-secret-change-me");
+const rawSecret = process.env.AUTH_SECRET;
+if (!rawSecret) {
+  throw new Error("AUTH_SECRET environment variable is not set");
+}
+const secret = new TextEncoder().encode(rawSecret);
 
 export async function verifyPassword(input: string): Promise<boolean> {
   const hash = process.env.ADMIN_PASSWORD_HASH;
