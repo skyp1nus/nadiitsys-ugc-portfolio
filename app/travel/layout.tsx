@@ -28,6 +28,18 @@ export const metadata: Metadata = {
   title: "Media Kit — Nadii Tsys",
   description:
     "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+  openGraph: {
+    type: "website",
+    title: "Media Kit — Nadii Tsys",
+    description: "Travel & Hospitality UGC Creator — Media Kit 2026.",
+    siteName: "nadiitsys.com",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Media Kit — Nadii Tsys",
+    description: "Travel & Hospitality UGC Creator — Media Kit 2026.",
+  },
 };
 
 export default function TravelLayout({ children }: { children: React.ReactNode }) {
