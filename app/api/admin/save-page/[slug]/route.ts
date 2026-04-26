@@ -7,7 +7,7 @@ const ALLOWED_SLUGS: PageSlug[] = ["travel", "beauty"];
 
 export async function POST(
   req: NextRequest,
-  ctx: RouteContext<"/api/admin/save-page/[slug]">
+  ctx: { params: Promise<{ slug: string }> }
 ): Promise<Response> {
   try {
     await requireAdmin(req);
