@@ -1,8 +1,10 @@
 import { Icon, type IconName } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelContact } from "@/types/travel";
 
 interface ContactProps {
   name: string;
+  contact: TravelContact;
 }
 
 interface Channel {
@@ -13,19 +15,20 @@ interface Channel {
   soon?: boolean;
 }
 
-const CHANNELS: Channel[] = [
-  { i: "mail", l: "Email", v: "hello@yourname.co", href: "mailto:hello@yourname.co" },
-  {
-    i: "ig",
-    l: "Instagram",
-    v: "@yourname.travels",
-    href: "https://instagram.com/yourname.travels",
-  },
-  { i: "tt", l: "TikTok", v: "@yourname", href: "https://tiktok.com/@yourname" },
-  { i: "yt", l: "YouTube", v: "—", href: null, soon: true },
-];
+function buildChannels(c: TravelContact): Channel[] {
+  return [
+    { i: "mail", l: "Email", v: c.email, href: c.email ? `mailto:${c.email}` : null },
+    { i: "ig", l: "Instagram", v: c.instagram, href: c.instagramUrl || null },
+    { i: "tt", l: "TikTok", v: c.tiktok, href: c.tiktokUrl || null },
+    c.youtubeReady
+      ? { i: "yt", l: "YouTube", v: c.youtube || "—", href: c.youtubeUrl || null }
+      : { i: "yt", l: "YouTube", v: "—", href: null, soon: true },
+  ];
+}
 
-export function Contact({ name }: ContactProps) {
+export function Contact({ name, contact }: ContactProps) {
+  const channels = buildChannels(contact);
+  const ctaHref = contact.email ? `mailto:${contact.email}` : "#";
   return (
     <section
       id="contact"
@@ -62,7 +65,7 @@ export function Contact({ name }: ContactProps) {
           </div>
           <div style={{ marginTop: 48, display: "flex", gap: 16, alignItems: "center" }}>
             <a
-              href="mailto:hello@yourname.co"
+              href={ctaHref}
               style={{
                 padding: "16px 28px",
                 background: "var(--ink)",
@@ -74,7 +77,7 @@ export function Contact({ name }: ContactProps) {
                 fontSize: 14,
               }}
             >
-              hello@yourname.co <Icon name="arrow" size={14} stroke={1.4} />
+              {contact.email || "Get in touch"} <Icon name="arrow" size={14} stroke={1.4} />
             </a>
           </div>
         </div>
@@ -86,7 +89,7 @@ export function Contact({ name }: ContactProps) {
             Direct channels
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {CHANNELS.map((r, i) => {
+            {channels.map((r, i) => {
               const inner = (
                 <>
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -129,7 +132,7 @@ export function Contact({ name }: ContactProps) {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "14px 0",
-                borderBottom: i < CHANNELS.length - 1 ? "1px solid var(--hair)" : "none",
+                borderBottom: i < channels.length - 1 ? "1px solid var(--hair)" : "none",
                 color: "var(--ink)",
                 textDecoration: "none",
                 cursor: r.soon ? "default" : "pointer",
@@ -166,13 +169,13 @@ export function Contact({ name }: ContactProps) {
               <div className={styles.monoXs} style={{ marginBottom: 6 }}>
                 Response time
               </div>
-              <div style={{ fontSize: 14 }}>Within 24 hours</div>
+              <div style={{ fontSize: 14 }}>{contact.responseTime}</div>
             </div>
             <div style={{ textAlign: "right" }}>
               <div className={styles.monoXs} style={{ marginBottom: 6 }}>
                 Booking window
               </div>
-              <div style={{ fontSize: 14 }}>May–September open</div>
+              <div style={{ fontSize: 14 }}>{contact.bookingWindow}</div>
             </div>
           </div>
         </div>

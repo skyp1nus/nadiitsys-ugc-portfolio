@@ -1,5 +1,6 @@
 import { Placeholder, type PlaceholderTone } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelPhoto } from "@/types/travel";
 
 interface Cell {
   col: string;
@@ -19,7 +20,11 @@ const CELLS: Cell[] = [
   { col: "span 1", row: "span 1", tone: "cool", label: "pool · overhead" },
 ];
 
-export function Stills() {
+interface StillsProps {
+  photos: TravelPhoto[];
+}
+
+export function Stills({ photos }: StillsProps) {
   return (
     <section
       className={styles.sectionPad}
@@ -62,8 +67,18 @@ export function Stills() {
           gap: 12,
         }}
       >
-        {CELLS.map((c, i) => (
-          <div key={i} style={{ gridColumn: c.col, gridRow: c.row }}>
+        {CELLS.map((c, i) => {
+          const photo = photos[i];
+          const inner = photo?.url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={photo.url}
+              alt={photo.caption || c.label}
+              loading="lazy"
+              decoding="async"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          ) : (
             <Placeholder
               label={c.label}
               tone={c.tone}
@@ -71,8 +86,28 @@ export function Stills() {
               style={{ height: "100%", aspectRatio: "unset" }}
               patternId={`stills-${i}`}
             />
-          </div>
-        ))}
+          );
+          const wrapStyle = { gridColumn: c.col, gridRow: c.row, overflow: "hidden" } as const;
+          if (photo?.url && photo.link) {
+            return (
+              <a
+                key={i}
+                href={photo.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={wrapStyle}
+                aria-label={photo.caption || "Photo"}
+              >
+                {inner}
+              </a>
+            );
+          }
+          return (
+            <div key={i} style={wrapStyle}>
+              {inner}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

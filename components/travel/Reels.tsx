@@ -1,6 +1,6 @@
-import type { Video } from "@/types/video";
+import type { TravelReel } from "@/types/travel";
 import type { PlaceholderTone } from "./Placeholder";
-import { PhoneFrame } from "./PhoneFrame";
+import { ReelFrame } from "./ReelFrame";
 import { PhoneFramePlaceholder } from "./PhoneFramePlaceholder";
 import styles from "@/app/travel/travel.module.css";
 
@@ -23,11 +23,11 @@ const FALLBACKS: ReadonlyArray<{
 ];
 
 interface ReelsProps {
-  videos: Video[];
+  reels: TravelReel[];
 }
 
-export function Reels({ videos }: ReelsProps) {
-  const real = videos.slice(0, SLOTS);
+export function Reels({ reels }: ReelsProps) {
+  const real = reels.slice(0, SLOTS);
   const placeholderCount = Math.max(0, SLOTS - real.length);
   const placeholders = FALLBACKS.slice(0, placeholderCount);
 
@@ -88,8 +88,8 @@ export function Reels({ videos }: ReelsProps) {
           gap: 28,
         }}
       >
-        {real.map((v, i) => (
-          <PhoneFrame key={v.id} video={v} index={i} />
+        {real.map((r, i) => (
+          <ReelFrame key={`r-${i}`} reel={r} index={i} />
         ))}
         {placeholders.map((p, i) => (
           <PhoneFramePlaceholder

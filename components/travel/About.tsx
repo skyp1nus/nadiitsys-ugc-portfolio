@@ -1,7 +1,14 @@
 import { Placeholder } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
 
-export function About() {
+interface AboutProps {
+  bio: string;
+  languages: string[];
+  gear: string;
+  delivery: string;
+}
+
+export function About({ bio, languages, gear, delivery }: AboutProps) {
   return (
     <section
       id="about"
@@ -45,8 +52,7 @@ export function About() {
                 color: "var(--ink)",
               }}
             >
-              A creator who turns hotel rooms into stories, flights into cinema, and breakfast
-              tables into the kind of frame people save at 2&nbsp;a.m.
+              {bio}
             </p>
             <div
               style={{
@@ -100,19 +106,19 @@ export function About() {
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                   <span>Languages</span>
                   <span className={styles.mono} style={{ fontSize: 12 }}>
-                    EN · PL · UA · RU
+                    {languages.join(" · ")}
                   </span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                   <span>Gear</span>
                   <span className={styles.mono} style={{ fontSize: 12 }}>
-                    iPhone 17 Pro Max
+                    {gear}
                   </span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                   <span>Delivery</span>
                   <span className={styles.mono} style={{ fontSize: 12 }}>
-                    5–7 days
+                    {delivery}
                   </span>
                 </div>
               </div>
