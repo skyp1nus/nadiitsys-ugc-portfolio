@@ -22,21 +22,8 @@
    - `nadiitsys.com/*` → `nadiitsys`
    - `admin.nadiitsys.com/*` → `nadiitsys`
 5. In `wrangler.toml` add `workers_dev = false` (disable the default URL once Routes are live).
-6. Smoke test on both hostnames; verify `admin.nadiitsys.com/admin/travel` editor flow + public `nadiitsys.com/travel` render.
-
-### 🚨 Strip `AUTH_SECRET` dev fallback
-**Why:** [AUDIT 3.1](./AUDIT.md#3-security) — `lib/auth.ts:7` silently falls back to a known-public string if the env-var is missing. A misconfigured deploy hands attackers valid sessions.
-**How:** replace the `??` fallback with a fail-fast check:
-```ts
-const rawSecret = process.env.AUTH_SECRET;
-if (!rawSecret) throw new Error("AUTH_SECRET is not set");
-const secret = new TextEncoder().encode(rawSecret);
-```
-Verify locally: a build without `AUTH_SECRET` should refuse to boot.
-
-### ⚠️ Login form a11y
-**Why:** [AUDIT 7.1](./AUDIT.md#7-accessibility-a11y) — password input has no `<label>`, only a placeholder. Screen readers fall back to "edit text".
-**How:** add a `sr-only` label or `aria-label="Password"` on the input in `app/admin/login/page.tsx`.
+6. Set `NEXT_PUBLIC_SITE_URL=https://nadiitsys.com` so `app/robots.ts` and `app/sitemap.ts` flip to production-allow rules.
+7. Smoke test on both hostnames; verify `admin.nadiitsys.com/admin/travel` editor flow + public `nadiitsys.com/travel` render.
 
 ---
 
@@ -69,13 +56,9 @@ Verify locally: a build without `AUTH_SECRET` should refuse to boot.
 **Why:** [AUDIT 3.2](./AUDIT.md#3-security) — in-memory map is per-isolate; an attacker landing on a fresh isolate gets a fresh budget.
 **How:** swap the in-memory store for a KV-backed sliding window (5 attempts / 15 min keyed on IP). Keep the in-memory path as a `bun run dev` fallback.
 
-### ⚠️ OpenGraph + Twitter meta
-**Why:** [AUDIT 8.1, 8.2](./AUDIT.md#8-seo) — public links unfurl as bare URLs on Slack/Twitter/LinkedIn.
-**How:** add `metadata.openGraph` and `metadata.twitter` exports on `app/(public)/page.tsx` and `app/travel/layout.tsx`. Provide a `/public/og.jpg` (1200×630) baseline.
-
-### ⚠️ Security headers in middleware
-**Why:** [AUDIT 3.3](./AUDIT.md#3-security) — no explicit CSP / X-Frame-Options / HSTS / Permissions-Policy. Cloudflare adds defaults; explicit headers are best practice before public launch.
-**How:** in `middleware.ts`, attach a `headers` block to every `NextResponse.next()` and `NextResponse.rewrite()`. Start with `default-src 'self'; img-src 'self' *.cdninstagram.com data:; frame-ancestors 'none';` and tighten as needed.
+### ⚠️ CSP header (additional)
+**Why:** baseline security headers are in middleware (HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options for admin). CSP intentionally deferred — Instagram embed (`*.cdninstagram.com`) needs end-to-end testing under a strict policy before rollout.
+**How:** start with `default-src 'self'; img-src 'self' *.cdninstagram.com data:; frame-src www.instagram.com; frame-ancestors 'none';` in middleware. Test reels + photos under Report-Only first.
 
 ---
 
@@ -93,16 +76,8 @@ Verify locally: a build without `AUTH_SECRET` should refuse to boot.
 **Why:** [AUDIT 6.1](./AUDIT.md#6-code-organization) — two parallel models drift silently. Tabs use the manual interfaces; the rest uses `TravelPageInput` from Zod.
 **How:** export `TravelHotel`, `TravelProfile`, etc. from `lib/schemas/travel-page.ts` as `z.infer<...>`. Search-replace the imports in `components/admin/travel/tabs/*`. Delete `types/travel.ts`.
 
-### 💡 DX scripts
-**Why:** [AUDIT 10.1](./AUDIT.md#10-dx--tooling).
-**How:** add to `package.json`:
-- `"db:types": "wrangler types"`
-- `"db:exec": "wrangler d1 execute nadiitsys --remote --file=db/schema.sql"`
-- `"db:seed": "wrangler d1 execute nadiitsys --remote --file=db/seed.sql"`
-- `"secrets:list": "wrangler secret list"`
-
-### 💡 robots.ts + sitemap.ts
-**Why:** [AUDIT 8.3](./AUDIT.md#8-seo). Two routes today (`/`, `/travel`); not urgent, low cost.
+### 💡 OG image
+**Why:** OpenGraph and Twitter meta are wired (commit `056d682`) but no `images` field — links unfurl without a hero. Needs a designed 1200×630 `og.jpg` in `public/`.
 
 ### 💡 Pre-commit hook
 **Why:** [AUDIT 10.2](./AUDIT.md#10-dx--tooling) — local feedback before CI.
@@ -111,17 +86,23 @@ Verify locally: a build without `AUTH_SECRET` should refuse to boot.
 ### 💡 CSRF tokens for save-page
 **Why:** [AUDIT 3.4](./AUDIT.md#3-security) — currently relying on `sameSite: lax`. OWASP-acceptable but tighter is double-submit cookie or per-session token.
 
-### 💡 D1 row corruption guard
-**Why:** [AUDIT 2.1](./AUDIT.md#2-error-handling) — `JSON.parse` in `lib/repos/pages.ts:21` lacks slug context on failure.
-**How:** wrap the parse, rethrow with `\`Corrupt page row "${slug}": ${e}\``.
-
-### 💡 Save-page error payload narrowing
-**Why:** [AUDIT 2.2](./AUDIT.md#2-error-handling) — Zod `flatten()` returned to client.
-**How:** map to `{ field, message }[]` or return a generic 400 + server log.
-
 ---
 
 ## Done ✅
+
+### Quality pass (post-audit)
+8 fixes from [`AUDIT.md`](./AUDIT.md) in 8 atomic commits — 1 high + 1 medium + 5 low + 1 SEO follow-up resolved, zero runtime regressions.
+
+- `8e2eb02` `fix(security): require AUTH_SECRET, fail-fast if missing` — closes AUDIT 3.1 (high).
+- `396f6b1` `fix(a11y): add hidden label to admin password input` — closes AUDIT 7.1 (medium).
+- `7e37b19` `feat(security): set baseline HTTP security headers` — closes part of AUDIT 3.3 (CSP follow-up tracked under "Next").
+- `056d682` `feat(seo): OpenGraph and Twitter meta on home and travel` — closes AUDIT 8.1, 8.2.
+- `cc708a1` `fix(db): wrap JSON.parse with slug context for clearer corruption errors` — closes AUDIT 2.1.
+- `6187d57` `fix(api): narrow save-page error payload, log details server-side` — closes AUDIT 2.2.
+- `6c763d3` `feat(seo): robots.ts and sitemap.ts (production-domain-aware)` — closes AUDIT 8.3.
+- `e9b9b99` `chore(dx): add db and secrets convenience scripts` — closes AUDIT 10.1.
+
+### Migration & infra
 - Octokit pipeline removed and replaced with Cloudflare D1 (12 commits, see `git log --grep=migration`).
 - D1 schema, seed, repository layer (`lib/repos/pages.ts`).
 - `PageEditor` generalized for Travel + Beauty admin (commit `6be291c`).
