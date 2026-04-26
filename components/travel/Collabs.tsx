@@ -6,13 +6,12 @@ interface Brand {
   location: string;
 }
 
-const BRANDS: Brand[] = [
-  { name: "Lemon Resort Spa", location: "Poland" },
-  { name: "Hotel Narvil Conference & Spa", location: "Poland" },
-  { name: "Heron Live Hotel", stars: "★★★★★", location: "Poland" },
-];
+interface CollabsProps {
+  hotels: Brand[];
+}
 
-export function Collabs() {
+export function Collabs({ hotels }: CollabsProps) {
+  const BRANDS = hotels;
   return (
     <section
       className={styles.sectionPad}

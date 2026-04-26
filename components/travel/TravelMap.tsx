@@ -2,8 +2,12 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { DOTS } from "./travel-map-dots";
-import { PINS, COUNTRIES, STATS } from "./travel-map-data";
+import { PINS, COUNTRIES as DEFAULT_COUNTRIES, STATS } from "./travel-map-data";
 import styles from "@/app/travel/travel.module.css";
+
+interface TravelMapProps {
+  countries?: string[];
+}
 
 const mapBtn: CSSProperties = {
   width: 32,
@@ -35,7 +39,8 @@ interface DragState {
   moved: boolean;
 }
 
-export function TravelMap() {
+export function TravelMap({ countries }: TravelMapProps = {}) {
+  const list = countries && countries.length > 0 ? countries : DEFAULT_COUNTRIES;
   const [view, setView] = useState<View>({ z: 1, tx: 0, ty: 0 });
   const [hover, setHover] = useState(-1);
   const [focused, setFocused] = useState(-1);
@@ -163,7 +168,7 @@ export function TravelMap() {
             </div>
             <div className={`${styles.monoXs}`} style={{ display: "flex", gap: 48 }}>
               {[
-                { n: STATS.countries, l: "countries" },
+                { n: list.length, l: "countries" },
                 { n: STATS.cities, l: "cities" },
                 { n: STATS.continents, l: "continents" },
               ].map((s) => (
@@ -384,7 +389,7 @@ export function TravelMap() {
             gap: "10px 20px",
           }}
         >
-          {COUNTRIES.map((c) => (
+          {list.map((c) => (
             <div
               key={c}
               className={styles.mono}

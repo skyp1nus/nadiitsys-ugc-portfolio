@@ -1,59 +1,63 @@
 "use client";
 
 import { useState } from "react";
-import type { Video } from "@/types/video";
+import type { TravelReel } from "@/types/travel";
 import { Icon } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
 
-const R2_URL = process.env.NEXT_PUBLIC_R2_PUBLIC_URL ?? "";
-
-interface PhoneFrameProps {
-  video: Video;
+interface ReelFrameProps {
+  reel: TravelReel;
   index: number;
 }
 
-export function PhoneFrame({ video, index }: PhoneFrameProps) {
+function isInstagram(url: string): boolean {
+  return /instagram\.com/i.test(url);
+}
+
+export function ReelFrame({ reel, index }: ReelFrameProps) {
   const [expanded, setExpanded] = useState(false);
-  const posterUrl = `${R2_URL}/${video.posterKey}`;
-  const location = video.tags?.[0] ?? "";
+  const canEmbed = isInstagram(reel.url);
+  const poster = reel.posterUrl;
 
   return (
     <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "VideoObject",
-            name: video.title,
-            description: video.description,
-            thumbnailUrl: posterUrl,
-            uploadDate: video.publishedAt,
-            url: video.instagramUrl,
-          }),
-        }}
-      />
-
-      {expanded ? (
-        <PhoneEmbed url={video.instagramUrl} />
+      {expanded && canEmbed ? (
+        <PhoneEmbed url={reel.url} />
       ) : (
-        <PhoneShell onClick={() => setExpanded(true)} title={video.title}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={posterUrl}
-            alt={video.title}
-            loading="lazy"
-            decoding="async"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+        <PhoneShell
+          onClick={() => {
+            if (canEmbed) setExpanded(true);
+            else if (reel.url) window.open(reel.url, "_blank", "noopener,noreferrer");
+          }}
+          title={reel.title}
+        >
+          {poster ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={poster}
+              alt={reel.title}
+              loading="lazy"
+              decoding="async"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(140deg, rgba(201,165,123,.35), rgba(43,42,38,.55))",
+              }}
+            />
+          )}
           <NotchAndPlay />
-          <Caption location={location} title={video.title} />
+          <Caption location={reel.location} title={reel.title} views={reel.views} />
         </PhoneShell>
       )}
 
@@ -67,7 +71,7 @@ export function PhoneFrame({ video, index }: PhoneFrameProps) {
         }}
       >
         <div className={styles.serif} style={{ fontSize: 15, fontStyle: "italic" }}>
-          {location || video.title}
+          {reel.location || reel.title}
         </div>
         <div className={styles.monoXs}>N° {String(index + 1).padStart(2, "0")}</div>
       </div>
@@ -168,7 +172,15 @@ function NotchAndPlay() {
   );
 }
 
-function Caption({ location, title }: { location: string; title: string }) {
+function Caption({
+  location,
+  title,
+  views,
+}: {
+  location: string;
+  title: string;
+  views: string;
+}) {
   return (
     <div
       style={{
@@ -199,17 +211,34 @@ function Caption({ location, title }: { location: string; title: string }) {
         </div>
       )}
       <div
-        className={styles.serif}
         style={{
-          fontSize: 14,
-          fontStyle: "italic",
-          opacity: 0.9,
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
+          display: "flex",
+          alignItems: "baseline",
+          justifyContent: "space-between",
+          gap: 8,
         }}
       >
-        {title}
+        <div
+          className={styles.serif}
+          style={{
+            fontSize: 14,
+            fontStyle: "italic",
+            opacity: 0.9,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {title}
+        </div>
+        {views && (
+          <div
+            className={styles.mono}
+            style={{ fontSize: 11, letterSpacing: "0.1em", whiteSpace: "nowrap" }}
+          >
+            {views}
+          </div>
+        )}
       </div>
     </div>
   );

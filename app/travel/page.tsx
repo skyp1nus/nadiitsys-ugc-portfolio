@@ -1,4 +1,4 @@
-import { getByCategory } from "@/lib/content";
+import { loadTravelPage } from "@/lib/content";
 import { Nav } from "@/components/travel/Nav";
 import { Hero } from "@/components/travel/Hero";
 import { Marquee } from "@/components/travel/Marquee";
@@ -10,24 +10,30 @@ import { Reels } from "@/components/travel/Reels";
 import { TravelMap } from "@/components/travel/TravelMap";
 import { Contact } from "@/components/travel/Contact";
 
-const CREATOR = "Nadii Tsys";
-const TAGLINE = "Travel & Hospitality UGC Creator";
-const LOCATION = "Based in Warszawa · Available Worldwide";
-
 export default function TravelPage() {
-  const videos = getByCategory("travel");
+  const data = loadTravelPage();
+  const { profile, hotels, countries, photos, reels, contact } = data;
   return (
     <>
       <Nav />
-      <Hero name={CREATOR} tagline={TAGLINE} location={LOCATION} />
+      <Hero
+        name={profile.creatorName}
+        tagline={profile.tagline}
+        location={profile.location}
+      />
       <Marquee />
-      <Stills />
-      <About />
+      <Stills photos={photos} />
+      <About
+        bio={profile.bio}
+        languages={profile.languages}
+        gear={profile.gear}
+        delivery={profile.delivery}
+      />
       <Offer />
-      <Collabs />
-      <Reels videos={videos} />
-      <TravelMap />
-      <Contact name={CREATOR} />
+      <Collabs hotels={hotels} />
+      <Reels reels={reels} />
+      <TravelMap countries={countries} />
+      <Contact name={profile.creatorName} contact={contact} />
     </>
   );
 }
