@@ -1,28 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/auth";
 import { TravelPageSchema } from "@/lib/schemas/travel-page";
-import { commitFile, ghConfigured } from "@/lib/github";
+import { upsertPage, type PageSlug } from "@/lib/repos/pages";
 
-type SaveResult =
-  | { ok: true; commitMessage: string; path: string; payload: unknown }
-  | { ok: false; status: number; error: unknown };
-
-function buildSave(slug: string, body: unknown): SaveResult {
-  if (slug === "travel") {
-    const parsed = TravelPageSchema.safeParse(body);
-    if (!parsed.success) {
-      return { ok: false, status: 400, error: parsed.error.flatten() };
-    }
-    const data = { ...parsed.data, updatedAt: new Date().toISOString() };
-    return {
-      ok: true,
-      path: "content/pages/travel.json",
-      commitMessage: "content: update travel page",
-      payload: data,
-    };
-  }
-  return { ok: false, status: 404, error: `Unknown page slug: ${slug}` };
-}
+const ALLOWED_SLUGS: PageSlug[] = ["travel", "beauty"];
 
 export async function POST(
   req: NextRequest,
@@ -35,6 +16,12 @@ export async function POST(
   }
 
   const { slug } = await ctx.params;
+  if (!ALLOWED_SLUGS.includes(slug as PageSlug)) {
+    return NextResponse.json(
+      { ok: false, error: `Unknown page slug: ${slug}` },
+      { status: 404 }
+    );
+  }
 
   let body: unknown;
   try {
@@ -43,27 +30,19 @@ export async function POST(
     return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
   }
 
-  const result = buildSave(slug, body);
-  if (!result.ok) {
-    return NextResponse.json({ ok: false, error: result.error }, { status: result.status });
-  }
-
-  if (!ghConfigured()) {
+  const parsed = TravelPageSchema.safeParse(body);
+  if (!parsed.success) {
     return NextResponse.json(
-      { ok: false, error: "GH_OWNER / GH_REPO not configured" },
-      { status: 500 }
+      { ok: false, error: parsed.error.flatten() },
+      { status: 400 }
     );
   }
 
-  const content = JSON.stringify(result.payload, null, 2) + "\n";
+  const data = { ...parsed.data, updatedAt: new Date().toISOString() };
 
   try {
-    const sha = await commitFile({
-      path: result.path,
-      content,
-      message: result.commitMessage,
-    });
-    return NextResponse.json({ ok: true, sha });
+    await upsertPage(slug as PageSlug, data);
+    return NextResponse.json({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ ok: false, error: message }, { status: 500 });
