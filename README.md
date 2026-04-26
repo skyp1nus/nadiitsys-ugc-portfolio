@@ -49,7 +49,7 @@ unescaped bcrypt hashes. Example:
 ADMIN_PASSWORD_HASH=\$2b\$12\$rNDjKq...rest_of_hash
 ```
 
-(In Cloudflare Pages dashboard the value goes in unescaped — only `.env.local` needs the backslashes.)
+(In the Cloudflare Workers dashboard the value goes in unescaped — only `.env.local` needs the backslashes.)
 
 ## Deploy
 
