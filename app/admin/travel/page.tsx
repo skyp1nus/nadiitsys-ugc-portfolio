@@ -1,7 +1,9 @@
 import { loadTravelPage } from "@/lib/content";
-import { TravelEditor } from "@/components/admin/travel/TravelEditor";
+import { PageEditor } from "@/components/admin/PageEditor";
 
-export default function AdminTravelPage() {
-  const data = loadTravelPage();
-  return <TravelEditor initial={data} />;
+export const dynamic = "force-dynamic";
+
+export default async function AdminTravelPage() {
+  const initial = await loadTravelPage();
+  return <PageEditor slug="travel" initial={initial} />;
 }
