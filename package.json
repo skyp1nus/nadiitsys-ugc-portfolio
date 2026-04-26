@@ -9,7 +9,12 @@
     "start": "next start",
     "lint": "eslint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:types": "wrangler types",
+    "db:schema": "wrangler d1 execute nadiitsys --remote --file=db/schema.sql",
+    "db:seed": "wrangler d1 execute nadiitsys --remote --file=db/seed.sql",
+    "db:local-reset": "wrangler d1 execute nadiitsys --local --file=db/schema.sql && wrangler d1 execute nadiitsys --local --file=db/seed.sql",
+    "secrets:list": "wrangler secret list"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
