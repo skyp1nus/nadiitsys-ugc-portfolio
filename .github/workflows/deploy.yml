@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Generate worker types
+        run: bunx wrangler types
+
       - name: Lint
         run: bun run lint
 
@@ -45,6 +48,9 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Generate worker types
+        run: bunx wrangler types
 
       - name: Build for Cloudflare
         run: bunx opennextjs-cloudflare build
