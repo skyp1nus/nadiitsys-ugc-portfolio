@@ -1,6 +1,7 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface CloudflareEnv extends Cloudflare.Env {}
 }
 
