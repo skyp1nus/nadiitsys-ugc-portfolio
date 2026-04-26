@@ -10,8 +10,10 @@ import { Reels } from "@/components/travel/Reels";
 import { TravelMap } from "@/components/travel/TravelMap";
 import { Contact } from "@/components/travel/Contact";
 
-export default function TravelPage() {
-  const data = loadTravelPage();
+export const revalidate = 60;
+
+export default async function TravelPage() {
+  const data = await loadTravelPage();
   const { profile, hotels, countries, photos, reels, contact } = data;
   return (
     <>
