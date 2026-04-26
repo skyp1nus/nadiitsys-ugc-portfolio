@@ -9,12 +9,10 @@ Beauty & travel content creator portfolio built on a zero-cost stack.
 | Framework | Next.js 16 (App Router, TypeScript strict) |
 | Styling | Tailwind CSS v4 |
 | Runtime (local/CI) | Bun |
-| Hosting | Cloudflare Pages |
+| Hosting | Cloudflare Workers (edge SSR) |
 | CF adapter | `@opennextjs/cloudflare` |
-| Content | `content/videos.json` in-repo |
+| Content store | Cloudflare D1 (`pages` table, JSON-blob per slug) |
 | Auth | `jose` (JWT HS256) + `bcryptjs` |
-| GitHub API | `@octokit/rest` |
-| Media storage | Cloudflare R2 |
 
 ## Local development
 
@@ -64,18 +62,16 @@ bun run deploy     # runs opennextjs-cloudflare build + wrangler deploy
 
 ## Required secrets
 
-Set these in **Cloudflare Pages** dashboard (Settings → Environment variables) and in **GitHub repository** secrets:
+Set these in the **Cloudflare Workers** dashboard (Settings → Variables and Secrets) and in **GitHub repository** secrets:
 
 | Secret | Where | Description |
 |---|---|---|
-| `AUTH_SECRET` | CF Pages + GitHub | 32+ byte random string for JWT signing |
-| `ADMIN_PASSWORD_HASH` | CF Pages | bcryptjs hash of admin password |
-| `GH_TOKEN` | CF Pages | Fine-grained PAT, `contents:write` on this repo only |
-| `GH_OWNER` | CF Pages | GitHub repo owner username |
-| `GH_REPO` | CF Pages | GitHub repo name |
-| `NEXT_PUBLIC_R2_PUBLIC_URL` | CF Pages + GitHub | Public R2 base URL (e.g. `https://media.nadiitsys.com`) |
-| `CLOUDFLARE_API_TOKEN` | GitHub | CF API token with Pages:Edit permission |
+| `AUTH_SECRET` | CF Workers + GitHub | 32+ byte random string for JWT signing |
+| `ADMIN_PASSWORD_HASH` | CF Workers | bcryptjs hash of admin password |
+| `CLOUDFLARE_API_TOKEN` | GitHub | CF API token with Workers Scripts:Edit + D1:Edit |
 | `CLOUDFLARE_ACCOUNT_ID` | GitHub | Your Cloudflare account ID |
+
+The D1 binding (`DB`) is wired up in `wrangler.toml`; no secret is needed for it.
 
 ---
 

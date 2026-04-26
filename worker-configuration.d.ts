@@ -7,10 +7,6 @@ declare namespace Cloudflare {
 		ASSETS: Fetcher;
 		AUTH_SECRET: string;
 		ADMIN_PASSWORD_HASH: string;
-		GH_TOKEN: string;
-		GH_OWNER: string;
-		GH_REPO: string;
-		NEXT_PUBLIC_R2_PUBLIC_URL: string;
 		WORKER_SELF_REFERENCE: Fetcher /* nadiitsys */;
 	}
 }
@@ -19,7 +15,7 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "AUTH_SECRET" | "ADMIN_PASSWORD_HASH" | "GH_TOKEN" | "GH_OWNER" | "GH_REPO" | "NEXT_PUBLIC_R2_PUBLIC_URL">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "AUTH_SECRET" | "ADMIN_PASSWORD_HASH">> {}
 }
 
 // Begin runtime types

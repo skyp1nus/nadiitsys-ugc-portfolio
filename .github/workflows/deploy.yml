@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: [main]
-  repository_dispatch:
-    types: [content-updated]
 
 concurrency:
   group: deploy
@@ -50,8 +48,6 @@ jobs:
 
       - name: Build for Cloudflare
         run: bunx opennextjs-cloudflare build
-        env:
-          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_R2_PUBLIC_URL }}
 
       - name: Deploy via wrangler
         uses: cloudflare/wrangler-action@v3
@@ -62,7 +58,3 @@ jobs:
         env:
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_OWNER: ${{ secrets.GH_OWNER }}
-          GH_REPO: ${{ secrets.GH_REPO }}
-          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_R2_PUBLIC_URL }}
