@@ -2,6 +2,23 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const ROOT = "nadiitsys.com";
 
+const SECURITY_HEADERS = {
+  "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+} as const;
+
+function applySecurityHeaders(response: NextResponse, isAdmin: boolean): NextResponse {
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  if (isAdmin) {
+    response.headers.set("X-Frame-Options", "DENY");
+  }
+  return response;
+}
+
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") ?? "").replace(/:\d+$/, "");
   const url = req.nextUrl.clone();
@@ -12,20 +29,32 @@ export function middleware(req: NextRequest) {
   if (isAdmin) {
     if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/")) {
       reqHeaders.set("x-pathname", url.pathname);
-      return NextResponse.next({ request: { headers: reqHeaders } });
+      return applySecurityHeaders(
+        NextResponse.next({ request: { headers: reqHeaders } }),
+        isAdmin
+      );
     }
     url.pathname = `/admin${url.pathname}`;
     reqHeaders.set("x-pathname", url.pathname);
-    return NextResponse.rewrite(url, { request: { headers: reqHeaders } });
+    return applySecurityHeaders(
+      NextResponse.rewrite(url, { request: { headers: reqHeaders } }),
+      isAdmin
+    );
   }
 
   // Block direct access to /admin/* on the public domain
   if (url.pathname.startsWith("/admin")) {
-    return new NextResponse("Not found", { status: 404 });
+    return applySecurityHeaders(
+      new NextResponse("Not found", { status: 404 }),
+      false
+    );
   }
 
   reqHeaders.set("x-pathname", url.pathname);
-  return NextResponse.next({ request: { headers: reqHeaders } });
+  return applySecurityHeaders(
+    NextResponse.next({ request: { headers: reqHeaders } }),
+    isAdmin
+  );
 }
 
 export const config = {
