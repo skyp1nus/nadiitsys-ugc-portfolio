@@ -5,7 +5,7 @@
 описи, ілюстрації тощо) — далі «Матеріали» — ліцензовані під
 **Creative Commons Attribution-NonCommercial 4.0 International License**.
 
-Copyright © 2026 Nadiia Tsysaruk
+Copyright © 2026 Nadii Tsys
 
 ---
 
@@ -18,7 +18,7 @@ Copyright © 2026 Nadiia Tsysaruk
 
 За таких умов:
 
-- **Attribution (Зазначення авторства)** — ви маєте вказати автора (Nadiia Tsysaruk),
+- **Attribution (Зазначення авторства)** — ви маєте вказати автора (Nadii Tsys),
   надати посилання на ліцензію та зазначити, чи вносилися зміни. Це можна
   зробити будь-яким розумним способом, але не так, щоб створити враження,
   ніби ліцензіар схвалює вас або ваше використання.
@@ -31,7 +31,7 @@ Copyright © 2026 Nadiia Tsysaruk
 ## Приклад зазначення авторства
 
 ```
-Photo by Nadiia Tsysaruk (https://nadiitsys.com),
+Photo by Nadii Tsys (https://nadiitsys.com),
 licensed under CC BY-NC 4.0 (https://creativecommons.org/licenses/by-nc/4.0/)
 ```
 

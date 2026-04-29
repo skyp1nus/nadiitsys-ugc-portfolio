@@ -109,7 +109,7 @@ research, education). **Commercial use is not permitted.**
 All creative content — including but not limited to materials in
 `content/`, `public/images/`, `public/videos/`, and `public/posters/`
 (photographs, videos, video posters, written descriptions, illustrations)
-— is © 2026 Nadiia Tsysaruk, licensed under
+— is © 2026 Nadii Tsys, licensed under
 **Creative Commons Attribution-NonCommercial 4.0 International**.
 You must credit the author and may not use the content commercially.
 
