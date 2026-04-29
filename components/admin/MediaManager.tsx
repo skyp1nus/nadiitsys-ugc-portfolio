@@ -129,7 +129,7 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
     const target = idx + delta;
     if (target < 0 || target >= items.length) return;
     const next = [...items];
-    [next[idx], next[target]] = [next[target], next[idx]];
+    [next[idx], next[target]] = [next[target]!, next[idx]!];
     setItems(next);
     void persistOrder(next);
   }
