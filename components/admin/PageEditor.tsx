@@ -43,9 +43,9 @@ const TAB_DESC: Record<TabKey, string> = {
   countries:
     "Countries shown in the Travels section. Keep it concise — only places you’ve actually shot in.",
   photos:
-    "Instagram photo links shown in the Stills gallery. Paste a direct image URL plus the post link.",
+    "Photos shown in the Stills gallery. Drag-and-drop або клік щоб завантажити у R2.",
   reels:
-    "TikTok / Instagram reel links shown in the Reels section. Paste the public URL of each reel.",
+    "Reel-відео для секції Reels. Drag-and-drop файлу — рендериться нативним <video> player.",
   languages:
     "Languages you speak. Shown as short codes (EN, PL, UA…) under the About section.",
   contact: "Email, social links and availability info shown in the Contact section.",
@@ -193,18 +193,8 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
             onChange={(countries) => setData((d) => ({ ...d, countries }))}
           />
         )}
-        {activeTab === "photos" && (
-          <PhotosTab
-            value={data.photos}
-            onChange={(photos) => setData((d) => ({ ...d, photos }))}
-          />
-        )}
-        {activeTab === "reels" && (
-          <ReelsTab
-            value={data.reels}
-            onChange={(reels) => setData((d) => ({ ...d, reels }))}
-          />
-        )}
+        {activeTab === "photos" && <PhotosTab pageSlug={slug} />}
+        {activeTab === "reels" && <ReelsTab pageSlug={slug} />}
         {activeTab === "languages" && (
           <LanguagesTab
             value={data.profile.languages}
@@ -232,10 +222,6 @@ function badgeFor(key: TabKey, data: TravelPage): number | undefined {
       return data.hotels.length;
     case "countries":
       return data.countries.length;
-    case "photos":
-      return data.photos.length;
-    case "reels":
-      return data.reels.length;
     case "languages":
       return data.profile.languages.length;
     default:
