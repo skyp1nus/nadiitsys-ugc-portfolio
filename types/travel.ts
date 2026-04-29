@@ -14,20 +14,6 @@ export interface TravelHotel {
   location: string;
 }
 
-export interface TravelPhoto {
-  url: string;
-  caption: string;
-  link: string;
-}
-
-export interface TravelReel {
-  url: string;
-  title: string;
-  location: string;
-  views: string;
-  posterUrl?: string;
-}
-
 export interface TravelContact {
   email: string;
   instagram: string;
@@ -47,7 +33,5 @@ export interface TravelPage {
   profile: TravelProfile;
   hotels: TravelHotel[];
   countries: string[];
-  photos: TravelPhoto[];
-  reels: TravelReel[];
   contact: TravelContact;
 }
