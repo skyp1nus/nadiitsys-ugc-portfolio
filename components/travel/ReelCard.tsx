@@ -71,17 +71,16 @@ export function ReelCard({ reel }: ReelCardProps) {
           >
             <span
               style={{
-                width: 80,
-                height: 80,
+                width: 56,
+                height: 56,
                 borderRadius: "50%",
                 background: "rgba(251,247,240,0.92)",
                 display: "grid",
                 placeItems: "center",
                 color: "var(--ink, #2b2a26)",
-                paddingLeft: 4,
               }}
             >
-              <Icon name="play" size={28} stroke={0} />
+              <Icon name="play" size={20} stroke={0} />
             </span>
           </span>
           {hasMeta && (
@@ -91,7 +90,7 @@ export function ReelCard({ reel }: ReelCardProps) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                padding: "60px 16px 18px",
+                padding: "100px 16px 18px",
                 background:
                   "linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.22) 65%, rgba(0,0,0,0) 100%)",
                 color: "#fff",
