@@ -3,17 +3,23 @@ import { requireAdmin } from "@/lib/auth";
 import {
   listMedia,
   uploadMedia,
+  replaceSingleMedia,
+  isSingletonKind,
   type PageSlug,
   type MediaKind,
 } from "@/lib/repos/media";
 
 const ALLOWED_PAGE: PageSlug[] = ["travel", "beauty"];
-const ALLOWED_KIND: MediaKind[] = ["photo", "reel"];
+const ALLOWED_KIND: MediaKind[] = ["photo", "reel", "hero", "about-video"];
 
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 const MAX_REEL_BYTES = 50 * 1024 * 1024;
 const ALLOWED_PHOTO_MIME = ["image/jpeg", "image/png", "image/webp"];
 const ALLOWED_REEL_MIME = ["video/mp4", "video/quicktime", "video/webm"];
+
+function isImageKind(kind: MediaKind): boolean {
+  return kind === "photo" || kind === "hero";
+}
 
 export async function GET(req: NextRequest): Promise<Response> {
   try {
@@ -94,9 +100,10 @@ export async function POST(req: NextRequest): Promise<Response> {
     );
   }
 
-  const isPhoto = kind === "photo";
-  const maxBytes = isPhoto ? MAX_PHOTO_BYTES : MAX_REEL_BYTES;
-  const allowedMime = isPhoto ? ALLOWED_PHOTO_MIME : ALLOWED_REEL_MIME;
+  const typedKind = kind as MediaKind;
+  const isImage = isImageKind(typedKind);
+  const maxBytes = isImage ? MAX_PHOTO_BYTES : MAX_REEL_BYTES;
+  const allowedMime = isImage ? ALLOWED_PHOTO_MIME : ALLOWED_REEL_MIME;
   if (file.size > maxBytes) {
     return NextResponse.json(
       { ok: false, error: `File too large (max ${maxBytes / 1024 / 1024} MB)` },
@@ -111,9 +118,10 @@ export async function POST(req: NextRequest): Promise<Response> {
   }
 
   try {
-    const item = await uploadMedia({
+    const uploadFn = isSingletonKind(typedKind) ? replaceSingleMedia : uploadMedia;
+    const item = await uploadFn({
       pageSlug: pageSlug as PageSlug,
-      kind: kind as MediaKind,
+      kind: typedKind,
       file,
       fileName: file.name,
       mime: file.type,

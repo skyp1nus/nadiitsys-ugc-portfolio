@@ -1,18 +1,20 @@
 import { Icon } from "./Icon";
 import { Placeholder } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
+import type { MediaItem } from "@/lib/repos/media";
 
 interface HeroProps {
   name: string;
   tagline: string;
   location: string;
+  heroImage?: MediaItem | null;
 }
 
 function HairRule({ w = "100%" }: { w?: string | number }) {
   return <div style={{ height: 1, background: "var(--hair)", width: w }} />;
 }
 
-export function Hero({ name, tagline, location }: HeroProps) {
+export function Hero({ name, tagline, location, heroImage }: HeroProps) {
   return (
     <section
       className={styles.sectionPad}
@@ -77,7 +79,24 @@ export function Hero({ name, tagline, location }: HeroProps) {
         </div>
 
         <div style={{ position: "relative" }}>
-          <Placeholder label="hero portrait · Amalfi" ratio="3/4" tone="sand" />
+          {heroImage ? (
+            <div
+              style={{
+                width: "100%",
+                aspectRatio: "3 / 4",
+                overflow: "hidden",
+                background: "var(--cream)",
+              }}
+            >
+              <img
+                src={heroImage.url}
+                alt={heroImage.alt ?? `${name} — hero portrait`}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
+            </div>
+          ) : (
+            <Placeholder label="hero portrait · Amalfi" ratio="3/4" tone="sand" />
+          )}
           <div
             className={styles.hideOnMobile}
             style={{

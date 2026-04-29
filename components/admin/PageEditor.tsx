@@ -177,6 +177,7 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
 
         {activeTab === "profile" && (
           <ProfileTab
+            pageSlug={slug}
             value={data.profile}
             onChange={(profile) => setData((d) => ({ ...d, profile }))}
           />
