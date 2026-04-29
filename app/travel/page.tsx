@@ -1,5 +1,5 @@
 import { loadTravelPage } from "@/lib/content";
-import { listMedia } from "@/lib/repos/media";
+import { listMedia, getSingleMedia } from "@/lib/repos/media";
 import { Nav } from "@/components/travel/Nav";
 import { Hero } from "@/components/travel/Hero";
 import { Marquee } from "@/components/travel/Marquee";
@@ -14,10 +14,12 @@ import { Contact } from "@/components/travel/Contact";
 export const dynamic = "force-dynamic";
 
 export default async function TravelPage() {
-  const [data, photos, reels] = await Promise.all([
+  const [data, photos, reels, heroImage, aboutVideo] = await Promise.all([
     loadTravelPage(),
     listMedia("travel", "photo"),
     listMedia("travel", "reel"),
+    getSingleMedia("travel", "hero"),
+    getSingleMedia("travel", "about-video"),
   ]);
   const { profile, hotels, countries, contact } = data;
   return (
@@ -27,6 +29,7 @@ export default async function TravelPage() {
         name={profile.creatorName}
         tagline={profile.tagline}
         location={profile.location}
+        heroImage={heroImage}
       />
       <Marquee />
       <Stills photos={photos} />
@@ -35,6 +38,7 @@ export default async function TravelPage() {
         languages={profile.languages}
         gear={profile.gear}
         delivery={profile.delivery}
+        aboutVideo={aboutVideo}
       />
       <Offer />
       <Collabs hotels={hotels} />

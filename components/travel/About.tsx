@@ -1,14 +1,16 @@
 import { Placeholder } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
+import type { MediaItem } from "@/lib/repos/media";
 
 interface AboutProps {
   bio: string;
   languages: string[];
   gear: string;
   delivery: string;
+  aboutVideo?: MediaItem | null;
 }
 
-export function About({ bio, languages, gear, delivery }: AboutProps) {
+export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps) {
   return (
     <section
       id="about"
@@ -84,12 +86,32 @@ export function About({ bio, languages, gear, delivery }: AboutProps) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <Placeholder
-              label="portrait · editorial"
-              ratio="4/5"
-              tone="warm"
-              patternId="about-portrait"
-            />
+            {aboutVideo ? (
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "4 / 5",
+                  overflow: "hidden",
+                  background: "var(--cream)",
+                }}
+              >
+                <video
+                  src={aboutVideo.url}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+              </div>
+            ) : (
+              <Placeholder
+                label="portrait · editorial"
+                ratio="4/5"
+                tone="warm"
+                patternId="about-portrait"
+              />
+            )}
             <div
               style={{
                 border: "1px solid var(--hair)",

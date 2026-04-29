@@ -2,7 +2,14 @@ import { getDB } from "@/lib/db";
 import { getR2, publicUrl } from "@/lib/r2";
 
 export type PageSlug = "travel" | "beauty";
-export type MediaKind = "photo" | "reel";
+export type MediaKind = "photo" | "reel" | "hero" | "about-video";
+export type SingletonKind = "hero" | "about-video";
+
+export const SINGLETON_KINDS: SingletonKind[] = ["hero", "about-video"];
+
+export function isSingletonKind(kind: MediaKind): kind is SingletonKind {
+  return kind === "hero" || kind === "about-video";
+}
 
 export interface MediaItem {
   key: string;
@@ -156,6 +163,35 @@ export async function deleteMedia(key: string): Promise<void> {
   const r2 = await getR2();
   await r2.delete(key);
   await db.prepare("DELETE FROM media WHERE key = ?").bind(key).run();
+}
+
+export async function getSingleMedia(
+  pageSlug: PageSlug,
+  kind: SingletonKind,
+): Promise<MediaItem | null> {
+  const db = await getDB();
+  const row = await db
+    .prepare(
+      `SELECT key, page_slug, kind, position, alt, caption, width, height,
+              size_bytes, mime, created_at, location, tags, views
+       FROM media
+       WHERE page_slug = ? AND kind = ?
+       LIMIT 1`,
+    )
+    .bind(pageSlug, kind)
+    .first<MediaRow>();
+  return row ? rowToItem(row) : null;
+}
+
+export async function replaceSingleMedia(input: UploadInput): Promise<MediaItem> {
+  if (!isSingletonKind(input.kind)) {
+    throw new Error(`replaceSingleMedia called with non-singleton kind: ${input.kind}`);
+  }
+  const existing = await getSingleMedia(input.pageSlug, input.kind);
+  if (existing) {
+    await deleteMedia(existing.key);
+  }
+  return uploadMedia(input);
 }
 
 export async function reorderMedia(
