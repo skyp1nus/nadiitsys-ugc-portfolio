@@ -86,9 +86,25 @@
 ### 💡 CSRF tokens for save-page
 **Why:** [AUDIT 3.4](./AUDIT.md#3-security) — currently relying on `sameSite: lax`. OWASP-acceptable but tighter is double-submit cookie or per-session token.
 
+### 💡 Reels autoplay + Intersection Observer
+**Why:** click-to-play UX is desktop-friendly but on mobile users expect autoplay-on-scroll like IG/TikTok.
+**How:** wrap `ReelCard` `<video>` in an IntersectionObserver hook; when ≥50% visible, `play()` muted; when off-screen, `pause()`. Respect `prefers-reduced-motion`. Keep current click overlay as fallback (unmute affordance).
+
 ---
 
 ## Done ✅
+
+### Reels redesign: phone frame + metadata overlay + click-to-play
+Reels grid rebuilt around a reusable phone-shaped frame (`components/travel/PhoneFrame.tsx`) with notch, custom play button, and metadata overlay (location uppercase / tags italic / views right-aligned). Click on the preview swaps to a native `<video controls autoPlay playsInline>` so users get fullscreen, scrubbing, and keyboard control without third-party players. Bandwidth-friendly: no `<video>` mounted until user clicks.
+
+- `db/migrations/003_add_reel_metadata.sql`: `location`, `tags`, `views` (TEXT) on `media`.
+- `lib/repos/media.ts`: `MediaItem` + 3 fields, `updateMediaMeta` extended.
+- `app/api/admin/media/[...key]/route.ts`: PATCH body type covers new fields.
+- `components/admin/MediaManager.tsx`: generalized `onMetaChange(item, field, value)`; reel kind shows 3 extra inputs (location/tags/views) with the same 600 ms debounce.
+- `components/travel/PhoneFrame.tsx` + `ReelCard.tsx`: new components, inline styles + CSS vars from `travel.module.css`.
+- `components/travel/Reels.tsx`: rewritten to render `<ReelCard>` per reel, empty state shows a single `<PhoneFrame>` with "No reels yet".
+- `components/travel/PhoneFramePlaceholder.tsx`: deleted (only Reels referenced it).
+- `app/travel/travel.module.css`: `--phone-frame: #1a1a1a` token added under `.shell`.
 
 ### R2 media migration (photos + reels)
 Travel photos and reels migrated from fragile Instagram CDN URLs / IG embed.js to a self-hosted Cloudflare R2 bucket (`nadiitsys-media`, served via `media.nadiitsys.com`). Admin gets drag-and-drop tabs (`MediaManager`); public Travel page renders native `<img>` / `<video>` from R2.
