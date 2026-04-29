@@ -11,32 +11,41 @@ export function PhoneFrame({ children, className, style }: PhoneFrameProps) {
     <div
       className={className}
       style={{
-        position: "relative",
-        aspectRatio: "9 / 16",
+        aspectRatio: "9 / 19.5",
         borderRadius: 34,
-        border: "6px solid var(--phone-frame, #1a1a1a)",
-        background: "#000",
-        overflow: "hidden",
+        background: "var(--ink, #2b2a26)",
+        padding: 8,
         boxShadow:
           "0 30px 60px -30px rgba(43,42,38,0.35), 0 10px 20px -10px rgba(43,42,38,0.2)",
         ...style,
       }}
     >
       <div
-        aria-hidden
         style={{
-          position: "absolute",
-          top: 12,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 80,
-          height: 20,
-          borderRadius: 12,
-          background: "var(--phone-frame, #1a1a1a)",
-          zIndex: 3,
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          borderRadius: 26,
+          overflow: "hidden",
+          background: "#111",
         }}
-      />
-      {children}
+      >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 80,
+            height: 22,
+            background: "#0a0a0a",
+            borderRadius: 14,
+            zIndex: 3,
+          }}
+        />
+        {children}
+      </div>
     </div>
   );
 }

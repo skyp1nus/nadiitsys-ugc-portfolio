@@ -104,7 +104,6 @@ Reels grid rebuilt around a reusable phone-shaped frame (`components/travel/Phon
 - `components/travel/PhoneFrame.tsx` + `ReelCard.tsx`: new components, inline styles + CSS vars from `travel.module.css`.
 - `components/travel/Reels.tsx`: rewritten to render `<ReelCard>` per reel, empty state shows a single `<PhoneFrame>` with "No reels yet".
 - `components/travel/PhoneFramePlaceholder.tsx`: deleted (only Reels referenced it).
-- `app/travel/travel.module.css`: `--phone-frame: #1a1a1a` token added under `.shell`.
 
 ### R2 media migration (photos + reels)
 Travel photos and reels migrated from fragile Instagram CDN URLs / IG embed.js to a self-hosted Cloudflare R2 bucket (`nadiitsys-media`, served via `media.nadiitsys.com`). Admin gets drag-and-drop tabs (`MediaManager`); public Travel page renders native `<img>` / `<video>` from R2.
