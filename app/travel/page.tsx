@@ -1,4 +1,5 @@
 import { loadTravelPage } from "@/lib/content";
+import { listMedia } from "@/lib/repos/media";
 import { Nav } from "@/components/travel/Nav";
 import { Hero } from "@/components/travel/Hero";
 import { Marquee } from "@/components/travel/Marquee";
@@ -13,8 +14,12 @@ import { Contact } from "@/components/travel/Contact";
 export const dynamic = "force-dynamic";
 
 export default async function TravelPage() {
-  const data = await loadTravelPage();
-  const { profile, hotels, countries, photos, reels, contact } = data;
+  const [data, photos, reels] = await Promise.all([
+    loadTravelPage(),
+    listMedia("travel", "photo"),
+    listMedia("travel", "reel"),
+  ]);
+  const { profile, hotels, countries, contact } = data;
   return (
     <>
       <Nav />
