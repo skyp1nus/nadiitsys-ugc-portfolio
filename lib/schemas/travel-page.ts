@@ -16,20 +16,6 @@ export const TravelHotelSchema = z.object({
   location: z.string(),
 });
 
-export const TravelPhotoSchema = z.object({
-  url: z.string(),
-  caption: z.string(),
-  link: z.string(),
-});
-
-export const TravelReelSchema = z.object({
-  url: z.string(),
-  title: z.string(),
-  location: z.string(),
-  views: z.string(),
-  posterUrl: z.string().optional(),
-});
-
 export const TravelContactSchema = z.object({
   email: z.string(),
   instagram: z.string(),
@@ -49,8 +35,6 @@ export const TravelPageSchema = z.object({
   profile: TravelProfileSchema,
   hotels: z.array(TravelHotelSchema),
   countries: z.array(z.string()),
-  photos: z.array(TravelPhotoSchema),
-  reels: z.array(TravelReelSchema),
   contact: TravelContactSchema,
 });
 
