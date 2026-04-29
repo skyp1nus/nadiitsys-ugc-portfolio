@@ -17,6 +17,9 @@ export interface MediaItem {
   mime: string;
   createdAt: number;
   url: string;
+  location: string | null;
+  tags: string | null;
+  views: string | null;
 }
 
 interface MediaRow {
@@ -31,6 +34,9 @@ interface MediaRow {
   size_bytes: number;
   mime: string;
   created_at: number;
+  location: string | null;
+  tags: string | null;
+  views: string | null;
 }
 
 function rowToItem(row: MediaRow): MediaItem {
@@ -47,6 +53,9 @@ function rowToItem(row: MediaRow): MediaItem {
     mime: row.mime,
     createdAt: row.created_at,
     url: publicUrl(row.key),
+    location: row.location,
+    tags: row.tags,
+    views: row.views,
   };
 }
 
@@ -58,7 +67,7 @@ export async function listMedia(
   const { results } = await db
     .prepare(
       `SELECT key, page_slug, kind, position, alt, caption, width, height,
-              size_bytes, mime, created_at
+              size_bytes, mime, created_at, location, tags, views
        FROM media
        WHERE page_slug = ? AND kind = ?
        ORDER BY position ASC, created_at ASC`,
@@ -136,6 +145,9 @@ export async function uploadMedia(input: UploadInput): Promise<MediaItem> {
     mime: input.mime,
     createdAt: Math.floor(Date.now() / 1000),
     url: publicUrl(key),
+    location: null,
+    tags: null,
+    views: null,
   };
 }
 
@@ -165,7 +177,13 @@ export async function reorderMedia(
 
 export async function updateMediaMeta(
   key: string,
-  patch: { alt?: string; caption?: string },
+  patch: {
+    alt?: string;
+    caption?: string;
+    location?: string;
+    tags?: string;
+    views?: string;
+  },
 ): Promise<void> {
   const db = await getDB();
   const fields: string[] = [];
@@ -177,6 +195,18 @@ export async function updateMediaMeta(
   if (patch.caption !== undefined) {
     fields.push("caption = ?");
     binds.push(patch.caption);
+  }
+  if (patch.location !== undefined) {
+    fields.push("location = ?");
+    binds.push(patch.location);
+  }
+  if (patch.tags !== undefined) {
+    fields.push("tags = ?");
+    binds.push(patch.tags);
+  }
+  if (patch.views !== undefined) {
+    fields.push("views = ?");
+    binds.push(patch.views);
   }
   if (fields.length === 0) return;
   binds.push(key);

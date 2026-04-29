@@ -1,35 +1,13 @@
 import type { MediaItem } from "@/lib/repos/media";
-import type { PlaceholderTone } from "./Placeholder";
-import { PhoneFramePlaceholder } from "./PhoneFramePlaceholder";
+import { ReelCard } from "./ReelCard";
+import { PhoneFrame } from "./PhoneFrame";
 import styles from "@/app/travel/travel.module.css";
-
-const SLOTS = 8;
-
-const FALLBACKS: ReadonlyArray<{
-  tone: PlaceholderTone;
-  label: string;
-  loc: string;
-  views: string;
-}> = [
-  { tone: "sand", label: "amalfi · sunset", loc: "Positano, IT", views: "2.4M" },
-  { tone: "warm", label: "aman · tokyo", loc: "Tokyo, JP", views: "1.1M" },
-  { tone: "dark", label: "desert · sunrise", loc: "AlUla, SA", views: "890K" },
-  { tone: "cool", label: "lounge · emirates", loc: "DXB, UAE", views: "1.7M" },
-  { tone: "sand", label: "breakfast · santorini", loc: "Oia, GR", views: "620K" },
-  { tone: "warm", label: "spa · como", loc: "Bellagio, IT", views: "340K" },
-  { tone: "dark", label: "cabin · business class", loc: "LHR ↔ SIN", views: "2.9M" },
-  { tone: "cool", label: "infinity pool · bali", loc: "Ubud, ID", views: "1.3M" },
-];
 
 interface ReelsProps {
   reels: MediaItem[];
 }
 
 export function Reels({ reels }: ReelsProps) {
-  const real = reels.slice(0, SLOTS);
-  const placeholderCount = Math.max(0, SLOTS - real.length);
-  const placeholders = FALLBACKS.slice(0, placeholderCount);
-
   return (
     <section
       id="work"
@@ -79,65 +57,45 @@ export function Reels({ reels }: ReelsProps) {
         </div>
       </div>
 
-      <div
-        className={styles.grid4}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 28,
-        }}
-      >
-        {real.map((r) => (
-          <div key={r.key}>
-            <div
-              style={{
-                aspectRatio: "9 / 19.5",
-                borderRadius: 34,
-                background: "var(--ink)",
-                padding: 8,
-                overflow: "hidden",
-                boxShadow:
-                  "0 30px 60px -30px rgba(43,42,38,0.35), 0 10px 20px -10px rgba(43,42,38,0.2)",
-              }}
-            >
-              <video
-                src={r.url}
-                controls
-                preload="metadata"
-                playsInline
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: 26,
-                  display: "block",
-                  background: "#000",
-                }}
-              >
-                Your browser doesn&apos;t support video playback.
-              </video>
-            </div>
-            {r.caption && (
+      {reels.length === 0 ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            placeItems: "center",
+          }}
+        >
+          <div style={{ width: "100%", maxWidth: 320 }}>
+            <PhoneFrame>
               <div
                 className={styles.monoXs}
-                style={{ marginTop: 12, color: "var(--ink-2)" }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "grid",
+                  placeItems: "center",
+                  color: "rgba(255,255,255,0.6)",
+                }}
               >
-                {r.caption}
+                No reels yet
               </div>
-            )}
+            </PhoneFrame>
           </div>
-        ))}
-        {placeholders.map((p, i) => (
-          <PhoneFramePlaceholder
-            key={`ph-${i}`}
-            tone={p.tone}
-            label={p.label}
-            location={p.loc}
-            views={p.views}
-            index={real.length + i}
-          />
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div
+          className={styles.grid4}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 28,
+          }}
+        >
+          {reels.map((r) => (
+            <ReelCard key={r.key} reel={r} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -41,7 +41,13 @@ export async function PATCH(
   const { key } = await ctx.params;
   const fullKey = key.join("/");
 
-  let body: { alt?: string; caption?: string };
+  let body: {
+    alt?: string;
+    caption?: string;
+    location?: string;
+    tags?: string;
+    views?: string;
+  };
   try {
     body = await req.json();
   } catch {

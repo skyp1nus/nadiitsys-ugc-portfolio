@@ -27,7 +27,7 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const altTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const metaTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
   useEffect(() => {
     const ac = new AbortController();
@@ -65,6 +65,9 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
       mime: file.type,
       createdAt: Math.floor(Date.now() / 1000),
       url: URL.createObjectURL(file),
+      location: null,
+      tags: null,
+      views: null,
       _pending: true,
       _localId: localId,
     };
@@ -149,16 +152,21 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
     }
   }
 
-  function onAltChange(item: LocalItem, alt: string) {
+  type MetaField = "alt" | "location" | "tags" | "views";
+
+  function onMetaChange(item: LocalItem, field: MetaField, value: string) {
     if (item._pending) return;
-    setItems((p) => p.map((it) => (it.key === item.key ? { ...it, alt } : it)));
-    if (altTimers.current[item.key]) clearTimeout(altTimers.current[item.key]);
-    altTimers.current[item.key] = setTimeout(() => {
+    setItems((p) =>
+      p.map((it) => (it.key === item.key ? { ...it, [field]: value } : it)),
+    );
+    const timerKey = `${item.key}:${field}`;
+    if (metaTimers.current[timerKey]) clearTimeout(metaTimers.current[timerKey]);
+    metaTimers.current[timerKey] = setTimeout(() => {
       void fetch(`/api/admin/media/${item.key}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ alt }),
-      }).catch(() => setError("Alt update failed"));
+        body: JSON.stringify({ [field]: value }),
+      }).catch(() => setError(`${field} update failed`));
     }, 600);
   }
 
@@ -288,10 +296,35 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
                   <Field label="Alt text" hint="Опис для accessibility (screen readers)">
                     <TextInput
                       value={item.alt ?? ""}
-                      onChange={(v) => onAltChange(item, v)}
+                      onChange={(v) => onMetaChange(item, "alt", v)}
                       placeholder="напр. Sunset over Bali rice terraces"
                     />
                   </Field>
+                  {kind === "reel" && (
+                    <>
+                      <Field label="Location" hint="Підпис над reel у public view">
+                        <TextInput
+                          value={item.location ?? ""}
+                          onChange={(v) => onMetaChange(item, "location", v)}
+                          placeholder="напр. POSITANO, IT"
+                        />
+                      </Field>
+                      <Field label="Tags" hint="Comma-separated, рендеряться як « · »-separated">
+                        <TextInput
+                          value={item.tags ?? ""}
+                          onChange={(v) => onMetaChange(item, "tags", v)}
+                          placeholder="напр. amalfi, sunset"
+                        />
+                      </Field>
+                      <Field label="Views" hint="Display string (нaпр. 2.4M, 500K)">
+                        <TextInput
+                          value={item.views ?? ""}
+                          onChange={(v) => onMetaChange(item, "views", v)}
+                          placeholder="напр. 2.4M"
+                        />
+                      </Field>
+                    </>
+                  )}
                   <div style={{ fontSize: 11, opacity: 0.5, marginTop: 4 }}>
                     {item._pending ? "Завантаження…" : `${(item.sizeBytes / 1024 / 1024).toFixed(2)} MB · ${item.mime}`}
                   </div>
