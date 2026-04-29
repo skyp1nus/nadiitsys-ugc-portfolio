@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className="max-w-5xl mx-auto px-4 py-20 text-center">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">Nadiia Tsysaruk</h1>
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">Nadii Tsys</h1>
       <p className="text-gray-500 text-lg mb-8">Beauty & travel content creator</p>
       <div className="flex gap-4 justify-center">
         <Link
