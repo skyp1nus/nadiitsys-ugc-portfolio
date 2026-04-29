@@ -1,6 +1,6 @@
 import { Placeholder, type PlaceholderTone } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
-import type { TravelPhoto } from "@/types/travel";
+import type { MediaItem } from "@/lib/repos/media";
 
 interface Cell {
   col: string;
@@ -21,7 +21,7 @@ const CELLS: Cell[] = [
 ];
 
 interface StillsProps {
-  photos: TravelPhoto[];
+  photos: MediaItem[];
 }
 
 export function Stills({ photos }: StillsProps) {
@@ -69,42 +69,41 @@ export function Stills({ photos }: StillsProps) {
       >
         {CELLS.map((c, i) => {
           const photo = photos[i];
-          const inner = photo?.url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={photo.url}
-              alt={photo.caption || c.label}
-              loading="lazy"
-              decoding="async"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            />
-          ) : (
-            <Placeholder
-              label={c.label}
-              tone={c.tone}
-              ratio="auto"
-              style={{ height: "100%", aspectRatio: "unset" }}
-              patternId={`stills-${i}`}
-            />
-          );
-          const wrapStyle = { gridColumn: c.col, gridRow: c.row, overflow: "hidden" } as const;
-          if (photo?.url && photo.link) {
+          const wrapStyle = {
+            gridColumn: c.col,
+            gridRow: c.row,
+            overflow: "hidden",
+          } as const;
+          if (photo) {
             return (
-              <a
-                key={i}
-                href={photo.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={wrapStyle}
-                aria-label={photo.caption || "Photo"}
-              >
-                {inner}
-              </a>
+              <div key={photo.key} style={wrapStyle}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={photo.url}
+                  alt={photo.alt ?? c.label}
+                  width={photo.width ?? undefined}
+                  height={photo.height ?? undefined}
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </div>
             );
           }
           return (
-            <div key={i} style={wrapStyle}>
-              {inner}
+            <div key={`ph-${i}`} style={wrapStyle}>
+              <Placeholder
+                label={c.label}
+                tone={c.tone}
+                ratio="auto"
+                style={{ height: "100%", aspectRatio: "unset" }}
+                patternId={`stills-${i}`}
+              />
             </div>
           );
         })}

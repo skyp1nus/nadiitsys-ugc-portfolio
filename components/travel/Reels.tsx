@@ -1,6 +1,5 @@
-import type { TravelReel } from "@/types/travel";
+import type { MediaItem } from "@/lib/repos/media";
 import type { PlaceholderTone } from "./Placeholder";
-import { ReelFrame } from "./ReelFrame";
 import { PhoneFramePlaceholder } from "./PhoneFramePlaceholder";
 import styles from "@/app/travel/travel.module.css";
 
@@ -23,7 +22,7 @@ const FALLBACKS: ReadonlyArray<{
 ];
 
 interface ReelsProps {
-  reels: TravelReel[];
+  reels: MediaItem[];
 }
 
 export function Reels({ reels }: ReelsProps) {
@@ -88,8 +87,45 @@ export function Reels({ reels }: ReelsProps) {
           gap: 28,
         }}
       >
-        {real.map((r, i) => (
-          <ReelFrame key={`r-${i}`} reel={r} index={i} />
+        {real.map((r) => (
+          <div key={r.key}>
+            <div
+              style={{
+                aspectRatio: "9 / 19.5",
+                borderRadius: 34,
+                background: "var(--ink)",
+                padding: 8,
+                overflow: "hidden",
+                boxShadow:
+                  "0 30px 60px -30px rgba(43,42,38,0.35), 0 10px 20px -10px rgba(43,42,38,0.2)",
+              }}
+            >
+              <video
+                src={r.url}
+                controls
+                preload="metadata"
+                playsInline
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: 26,
+                  display: "block",
+                  background: "#000",
+                }}
+              >
+                Your browser doesn&apos;t support video playback.
+              </video>
+            </div>
+            {r.caption && (
+              <div
+                className={styles.monoXs}
+                style={{ marginTop: 12, color: "var(--ink-2)" }}
+              >
+                {r.caption}
+              </div>
+            )}
+          </div>
         ))}
         {placeholders.map((p, i) => (
           <PhoneFramePlaceholder
