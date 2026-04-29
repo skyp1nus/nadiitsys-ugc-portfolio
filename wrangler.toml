@@ -15,3 +15,7 @@ service = "nadiitsys"
 binding = "DB"
 database_name = "nadiitsys"
 database_id = "a3d23bab-6cc7-4314-b624-9ec031040e99"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "nadiitsys-media"
