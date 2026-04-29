@@ -90,6 +90,18 @@
 
 ## Done ✅
 
+### R2 media migration (photos + reels)
+Travel photos and reels migrated from fragile Instagram CDN URLs / IG embed.js to a self-hosted Cloudflare R2 bucket (`nadiitsys-media`, served via `media.nadiitsys.com`). Admin gets drag-and-drop tabs (`MediaManager`); public Travel page renders native `<img>` / `<video>` from R2.
+
+- `wrangler.toml`: bound `MEDIA` R2 bucket.
+- `db/migrations/001_add_media_table.sql`: new `media` table (key, page_slug, kind, position, alt, mime, …).
+- `lib/r2.ts`, `lib/repos/media.ts`: accessor + CRUD repo (`listMedia`, `uploadMedia`, `deleteMedia`, `reorderMedia`, `updateMediaMeta`).
+- `app/api/admin/media/{,[...key],reorder}/route.ts`: list/upload/delete/patch/reorder endpoints with size + MIME validation (10 MB photos, 50 MB reels).
+- `components/admin/MediaManager.tsx`: native HTML5 drag-drop, optimistic UI, no external libs.
+- `components/admin/travel/tabs/PhotosTab.tsx` + `ReelsTab.tsx`: thin wrappers over `MediaManager`; PageEditor no longer keeps photos/reels in JSON state.
+- `components/travel/Stills.tsx` + `Reels.tsx`: render directly from `MediaItem[]`. `ReelFrame.tsx` deleted (IG embed dead code).
+- `db/migrations/002_strip_photos_reels_from_pages.sql`: cleans legacy keys from `pages.data` JSON. Schemas / types / seed updated to match.
+
 ### Quality pass (post-audit)
 8 fixes from [`AUDIT.md`](./AUDIT.md) in 8 atomic commits — 1 high + 1 medium + 5 low + 1 SEO follow-up resolved, zero runtime regressions.
 

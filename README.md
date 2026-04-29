@@ -11,7 +11,8 @@ Beauty & travel content creator portfolio built on a zero-cost stack.
 | Runtime (local/CI) | Bun |
 | Hosting | Cloudflare Workers (edge SSR) |
 | CF adapter | `@opennextjs/cloudflare` |
-| Content store | Cloudflare D1 (`pages` table, JSON-blob per slug) |
+| Content store | Cloudflare D1 (`pages` table JSON-blob + `media` index table) |
+| Media store | Cloudflare R2 bucket `nadiitsys-media`, served via `media.nadiitsys.com` |
 | Auth | `jose` (JWT HS256) + `bcryptjs` |
 
 ## Local development
@@ -71,7 +72,23 @@ Set these in the **Cloudflare Workers** dashboard (Settings → Variables and Se
 | `CLOUDFLARE_API_TOKEN` | GitHub | CF API token with Workers Scripts:Edit + D1:Edit |
 | `CLOUDFLARE_ACCOUNT_ID` | GitHub | Your Cloudflare account ID |
 
-The D1 binding (`DB`) is wired up in `wrangler.toml`; no secret is needed for it.
+The D1 binding (`DB`) and R2 binding (`MEDIA`) are wired up in `wrangler.toml`; no secret is needed for them.
+
+## Media uploads
+
+Travel photos and reels live in the Cloudflare R2 bucket `nadiitsys-media` and are served from `https://media.nadiitsys.com` (custom domain, immutable cache). The admin panel exposes drag-and-drop tabs for both kinds:
+
+- `/admin/travel` → **Photos** tab — JPEG/PNG/WebP, up to 10 MB
+- `/admin/travel` → **Reels** tab — MP4/MOV/WebM, up to 50 MB
+
+Each upload produces a row in the `media` D1 table (`page_slug`, `kind`, `position`, `alt`, `mime`, …) and writes the file under a UUID key (`travel/photos/<uuid>.jpg`). The public Travel page (`app/travel/page.tsx`) fetches `listMedia('travel', 'photo' | 'reel')` server-side and renders native `<img>` / `<video>` elements.
+
+Apply DB migrations with:
+
+```bash
+bunx wrangler d1 execute nadiitsys --local  --file=db/migrations/001_add_media_table.sql
+bunx wrangler d1 execute nadiitsys --remote --file=db/migrations/001_add_media_table.sql
+```
 
 ---
 
