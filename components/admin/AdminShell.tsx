@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import "@/app/admin/admin.css";
 
 export interface PageLink {
@@ -57,6 +58,7 @@ export function AdminShell(props: AdminShellProps) {
   } = props;
   const [open, setOpen] = useState(false);
   const closeSidebar = () => setOpen(false);
+  const router = useRouter();
 
   const statusClass =
     saveState === "saved" ? "saved" : saveState === "error" ? "error" : "";
@@ -110,9 +112,17 @@ export function AdminShell(props: AdminShellProps) {
                 ↗ Open page
               </a>
             )}
-            <a className="admin-btn admin-btn-sm" href="/api/auth/logout">
+            <button
+              type="button"
+              className="admin-btn admin-btn-sm"
+              onClick={async () => {
+                await fetch("/api/auth/logout", { method: "POST" });
+                router.push("/login");
+                router.refresh();
+              }}
+            >
               Sign out
-            </a>
+            </button>
           </div>
         </aside>
 

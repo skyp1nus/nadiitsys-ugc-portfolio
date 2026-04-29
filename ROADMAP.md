@@ -120,7 +120,8 @@ Travel photos and reels migrated from fragile Instagram CDN URLs / IG embed.js t
 - `PageEditor` generalized for Travel + Beauty admin (commit `6be291c`).
 - GitHub Actions CI/CD with `wrangler types` step.
 - Production deploy on Cloudflare Workers.
-- Login redirect bug fix (`/videos` → `/`, commit `b5abd33`).
+- Login redirect bug fix (`/videos` → `/travel`, commits `b5abd33` + follow-up). Earlier note was inaccurate — push was on `/`, causing double-bounce via `app/admin/page.tsx` to `/admin/travel`.
+- Logout flow: 405 fix (`<a>` GET → `<button>` POST), redirect to `/login` + `router.refresh()`; cookie cleanup unchanged (already correct).
 - Doc drift cleanup: README "Pages" → "Workers"; `app/admin/page.tsx` comment `proxy.ts` → `middleware.ts`.
 - `worker-configuration.d.ts` untracked + regenerated in CI.
 - Post-migration audit ([`AUDIT.md`](./AUDIT.md)) and roadmap (this file).
