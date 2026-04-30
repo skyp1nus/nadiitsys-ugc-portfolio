@@ -2,23 +2,13 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { MediaItem } from "@/lib/repos/media";
+import { derivePosterUrl } from "@/lib/posterUrl";
 import { PhoneFrame } from "./PhoneFrame";
 import { Icon } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
 
 interface ReelCardProps {
   reel: MediaItem;
-}
-
-function derivePosterUrl(videoUrl: string): string {
-  try {
-    const isAbsolute = /^https?:\/\//i.test(videoUrl);
-    const u = new URL(videoUrl, isAbsolute ? undefined : "http://_local_");
-    u.pathname = u.pathname.replace(/\.[^./]+$/, ".jpg");
-    return isAbsolute ? u.toString() : u.pathname + u.search + u.hash;
-  } catch {
-    return videoUrl.replace(/\.[^./?#]+(\?|#|$)/, ".jpg$1");
-  }
 }
 
 export function ReelCard({ reel }: ReelCardProps) {
