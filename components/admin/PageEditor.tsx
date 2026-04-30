@@ -87,6 +87,15 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const skipAutosaveRef = useRef(true);
 
+  const openPreview = useCallback(() => {
+    const host = window.location.host;
+    const publicHost = host.startsWith("admin.")
+      ? host.slice("admin.".length)
+      : host;
+    const url = `${window.location.protocol}//${publicHost}/${slug}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }, [slug]);
+
   const showToast = useCallback((msg: string) => {
     setToast(msg);
     setTimeout(() => setToast(null), 1800);
@@ -124,21 +133,16 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
       return;
     }
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    setSaveState("saving");
+    setSaveState("dirty");
     setSaveMessage(undefined);
     debounceRef.current = setTimeout(() => {
+      setSaveState("saving");
       void doSave(data, true);
     }, 800);
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [data, doSave]);
-
-  function manualSave() {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    setSaveState("saving");
-    void doSave(data, false);
-  }
 
   const tabs: TabItem[] = TABS_ORDER.map((k) => ({
     key: k,
@@ -147,7 +151,6 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
   }));
 
   const pageTitle = PAGE_TITLES[slug];
-  const previewHref = slug === "travel" ? "/travel" : "/beauty";
 
   const crumb = (
     <>
@@ -169,8 +172,7 @@ export function PageEditor({ slug, initial }: PageEditorProps) {
         crumb={crumb}
         saveState={saveState}
         saveMessage={saveMessage}
-        onSave={manualSave}
-        openPreviewHref={previewHref}
+        onOpenPreview={openPreview}
       >
         <h2>{TAB_LABELS[activeTab]}</h2>
         <p className="section-desc">{TAB_DESC[activeTab]}</p>

@@ -77,6 +77,8 @@
 .admin-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
 .admin-save-status { font-size: 12px; color: var(--ink-3); margin-right: 8px; }
 .admin-save-status.saved { color: var(--ok); }
+.admin-save-status.dirty { color: var(--accent-d); }
+.admin-save-status.saving { color: var(--ink-3); }
 .admin-save-status.error { color: var(--danger); }
 
 .admin-content { padding: 32px; max-width: 880px; min-width: 0; }
@@ -214,7 +216,6 @@
   .admin-sidebar.open { transform: translateX(0); }
   .admin-menu-btn { display: inline-flex; }
   .admin-toolbar { padding: 14px 18px; }
-  .admin-actions .admin-save-status { display: none; }
   .admin-content { padding: 20px 18px; }
   .admin-row { grid-template-columns: 1fr; }
   .admin-list-item { grid-template-columns: 32px minmax(0, 1fr); }
