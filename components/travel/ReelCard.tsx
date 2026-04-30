@@ -240,7 +240,7 @@ export function ReelCard({ reel }: ReelCardProps) {
         style={{
           position: "absolute",
           right: 6,
-          bottom: 6,
+          top: 6,
           zIndex: 3,
           width: 44,
           height: 44,
