@@ -1,6 +1,7 @@
 import type { MediaItem } from "@/lib/repos/media";
 import { ReelCard } from "./ReelCard";
 import { PhoneFrame } from "./PhoneFrame";
+import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 
 interface ReelsProps {
@@ -23,7 +24,7 @@ export function Reels({ reels }: ReelsProps) {
           marginBottom: 64,
         }}
       >
-        <div>
+        <Reveal>
           <div className={styles.monoXs} style={{ marginBottom: 8 }}>
             § 04
           </div>
@@ -33,28 +34,30 @@ export function Reels({ reels }: ReelsProps) {
           >
             Reels
           </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "end",
-            gap: 24,
-            flexWrap: "wrap",
-          }}
-        >
+        </Reveal>
+        <Reveal>
           <div
-            style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "end",
+              gap: 24,
+              flexWrap: "wrap",
+            }}
           >
-            A selection of recent vertical video work. Each reel is scored, paced, and
-            colour-graded in-house.
+            <div
+              style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
+            >
+              A selection of recent vertical video work. Each reel is scored, paced, and
+              colour-graded in-house.
+            </div>
+            <div className={styles.monoXs} style={{ textAlign: "right" }}>
+              Avg. reach · 480K
+              <br />
+              Avg. completion · 71%
+            </div>
           </div>
-          <div className={styles.monoXs} style={{ textAlign: "right" }}>
-            Avg. reach · 480K
-            <br />
-            Avg. completion · 71%
-          </div>
-        </div>
+        </Reveal>
       </div>
 
       {reels.length === 0 ? (
@@ -84,7 +87,7 @@ export function Reels({ reels }: ReelsProps) {
         </div>
       ) : (
         <div
-          className={styles.grid4}
+          className={`${styles.grid4} ${styles.staggerChildren}`}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
@@ -92,7 +95,9 @@ export function Reels({ reels }: ReelsProps) {
           }}
         >
           {reels.map((r) => (
-            <ReelCard key={r.key} reel={r} />
+            <Reveal key={r.key}>
+              <ReelCard reel={r} />
+            </Reveal>
           ))}
         </div>
       )}

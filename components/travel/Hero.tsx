@@ -1,7 +1,10 @@
+import type { CSSProperties } from "react";
 import { Icon } from "./Icon";
 import { Placeholder } from "./Placeholder";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
+
+const delay = (ms: number) => ({ ["--reveal-delay" as never]: `${ms}ms` } as CSSProperties);
 
 interface HeroProps {
   name: string;
@@ -49,18 +52,28 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
         }}
       >
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 40 }}>
+          <div
+            className={styles.heroEntry}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              marginBottom: 40,
+              ...delay(0),
+            }}
+          >
             <Icon name="plane" size={18} stroke={1.1} />
             <div className={styles.monoXs}>Travel · Hospitality · Lifestyle</div>
           </div>
           <h1
-            className={styles.serif}
+            className={`${styles.serif} ${styles.heroEntry}`}
             style={{
               fontSize: "clamp(48px, 8.4vw, 132px)",
               lineHeight: 0.92,
               margin: 0,
               fontWeight: 400,
               letterSpacing: "-0.02em",
+              ...delay(80),
             }}
           >
             The art of
@@ -69,7 +82,16 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
             <br />
             told in frames.
           </h1>
-          <div style={{ marginTop: 48, display: "flex", alignItems: "center", gap: 24 }}>
+          <div
+            className={styles.heroEntry}
+            style={{
+              marginTop: 48,
+              display: "flex",
+              alignItems: "center",
+              gap: 24,
+              ...delay(240),
+            }}
+          >
             <HairRule w={80} />
             <div style={{ fontSize: 15, color: "var(--ink-2)", maxWidth: 420, lineHeight: 1.6 }}>
               {tagline}. I create cinematic UGC for hotels, resorts, airlines &amp; destination
@@ -81,11 +103,13 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
         <div style={{ position: "relative" }}>
           {heroImage ? (
             <div
+              className={styles.heroEntry}
               style={{
                 width: "100%",
                 aspectRatio: "3 / 4",
                 overflow: "hidden",
                 background: "var(--cream)",
+                ...delay(160),
               }}
             >
               <img
@@ -95,10 +119,12 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
               />
             </div>
           ) : (
-            <Placeholder label="hero portrait · Amalfi" ratio="3/4" tone="sand" />
+            <div className={styles.heroEntry} style={delay(160)}>
+              <Placeholder label="hero portrait · Amalfi" ratio="3/4" tone="sand" />
+            </div>
           )}
           <div
-            className={styles.hideOnMobile}
+            className={`${styles.hideOnMobile} ${styles.heroEntry}`}
             style={{
               position: "absolute",
               bottom: -18,
@@ -106,6 +132,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
               background: "var(--paper)",
               padding: "14px 18px",
               border: "1px solid var(--hair)",
+              ...delay(380),
             }}
           >
             <div className={styles.monoXs} style={{ marginBottom: 4 }}>
@@ -114,7 +141,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
             <span className={styles.monoXs}>40.6340°N / 14.6027°E · Positano, IT</span>
           </div>
           <div
-            className={styles.hideOnMobile}
+            className={`${styles.hideOnMobile} ${styles.heroEntry}`}
             style={{
               position: "absolute",
               top: -20,
@@ -126,6 +153,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
               display: "grid",
               placeItems: "center",
               background: "var(--cream)",
+              ...delay(440),
             }}
           >
             <div
@@ -147,6 +175,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
       </div>
 
       <div
+        className={styles.heroEntry}
         style={{
           marginTop: 96,
           display: "flex",
@@ -155,6 +184,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
           gap: 16,
           borderTop: "1px solid var(--ink)",
           paddingTop: 22,
+          ...delay(520),
         }}
       >
         <div className={styles.serif} style={{ fontSize: 22, fontStyle: "italic" }}>

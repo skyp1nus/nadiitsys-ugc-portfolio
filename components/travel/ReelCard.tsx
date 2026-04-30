@@ -104,7 +104,7 @@ export function ReelCard({ reel }: ReelCardProps) {
   }
 
   return (
-    <PhoneFrame>
+    <PhoneFrame className={styles.reelLift}>
       <video
         ref={videoRef}
         src={reel.url}

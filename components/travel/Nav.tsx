@@ -1,9 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Icon } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
 
 export function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const navClass = `${styles.nav} ${scrolled ? styles.navScrolled : ""}`.trim();
+
   return (
     <nav
+      className={navClass}
       style={{
         position: "sticky",
         top: 0,
@@ -28,6 +54,7 @@ export function Nav() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div
+            className={styles.navCompass}
             style={{
               width: 28,
               height: 28,
@@ -45,16 +72,26 @@ export function Nav() {
         </div>
 
         <div className={`${styles.monoXs} ${styles.navLinks}`} style={{ display: "flex", gap: 40 }}>
-          <a href="#about">About</a>
-          <a href="#offer">Services</a>
-          <a href="#work">Work</a>
-          <a href="#map">Travels</a>
-          <a href="#contact">Contact</a>
+          <a className={styles.navLink} href="#about">
+            About
+          </a>
+          <a className={styles.navLink} href="#offer">
+            Services
+          </a>
+          <a className={styles.navLink} href="#work">
+            Work
+          </a>
+          <a className={styles.navLink} href="#map">
+            Travels
+          </a>
+          <a className={styles.navLink} href="#contact">
+            Contact
+          </a>
         </div>
 
         <a
           href="#contact"
-          className={styles.monoXs}
+          className={`${styles.monoXs} ${styles.navCta}`}
           style={{
             padding: "10px 18px",
             border: "1px solid var(--ink)",
