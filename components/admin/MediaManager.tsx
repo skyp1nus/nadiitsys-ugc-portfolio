@@ -12,6 +12,7 @@ import {
 } from "./travel/_ui";
 import type { MediaItem, MediaKind, PageSlug } from "@/lib/repos/media";
 import { extractPoster } from "@/lib/posterFromVideo";
+import MediaThumb from "./MediaThumb";
 
 type LocalItem = MediaItem & { _pending?: boolean; _localId?: string };
 
@@ -275,33 +276,12 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
               }
             >
               <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                <div
-                  style={{
-                    width: 96,
-                    height: 96,
-                    flexShrink: 0,
-                    background: "#111",
-                    borderRadius: 6,
-                    overflow: "hidden",
-                    opacity: item._pending ? 0.5 : 1,
-                  }}
-                >
-                  {kind === "photo" ? (
-                    <img
-                      src={item.url}
-                      alt={item.alt ?? ""}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  ) : (
-                    <video
-                      src={item.url}
-                      preload="metadata"
-                      muted
-                      playsInline
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  )}
-                </div>
+                <MediaThumb
+                  url={item.url}
+                  kind={kind}
+                  alt={item.alt}
+                  dimmed={item._pending}
+                />
                 <div style={{ flex: 1 }}>
                   <Field label="Alt text" hint="Опис для accessibility (screen readers)">
                     <TextInput
