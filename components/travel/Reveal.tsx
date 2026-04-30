@@ -4,6 +4,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type ElementType,
   type ReactNode,
@@ -22,6 +23,15 @@ interface RevealProps {
   id?: string;
 }
 
+const subscribeReducedMotion = (onChange: () => void) => {
+  const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+  m.addEventListener("change", onChange);
+  return () => m.removeEventListener("change", onChange);
+};
+const getReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const getReducedMotionServer = () => false;
+
 export function Reveal({
   as: Tag = "div",
   variant = "default",
@@ -32,23 +42,23 @@ export function Reveal({
   id,
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
-  const [shown, setShown] = useState(false);
+  const [intersected, setIntersected] = useState(false);
+  const reduce = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getReducedMotionServer
+  );
+  const shown = reduce || intersected;
 
   useEffect(() => {
+    if (reduce) return;
     const el = ref.current;
     if (!el) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setShown(true);
-      return;
-    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            setShown(true);
+            setIntersected(true);
             io.disconnect();
             break;
           }
@@ -58,7 +68,7 @@ export function Reveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [reduce]);
 
   const variantClass =
     variant === "lift" ? styles.revealLift : variant === "fade" ? styles.revealFade : "";
