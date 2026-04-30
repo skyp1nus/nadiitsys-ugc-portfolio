@@ -17,7 +17,7 @@ export interface TabItem {
   badge?: string | number;
 }
 
-export type SaveState = "idle" | "saving" | "saved" | "error";
+export type SaveState = "idle" | "dirty" | "saving" | "saved" | "error";
 
 interface AdminShellProps {
   brand: { title: string; subtitle?: string };
@@ -29,15 +29,15 @@ interface AdminShellProps {
   crumb: ReactNode;
   saveState: SaveState;
   saveMessage?: string;
-  onSave: () => void;
-  openPreviewHref?: string;
+  onOpenPreview?: () => void;
   children: ReactNode;
 }
 
 const STATUS_LABEL: Record<SaveState, string> = {
-  idle: "All changes saved",
+  idle: "Saved",
+  dirty: "Unsaved",
   saving: "Saving…",
-  saved: "All changes saved",
+  saved: "Saved",
   error: "Save failed",
 };
 
@@ -52,8 +52,7 @@ export function AdminShell(props: AdminShellProps) {
     crumb,
     saveState,
     saveMessage,
-    onSave,
-    openPreviewHref,
+    onOpenPreview,
     children,
   } = props;
   const [open, setOpen] = useState(false);
@@ -61,7 +60,13 @@ export function AdminShell(props: AdminShellProps) {
   const router = useRouter();
 
   const statusClass =
-    saveState === "saved" ? "saved" : saveState === "error" ? "error" : "";
+    saveState === "error"
+      ? "error"
+      : saveState === "dirty"
+        ? "dirty"
+        : saveState === "saving"
+          ? "saving"
+          : "saved";
 
   return (
     <div className="admin-root">
@@ -102,15 +107,14 @@ export function AdminShell(props: AdminShellProps) {
           ))}
 
           <div className="admin-sidebar-footer">
-            {openPreviewHref && (
-              <a
+            {onOpenPreview && (
+              <button
+                type="button"
                 className="admin-btn admin-btn-sm"
-                href={openPreviewHref}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={onOpenPreview}
               >
                 ↗ Open page
-              </a>
+              </button>
             )}
             <button
               type="button"
@@ -143,14 +147,6 @@ export function AdminShell(props: AdminShellProps) {
               <span className={`admin-save-status ${statusClass}`}>
                 {saveMessage ?? STATUS_LABEL[saveState]}
               </span>
-              <button
-                type="button"
-                className="admin-btn admin-btn-sm primary"
-                onClick={onSave}
-                disabled={saveState === "saving"}
-              >
-                {saveState === "saving" ? "Saving…" : "Save"}
-              </button>
             </div>
           </div>
           <div className="admin-content">{children}</div>
