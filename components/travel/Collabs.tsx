@@ -1,3 +1,4 @@
+import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 
 interface Brand {
@@ -32,7 +33,7 @@ export function Collabs({ hotels }: CollabsProps) {
             marginBottom: 56,
           }}
         >
-          <div>
+          <Reveal>
             <div className={styles.monoXs} style={{ marginBottom: 8 }}>
               § 03
             </div>
@@ -42,17 +43,19 @@ export function Collabs({ hotels }: CollabsProps) {
             >
               Trusted by
             </div>
-          </div>
-          <div
-            style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
-          >
-            Hotels and properties I’ve created content for — with new collaborations always
-            welcome.
-          </div>
+          </Reveal>
+          <Reveal>
+            <div
+              style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
+            >
+              Hotels and properties I’ve created content for — with new collaborations always
+              welcome.
+            </div>
+          </Reveal>
         </div>
 
         <div
-          className={styles.grid3}
+          className={`${styles.grid3} ${styles.staggerChildren}`}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
@@ -61,49 +64,51 @@ export function Collabs({ hotels }: CollabsProps) {
           }}
         >
           {BRANDS.map((b, i) => (
-            <div
-              key={i}
-              style={{
-                borderRight: "1px solid var(--line)",
-                borderBottom: "1px solid var(--line)",
-                padding: "48px 32px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                minHeight: 180,
-                justifyContent: "space-between",
-              }}
-            >
-              <div className={styles.monoXs}>0{i + 1}</div>
-              <div>
-                <div
-                  className={styles.serif}
-                  style={{
-                    fontSize: 24,
-                    lineHeight: 1.15,
-                    letterSpacing: "-0.01em",
-                    marginBottom: 8,
-                  }}
-                >
-                  {b.name}
-                </div>
-                {b.stars && (
+            <Reveal key={i}>
+              <div
+                className={styles.cellHover}
+                style={{
+                  borderRight: "1px solid var(--line)",
+                  borderBottom: "1px solid var(--line)",
+                  padding: "48px 32px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  minHeight: 180,
+                  justifyContent: "space-between",
+                }}
+              >
+                <div className={styles.monoXs}>0{i + 1}</div>
+                <div>
                   <div
+                    className={styles.serif}
                     style={{
-                      fontSize: 12,
-                      color: "var(--sand-d)",
-                      letterSpacing: "0.2em",
-                      marginBottom: 4,
+                      fontSize: 24,
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.01em",
+                      marginBottom: 8,
                     }}
                   >
-                    {b.stars}
+                    {b.name}
                   </div>
-                )}
-                <div className={styles.monoXs} style={{ color: "var(--ink-2)" }}>
-                  {b.location}
+                  {b.stars && (
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: "var(--sand-d)",
+                        letterSpacing: "0.2em",
+                        marginBottom: 4,
+                      }}
+                    >
+                      {b.stars}
+                    </div>
+                  )}
+                  <div className={styles.monoXs} style={{ color: "var(--ink-2)" }}>
+                    {b.location}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

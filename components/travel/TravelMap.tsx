@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { DOTS } from "./travel-map-dots";
 import { PINS, COUNTRIES as DEFAULT_COUNTRIES, STATS } from "./travel-map-data";
+import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 
 interface TravelMapProps {
@@ -135,7 +136,7 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
             marginBottom: 56,
           }}
         >
-          <div>
+          <Reveal>
             <div className={styles.monoXs} style={{ marginBottom: 8 }}>
               § 06
             </div>
@@ -145,8 +146,8 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
             >
               Travels
             </div>
-          </div>
-          <div
+          </Reveal>
+          <Reveal
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -188,26 +189,27 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </div>
 
-        <div
-          ref={boxRef}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          style={{
-            position: "relative",
-            aspectRatio: "2.2 / 1",
-            background: "var(--cream)",
-            border: "1px solid var(--hair)",
-            overflow: "hidden",
-            cursor: isDragging ? "grabbing" : "grab",
-            userSelect: "none",
-            touchAction: "none",
-          }}
-        >
+        <Reveal variant="fade">
+          <div
+            ref={boxRef}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+            style={{
+              position: "relative",
+              aspectRatio: "2.2 / 1",
+              background: "var(--cream)",
+              border: "1px solid var(--hair)",
+              overflow: "hidden",
+              cursor: isDragging ? "grabbing" : "grab",
+              userSelect: "none",
+              touchAction: "none",
+            }}
+          >
           <div
             style={{
               position: "absolute",
@@ -379,41 +381,44 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
           >
             UPDATED APR 2026
           </div>
-        </div>
+          </div>
+        </Reveal>
 
-        <div
-          style={{
-            marginTop: 32,
-            display: "grid",
-            gridTemplateColumns: "repeat(6, 1fr)",
-            gap: "10px 20px",
-          }}
-        >
-          {list.map((c) => (
-            <div
-              key={c}
-              className={styles.mono}
-              style={{
-                fontSize: 12,
-                color: "var(--ink-2)",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}
-            >
-              <span
+        <Reveal>
+          <div
+            style={{
+              marginTop: 32,
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              gap: "10px 20px",
+            }}
+          >
+            {list.map((c) => (
+              <div
+                key={c}
+                className={styles.mono}
                 style={{
-                  display: "inline-block",
-                  width: 4,
-                  height: 4,
-                  borderRadius: "50%",
-                  background: "var(--sand)",
+                  fontSize: 12,
+                  color: "var(--ink-2)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
                 }}
-              />
-              {c}
-            </div>
-          ))}
-        </div>
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 4,
+                    height: 4,
+                    borderRadius: "50%",
+                    background: "var(--sand)",
+                  }}
+                />
+                {c}
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

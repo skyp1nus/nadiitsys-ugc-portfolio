@@ -29,6 +29,7 @@ export function Marquee() {
   const full = [...ITEMS, ...ITEMS, ...ITEMS];
   return (
     <div
+      className={styles.marqueeWrap}
       style={{
         borderTop: "1px solid var(--hair)",
         borderBottom: "1px solid var(--hair)",

@@ -1,4 +1,5 @@
 import { Icon, type IconName } from "./Icon";
+import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 import type { TravelContact } from "@/types/travel";
 
@@ -44,45 +45,53 @@ export function Contact({ name, contact }: ContactProps) {
           alignItems: "start",
         }}
       >
-        <div>
-          <div className={styles.monoXs} style={{ marginBottom: 16 }}>
-            § 07 · Let’s work
-          </div>
-          <div
-            className={styles.serif}
-            style={{
-              fontSize: "clamp(40px, 6vw, 96px)",
-              lineHeight: 0.95,
-              margin: 0,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Have a place
-            <br />
-            worth telling
-            <br />
-            <i>a story about?</i>
-          </div>
-          <div style={{ marginTop: 48, display: "flex", gap: 16, alignItems: "center" }}>
-            <a
-              href={ctaHref}
+        <div className={styles.staggerChildren}>
+          <Reveal variant="lift">
+            <div className={styles.monoXs} style={{ marginBottom: 16 }}>
+              § 07 · Let’s work
+            </div>
+          </Reveal>
+          <Reveal variant="lift">
+            <div
+              className={styles.serif}
               style={{
-                padding: "16px 28px",
-                background: "var(--ink)",
-                color: "var(--paper)",
-                borderRadius: 999,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 12,
-                fontSize: 14,
+                fontSize: "clamp(40px, 6vw, 96px)",
+                lineHeight: 0.95,
+                margin: 0,
+                letterSpacing: "-0.02em",
               }}
             >
-              {contact.email || "Get in touch"} <Icon name="arrow" size={14} stroke={1.4} />
-            </a>
-          </div>
+              Have a place
+              <br />
+              worth telling
+              <br />
+              <i>a story about?</i>
+            </div>
+          </Reveal>
+          <Reveal variant="lift">
+            <div style={{ marginTop: 48, display: "flex", gap: 16, alignItems: "center" }}>
+              <a
+                href={ctaHref}
+                className={styles.contactCta}
+                style={{
+                  padding: "16px 28px",
+                  background: "var(--ink)",
+                  color: "var(--paper)",
+                  borderRadius: 999,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 12,
+                  fontSize: 14,
+                }}
+              >
+                {contact.email || "Get in touch"} <Icon name="arrow" size={14} stroke={1.4} />
+              </a>
+            </div>
+          </Reveal>
         </div>
 
-        <div
+        <Reveal
+          variant="fade"
           style={{ border: "1px solid var(--hair)", padding: 32, background: "var(--paper)" }}
         >
           <div className={styles.monoXs} style={{ marginBottom: 24 }}>
@@ -178,10 +187,10 @@ export function Contact({ name, contact }: ContactProps) {
               <div style={{ fontSize: 14 }}>{contact.bookingWindow}</div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
 
-      <div
+      <Reveal
         style={{
           marginTop: 120,
           paddingTop: 28,
@@ -198,7 +207,7 @@ export function Contact({ name, contact }: ContactProps) {
         <div className={styles.monoXs} style={{ textAlign: "right" }}>
           © {new Date().getFullYear()} · Media Kit v.3 · All rights reserved
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

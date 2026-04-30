@@ -1,4 +1,5 @@
 import { Placeholder, type PlaceholderTone } from "./Placeholder";
+import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
 
@@ -39,7 +40,7 @@ export function Stills({ photos }: StillsProps) {
           marginBottom: 64,
         }}
       >
-        <div>
+        <Reveal>
           <div className={styles.monoXs} style={{ marginBottom: 8 }}>
             § 05
           </div>
@@ -49,17 +50,19 @@ export function Stills({ photos }: StillsProps) {
           >
             Stills
           </div>
-        </div>
-        <div
-          style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
-        >
-          Photography shot alongside video — for social grids, press, brochures and ad
-          placements.
-        </div>
+        </Reveal>
+        <Reveal>
+          <div
+            style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
+          >
+            Photography shot alongside video — for social grids, press, brochures and ad
+            placements.
+          </div>
+        </Reveal>
       </div>
 
       <div
-        className={styles.stillsGrid}
+        className={`${styles.stillsGrid} ${styles.staggerChildren}`}
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
@@ -72,39 +75,37 @@ export function Stills({ photos }: StillsProps) {
           const wrapStyle = {
             gridColumn: c.col,
             gridRow: c.row,
-            overflow: "hidden",
           } as const;
-          if (photo) {
-            return (
-              <div key={photo.key} style={wrapStyle}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo.url}
-                  alt={photo.alt ?? c.label}
-                  width={photo.width ?? undefined}
-                  height={photo.height ?? undefined}
-                  loading="lazy"
-                  decoding="async"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </div>
-            );
-          }
           return (
-            <div key={`ph-${i}`} style={wrapStyle}>
-              <Placeholder
-                label={c.label}
-                tone={c.tone}
-                ratio="auto"
-                style={{ height: "100%", aspectRatio: "unset" }}
-                patternId={`stills-${i}`}
-              />
-            </div>
+            <Reveal key={photo?.key ?? `ph-${i}`} style={wrapStyle}>
+              <div className={styles.stillsCell} style={{ width: "100%", height: "100%" }}>
+                {photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={photo.url}
+                    alt={photo.alt ?? c.label}
+                    width={photo.width ?? undefined}
+                    height={photo.height ?? undefined}
+                    loading="lazy"
+                    decoding="async"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
+                ) : (
+                  <Placeholder
+                    label={c.label}
+                    tone={c.tone}
+                    ratio="auto"
+                    style={{ height: "100%", aspectRatio: "unset" }}
+                    patternId={`stills-${i}`}
+                  />
+                )}
+              </div>
+            </Reveal>
           );
         })}
       </div>
