@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { DOTS } from "./travel-map-dots";
 import { PINS, COUNTRIES as DEFAULT_COUNTRIES, STATS } from "./travel-map-data";
 import { Reveal } from "./Reveal";
@@ -58,33 +58,6 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
     const maxY = (h * (z - 1)) / 2;
     setView({ z, tx: clamp(next.tx, -maxX, maxX), ty: clamp(next.ty, -maxY, maxY) });
   };
-
-  // wheel needs non-passive listener to call preventDefault in React 19
-  useEffect(() => {
-    const box = boxRef.current;
-    if (!box) return;
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const rect = box.getBoundingClientRect();
-      const cx = e.clientX - rect.left - rect.width / 2;
-      const cy = e.clientY - rect.top - rect.height / 2;
-      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
-      setView((cur) => {
-        const nz = clamp(cur.z * factor, 1, 6);
-        const ratio = nz / cur.z;
-        const z = nz;
-        const w = box.clientWidth || 1000;
-        const h = box.clientHeight || 450;
-        const maxX = (w * (z - 1)) / 2;
-        const maxY = (h * (z - 1)) / 2;
-        const tx = clamp(cx - (cx - cur.tx) * ratio, -maxX, maxX);
-        const ty = clamp(cy - (cy - cur.ty) * ratio, -maxY, maxY);
-        return { z, tx, ty };
-      });
-    };
-    box.addEventListener("wheel", onWheel, { passive: false });
-    return () => box.removeEventListener("wheel", onWheel);
-  }, []);
 
   const onMouseDown = (e: React.MouseEvent) => {
     dragRef.current = {
