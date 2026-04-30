@@ -11,6 +11,7 @@ import {
   TextInput,
 } from "./travel/_ui";
 import type { MediaItem, MediaKind, PageSlug } from "@/lib/repos/media";
+import { extractPoster } from "@/lib/posterFromVideo";
 
 type LocalItem = MediaItem & { _pending?: boolean; _localId?: string };
 
@@ -77,6 +78,15 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
     fd.append("file", file);
     fd.append("page", pageSlug);
     fd.append("kind", kind);
+
+    if (kind === "reel" && file.type.startsWith("video/")) {
+      try {
+        const poster = await extractPoster(file);
+        if (poster) fd.append("posterFile", poster, "poster.jpg");
+      } catch (err) {
+        console.warn("[poster extract]", err);
+      }
+    }
 
     try {
       const res = await fetch("/api/admin/media", { method: "POST", body: fd });

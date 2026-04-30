@@ -158,10 +158,27 @@ export async function uploadMedia(input: UploadInput): Promise<MediaItem> {
   };
 }
 
+function derivePosterKey(parentKey: string): string {
+  return parentKey.replace(/\.[^.]+$/, ".jpg");
+}
+
+export async function uploadPoster(parentKey: string, file: File): Promise<void> {
+  const r2 = await getR2();
+  const posterKey = derivePosterKey(parentKey);
+  await r2.put(posterKey, await file.arrayBuffer(), {
+    httpMetadata: {
+      contentType: "image/jpeg",
+      cacheControl: "public, max-age=31536000, immutable",
+    },
+  });
+}
+
 export async function deleteMedia(key: string): Promise<void> {
   const db = await getDB();
   const r2 = await getR2();
   await r2.delete(key);
+  // Best-effort: остаточних poster-ів не повинно лишатися. Ігноруємо все.
+  await r2.delete(derivePosterKey(key)).catch(() => {});
   await db.prepare("DELETE FROM media WHERE key = ?").bind(key).run();
 }
 

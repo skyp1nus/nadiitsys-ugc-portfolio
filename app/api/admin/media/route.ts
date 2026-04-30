@@ -4,6 +4,7 @@ import {
   listMedia,
   uploadMedia,
   replaceSingleMedia,
+  uploadPoster,
   isSingletonKind,
   type PageSlug,
   type MediaKind,
@@ -127,6 +128,18 @@ export async function POST(req: NextRequest): Promise<Response> {
       mime: file.type,
       alt,
     });
+
+    if (typedKind === "reel") {
+      const posterFile = formData.get("posterFile");
+      if (posterFile instanceof File && posterFile.size > 0) {
+        try {
+          await uploadPoster(item.key, posterFile);
+        } catch (err) {
+          console.warn("[media POST] poster upload failed", err);
+        }
+      }
+    }
+
     return NextResponse.json({ ok: true, item });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
