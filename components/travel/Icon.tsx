@@ -12,7 +12,9 @@ export type IconName =
   | "yt"
   | "mail"
   | "arrow"
-  | "play";
+  | "play"
+  | "volumeOn"
+  | "volumeOff";
 
 interface IconProps {
   name: IconName;
@@ -122,6 +124,22 @@ export function Icon({ name, size = 20, stroke = 1.25, style }: IconProps) {
       return (
         <svg {...common} fill="currentColor" stroke="none">
           <path d="M8 5l12 7-12 7V5z" />
+        </svg>
+      );
+    case "volumeOn":
+      return (
+        <svg {...common}>
+          <path d="M4 9v6h4l5 4V5L8 9H4z" />
+          <path d="M16 8a5 5 0 010 8" />
+          <path d="M19 5a9 9 0 010 14" />
+        </svg>
+      );
+    case "volumeOff":
+      return (
+        <svg {...common}>
+          <path d="M4 9v6h4l5 4V5L8 9H4z" />
+          <path d="M17 9l5 6" />
+          <path d="M22 9l-5 6" />
         </svg>
       );
     default:
