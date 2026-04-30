@@ -75,6 +75,7 @@ export function Collabs({ hotels }: CollabsProps) {
                   flexDirection: "column",
                   gap: 12,
                   minHeight: 180,
+                  height: "100%",
                   justifyContent: "space-between",
                 }}
               >
