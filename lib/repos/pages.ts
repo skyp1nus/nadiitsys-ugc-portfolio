@@ -1,5 +1,6 @@
 import { getDB } from "@/lib/db";
 import { TravelPageSchema, type TravelPageInput } from "@/lib/schemas/travel-page";
+import { BeautyPageSchema, type BeautyPageInput } from "@/lib/schemas/beauty-page";
 
 export type PageSlug = "travel" | "beauty";
 
@@ -9,7 +10,7 @@ interface PageRow {
   updated_at: number;
 }
 
-export async function getPage(slug: PageSlug): Promise<TravelPageInput | null> {
+async function getRawPage(slug: PageSlug): Promise<unknown | null> {
   const db = await getDB();
   const row = await db
     .prepare("SELECT slug, data, updated_at FROM pages WHERE slug = ?")
@@ -18,17 +19,27 @@ export async function getPage(slug: PageSlug): Promise<TravelPageInput | null> {
 
   if (!row) return null;
 
-  let parsed: unknown;
   try {
-    parsed = JSON.parse(row.data);
+    return JSON.parse(row.data);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     throw new Error(`Corrupt JSON in pages row "${slug}": ${msg}`);
   }
+}
+
+export async function getTravelPage(): Promise<TravelPageInput | null> {
+  const parsed = await getRawPage("travel");
+  if (!parsed) return null;
   return TravelPageSchema.parse(parsed);
 }
 
-export async function upsertPage(slug: PageSlug, data: TravelPageInput): Promise<void> {
+export async function getBeautyPage(): Promise<BeautyPageInput | null> {
+  const parsed = await getRawPage("beauty");
+  if (!parsed) return null;
+  return BeautyPageSchema.parse(parsed);
+}
+
+async function upsertRaw(slug: PageSlug, data: unknown): Promise<void> {
   const db = await getDB();
   const json = JSON.stringify(data);
   await db
@@ -38,4 +49,12 @@ export async function upsertPage(slug: PageSlug, data: TravelPageInput): Promise
     )
     .bind(slug, json)
     .run();
+}
+
+export async function upsertTravelPage(data: TravelPageInput): Promise<void> {
+  await upsertRaw("travel", data);
+}
+
+export async function upsertBeautyPage(data: BeautyPageInput): Promise<void> {
+  await upsertRaw("beauty", data);
 }

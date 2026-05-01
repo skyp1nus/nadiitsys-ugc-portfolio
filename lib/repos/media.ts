@@ -2,7 +2,7 @@ import { getDB } from "@/lib/db";
 import { getR2, publicUrl } from "@/lib/r2";
 
 export type PageSlug = "travel" | "beauty";
-export type MediaKind = "photo" | "reel" | "hero" | "about-video";
+export type MediaKind = "photo" | "reel" | "hero" | "about-video" | "about-photo";
 export type SingletonKind = "hero" | "about-video";
 
 export const SINGLETON_KINDS: SingletonKind[] = ["hero", "about-video"];
