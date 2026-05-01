@@ -112,6 +112,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
                 ...delay(160),
               }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={heroImage.url}
                 alt={heroImage.alt ?? `${name} — hero portrait`}
