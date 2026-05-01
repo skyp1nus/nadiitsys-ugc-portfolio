@@ -14,15 +14,13 @@ interface Props {
 
 export function Videos({ header, reels }: Props) {
   const gridRef = useRef<HTMLDivElement | null>(null);
-  const [intersected, setIntersected] = useState(false);
+  const [intersected, setIntersected] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setIntersected(true);
-      return;
-    }
+    if (intersected) return;
     const el = gridRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -39,7 +37,7 @@ export function Videos({ header, reels }: Props) {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [intersected]);
 
   const items = reels.length > 0 ? reels : Array.from({ length: 8 }, () => null);
 

@@ -165,6 +165,7 @@ export default function SingleSlotMedia({
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={item.url}
                 alt={item.alt ?? ""}

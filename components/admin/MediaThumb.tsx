@@ -35,6 +35,7 @@ export default function MediaThumb({ url, kind, alt, dimmed }: Props) {
   if (kind !== "reel") {
     return (
       <div style={containerStyle(dimmed)}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={url} alt={alt ?? ""} style={fillStyle} />
       </div>
     );
@@ -97,6 +98,7 @@ function ReelThumb({ url, alt }: { url: string; alt: string | null }) {
   }, [posterOk]);
 
   if (posterOk === true) {
+    // eslint-disable-next-line @next/next/no-img-element
     return <img src={posterUrl} alt={alt ?? ""} style={fillStyle} />;
   }
   if (posterOk === false) {

@@ -28,15 +28,13 @@ export function Reveal({
   id,
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setShown(true);
-      return;
-    }
+    if (shown) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -53,7 +51,7 @@ export function Reveal({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [shown]);
 
   const delayClass =
     delay === 1 ? styles.delay1 : delay === 2 ? styles.delay2 : delay === 3 ? styles.delay3 : "";
