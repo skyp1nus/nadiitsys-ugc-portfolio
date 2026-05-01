@@ -21,9 +21,11 @@ interface Props {
   kind: MediaKind;
   accept: string;
   maxSizeMB: number;
+  title?: string;
+  description?: string;
 }
 
-export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Props) {
+export default function MediaManager({ pageSlug, kind, accept, maxSizeMB, title: titleProp, description: descriptionProp }: Props) {
   const [items, setItems] = useState<LocalItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [dragOver, setDragOver] = useState(false);
@@ -181,11 +183,14 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB }: Prop
     }, 600);
   }
 
-  const title = kind === "photo" ? "Photos" : "Reels";
+  const title = titleProp ?? (kind === "photo" ? "Photos" : kind === "reel" ? "Reels" : "Media");
   const description =
-    kind === "photo"
+    descriptionProp ??
+    (kind === "photo"
       ? `Drag-and-drop для завантаження фото у R2 (max ${maxSizeMB} MB).`
-      : `Drag-and-drop для завантаження reel-відео у R2 (max ${maxSizeMB} MB).`;
+      : kind === "reel"
+        ? `Drag-and-drop для завантаження reel-відео у R2 (max ${maxSizeMB} MB).`
+        : `Drag-and-drop для завантаження файлів у R2 (max ${maxSizeMB} MB).`);
 
   return (
     <Card title={title} description={description}>

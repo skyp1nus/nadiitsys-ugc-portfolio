@@ -11,7 +11,7 @@ import {
 } from "@/lib/repos/media";
 
 const ALLOWED_PAGE: PageSlug[] = ["travel", "beauty"];
-const ALLOWED_KIND: MediaKind[] = ["photo", "reel", "hero", "about-video"];
+const ALLOWED_KIND: MediaKind[] = ["photo", "reel", "hero", "about-video", "about-photo"];
 
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 const MAX_REEL_BYTES = 50 * 1024 * 1024;
@@ -19,7 +19,7 @@ const ALLOWED_PHOTO_MIME = ["image/jpeg", "image/png", "image/webp"];
 const ALLOWED_REEL_MIME = ["video/mp4", "video/quicktime", "video/webm"];
 
 function isImageKind(kind: MediaKind): boolean {
-  return kind === "photo" || kind === "hero";
+  return kind === "photo" || kind === "hero" || kind === "about-photo";
 }
 
 export async function GET(req: NextRequest): Promise<Response> {

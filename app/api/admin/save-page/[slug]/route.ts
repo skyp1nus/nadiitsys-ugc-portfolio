@@ -1,7 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/auth";
 import { TravelPageSchema } from "@/lib/schemas/travel-page";
-import { upsertPage, type PageSlug } from "@/lib/repos/pages";
+import { BeautyPageSchema } from "@/lib/schemas/beauty-page";
+import {
+  upsertTravelPage,
+  upsertBeautyPage,
+  type PageSlug,
+} from "@/lib/repos/pages";
 
 const ALLOWED_SLUGS: PageSlug[] = ["travel", "beauty"];
 
@@ -30,19 +35,30 @@ export async function POST(
     return NextResponse.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
   }
 
-  const parsed = TravelPageSchema.safeParse(body);
-  if (!parsed.success) {
-    console.error(`[save-page/${slug}] validation failed:`, parsed.error.flatten());
-    return NextResponse.json(
-      { ok: false, error: "Validation failed" },
-      { status: 400 }
-    );
-  }
-
-  const data = { ...parsed.data, updatedAt: new Date().toISOString() };
+  const updatedAt = new Date().toISOString();
 
   try {
-    await upsertPage(slug as PageSlug, data);
+    if (slug === "travel") {
+      const parsed = TravelPageSchema.safeParse(body);
+      if (!parsed.success) {
+        console.error("[save-page/travel] validation failed:", parsed.error.flatten());
+        return NextResponse.json(
+          { ok: false, error: "Validation failed" },
+          { status: 400 }
+        );
+      }
+      await upsertTravelPage({ ...parsed.data, updatedAt });
+    } else {
+      const parsed = BeautyPageSchema.safeParse(body);
+      if (!parsed.success) {
+        console.error("[save-page/beauty] validation failed:", parsed.error.flatten());
+        return NextResponse.json(
+          { ok: false, error: "Validation failed" },
+          { status: 400 }
+        );
+      }
+      await upsertBeautyPage({ ...parsed.data, updatedAt });
+    }
     return NextResponse.json({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
