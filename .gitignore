@@ -42,6 +42,8 @@ yarn-error.log*
 .wrangler/
 .dev.vars*
 worker-configuration.d.ts
+wrangler.toml
+!wrangler.toml.example
 
 # typescript
 *.tsbuildinfo
