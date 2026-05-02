@@ -293,23 +293,23 @@
   font-family: inherit;
 }
 
-.btnPrimary {
+.btn.btnPrimary {
   background: var(--ink);
   color: var(--cream);
 }
 
-.btnPrimary:hover {
+.btn.btnPrimary:hover {
   background: var(--rose-deep);
   transform: translateY(-2px);
 }
 
-.btnGhost {
+.btn.btnGhost {
   background: transparent;
   color: var(--ink);
   border-color: var(--ink);
 }
 
-.btnGhost:hover {
+.btn.btnGhost:hover {
   background: var(--ink);
   color: var(--cream);
 }
@@ -690,8 +690,8 @@
   font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--rose-deep);
-  opacity: 0;
-  transform: translateX(-6px);
+  opacity: 0.7;
+  transform: translateX(0);
   transition: all 0.3s;
   text-transform: uppercase;
   font-family: var(--font-mono), monospace;
@@ -699,7 +699,6 @@
 
 .brandCell:hover .brandVisit {
   opacity: 1;
-  transform: translateX(0);
 }
 
 .brandCorner {
@@ -872,6 +871,11 @@
 .serviceCardFeatured .serviceTag {
   background: rgba(249, 237, 229, 0.15);
   color: var(--blush);
+}
+
+.serviceCardFeatured .serviceName,
+.serviceCardFeatured .servicePrice {
+  color: var(--cream);
 }
 
 .serviceCardFeatured .serviceName .accent {
@@ -1137,7 +1141,7 @@
   line-height: 1.6;
 }
 
-.contactEmail {
+a.contactEmail {
   display: inline-flex;
   align-items: center;
   gap: 18px;
@@ -1149,7 +1153,7 @@
   margin-bottom: 40px;
 }
 
-.contactEmail:hover {
+a.contactEmail:hover {
   background: var(--blush);
   transform: translateY(-2px);
 }
