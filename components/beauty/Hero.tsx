@@ -10,6 +10,10 @@ interface Props {
 }
 
 export function Hero({ hero, heroImage }: Props) {
+  const badgeText = (() => {
+    const tokens = hero.badgeText.match(/[\p{L}\p{N}]+(?:[ &/-][\p{L}\p{N}]+)*/gu) ?? [];
+    return tokens.length ? `${tokens.join(" · ")} · ` : "";
+  })();
   return (
     <section className={styles.hero}>
       <div className={`${styles.section} ${styles.container}`} style={{ padding: 0 }}>
@@ -94,10 +98,16 @@ export function Hero({ hero, heroImage }: Props) {
                 <text
                   fontFamily="var(--font-mono), monospace"
                   fontSize="11"
-                  letterSpacing="3"
                   fill="currentColor"
                 >
-                  <textPath href="#beauty-badge-circle">{hero.badgeText}</textPath>
+                  <textPath
+                    href="#beauty-badge-circle"
+                    textLength="471"
+                    lengthAdjust="spacing"
+                    startOffset="0"
+                  >
+                    {badgeText}
+                  </textPath>
                 </text>
               </svg>
               <div className={styles.heroBadgeCenter}>{hero.badgeIcon}</div>
