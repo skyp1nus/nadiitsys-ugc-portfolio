@@ -8,7 +8,7 @@ export async function POST(req: Request): Promise<Response> {
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     "local";
 
-  const { allowed } = checkRateLimit(ip);
+  const { allowed } = await checkRateLimit(ip);
   if (!allowed) {
     return NextResponse.json({ ok: false }, { status: 429 });
   }
@@ -35,7 +35,7 @@ export async function POST(req: Request): Promise<Response> {
   res.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
   });

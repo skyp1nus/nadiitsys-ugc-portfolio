@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/auth";
+import { logger } from "@/lib/logger";
 import {
   listMedia,
   uploadMedia,
@@ -51,7 +52,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     return NextResponse.json({ ok: true, items });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("[media GET]", msg);
+    logger.error("media GET", msg);
     return NextResponse.json(
       { ok: false, error: "List failed" },
       { status: 500 },
@@ -135,7 +136,7 @@ export async function POST(req: NextRequest): Promise<Response> {
         try {
           await uploadPoster(item.key, posterFile);
         } catch (err) {
-          console.warn("[media POST] poster upload failed", err);
+          logger.warn("media POST", "poster upload failed", err);
         }
       }
     }
@@ -143,7 +144,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     return NextResponse.json({ ok: true, item });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("[media POST]", msg);
+    logger.error("media POST", msg);
     return NextResponse.json({ ok: false, error: "Upload failed" }, { status: 500 });
   }
 }

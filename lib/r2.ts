@@ -8,7 +8,7 @@ export async function getR2(): Promise<R2Bucket> {
   return env.MEDIA;
 }
 
-const PUBLIC_BASE = "https://media.nadiitsys.com";
+const PUBLIC_BASE = process.env.NEXT_PUBLIC_MEDIA_URL ?? "https://media.nadiitsys.com";
 
 export function publicUrl(key: string): string {
   return `${PUBLIC_BASE}/${key}`;

@@ -1,6 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const ROOT = "nadiitsys.com";
+const ROOT = (() => {
+  const url = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!url) return "nadiitsys.com";
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "nadiitsys.com";
+  }
+})();
 
 const SECURITY_HEADERS = {
   "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/auth";
+import { logger } from "@/lib/logger";
 import { TravelPageSchema } from "@/lib/schemas/travel-page";
 import { BeautyPageSchema } from "@/lib/schemas/beauty-page";
 import {
@@ -20,7 +21,12 @@ export async function POST(
     return res as Response;
   }
 
-  const { slug } = await ctx.params;
+  let slug: string;
+  try {
+    ({ slug } = await ctx.params);
+  } catch {
+    return NextResponse.json({ ok: false, error: "Invalid params" }, { status: 400 });
+  }
   if (!ALLOWED_SLUGS.includes(slug as PageSlug)) {
     return NextResponse.json(
       { ok: false, error: `Unknown page slug: ${slug}` },
@@ -41,7 +47,7 @@ export async function POST(
     if (slug === "travel") {
       const parsed = TravelPageSchema.safeParse(body);
       if (!parsed.success) {
-        console.error("[save-page/travel] validation failed:", parsed.error.flatten());
+        logger.error("save-page/travel", "validation failed", parsed.error.flatten());
         return NextResponse.json(
           { ok: false, error: "Validation failed" },
           { status: 400 }
@@ -51,7 +57,7 @@ export async function POST(
     } else {
       const parsed = BeautyPageSchema.safeParse(body);
       if (!parsed.success) {
-        console.error("[save-page/beauty] validation failed:", parsed.error.flatten());
+        logger.error("save-page/beauty", "validation failed", parsed.error.flatten());
         return NextResponse.json(
           { ok: false, error: "Validation failed" },
           { status: 400 }
