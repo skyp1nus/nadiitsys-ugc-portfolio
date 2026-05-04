@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: [main]
-  repository_dispatch:
-    types: [content-updated]
 
 concurrency:
   group: deploy
@@ -28,6 +26,19 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Materialize wrangler.toml
+        env:
+          D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          KV_RATE_LIMIT_ID: ${{ secrets.CF_KV_RATE_LIMIT_ID }}
+        run: |
+          sed \
+            -e "s|YOUR_D1_DATABASE_ID|${D1_DATABASE_ID}|" \
+            -e "s|YOUR_KV_NAMESPACE_ID|${KV_RATE_LIMIT_ID}|" \
+            wrangler.toml.example > wrangler.toml
+
+      - name: Generate worker types
+        run: bunx wrangler types
+
       - name: Lint
         run: bun run lint
 
@@ -48,10 +59,21 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Materialize wrangler.toml
+        env:
+          D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          KV_RATE_LIMIT_ID: ${{ secrets.CF_KV_RATE_LIMIT_ID }}
+        run: |
+          sed \
+            -e "s|YOUR_D1_DATABASE_ID|${D1_DATABASE_ID}|" \
+            -e "s|YOUR_KV_NAMESPACE_ID|${KV_RATE_LIMIT_ID}|" \
+            wrangler.toml.example > wrangler.toml
+
+      - name: Generate worker types
+        run: bunx wrangler types
+
       - name: Build for Cloudflare
         run: bunx opennextjs-cloudflare build
-        env:
-          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_R2_PUBLIC_URL }}
 
       - name: Deploy via wrangler
         uses: cloudflare/wrangler-action@v3
@@ -59,10 +81,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
-        env:
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_OWNER: ${{ secrets.GH_OWNER }}
-          GH_REPO: ${{ secrets.GH_REPO }}
-          NEXT_PUBLIC_R2_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_R2_PUBLIC_URL }}

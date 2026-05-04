@@ -1,33 +1,57 @@
-// In-memory sliding window rate limiter.
-// NOTE: for multi-region Cloudflare production, migrate to KV or Durable Objects
-// since in-memory state doesn't survive between isolated Workers instances.
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 const LIMIT = 5;
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const WINDOW_SEC = 15 * 60;
+const WINDOW_MS = WINDOW_SEC * 1000;
 
-const store = new Map<string, number[]>();
+const memStore = new Map<string, number[]>();
 
-// Cleanup stale entries every 5 minutes.
-// Guard against HMR creating multiple intervals in dev.
 declare const globalThis: typeof global & { __rl_cleanup?: ReturnType<typeof setInterval> };
 if (!globalThis.__rl_cleanup) {
   globalThis.__rl_cleanup = setInterval(() => {
     const now = Date.now();
-    for (const [key, times] of store) {
+    for (const [key, times] of memStore) {
       const fresh = times.filter((t) => now - t < WINDOW_MS);
-      if (fresh.length === 0) store.delete(key);
-      else store.set(key, fresh);
+      if (fresh.length === 0) memStore.delete(key);
+      else memStore.set(key, fresh);
     }
   }, 5 * 60 * 1000);
 }
 
-export function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
+function memCheck(ip: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
-  const times = (store.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  if (times.length >= LIMIT) {
-    return { allowed: false, remaining: 0 };
-  }
+  const times = (memStore.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (times.length >= LIMIT) return { allowed: false, remaining: 0 };
   times.push(now);
-  store.set(ip, times);
+  memStore.set(ip, times);
   return { allowed: true, remaining: LIMIT - times.length };
+}
+
+async function kvCheck(
+  kv: KVNamespace,
+  ip: string,
+): Promise<{ allowed: boolean; remaining: number }> {
+  const key = `rl:${ip}`;
+  const now = Date.now();
+  const raw = await kv.get(key);
+  const times = (raw ? (JSON.parse(raw) as number[]) : []).filter(
+    (t) => now - t < WINDOW_MS,
+  );
+  if (times.length >= LIMIT) return { allowed: false, remaining: 0 };
+  times.push(now);
+  await kv.put(key, JSON.stringify(times), { expirationTtl: WINDOW_SEC });
+  return { allowed: true, remaining: LIMIT - times.length };
+}
+
+export async function checkRateLimit(
+  ip: string,
+): Promise<{ allowed: boolean; remaining: number }> {
+  try {
+    const { env } = await getCloudflareContext({ async: true });
+    const kv = (env as Env & { RATE_LIMIT?: KVNamespace }).RATE_LIMIT;
+    if (kv) return await kvCheck(kv, ip);
+  } catch {
+    // CF context unavailable (eg dev without wrangler) — fall through
+  }
+  return memCheck(ip);
 }

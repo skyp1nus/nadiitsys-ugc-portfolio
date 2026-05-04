@@ -40,7 +40,10 @@ yarn-error.log*
 # cloudflare
 .open-next/
 .wrangler/
-.dev.vars
+.dev.vars*
+worker-configuration.d.ts
+wrangler.toml
+!wrangler.toml.example
 
 # typescript
 *.tsbuildinfo

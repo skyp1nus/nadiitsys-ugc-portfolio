@@ -1,0 +1,30 @@
+# Copy to wrangler.toml and fill in resource IDs from your Cloudflare dashboard.
+# wrangler.toml is gitignored — never commit real IDs.
+
+name = "nadiitsys"
+main = ".open-next/worker.js"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "nadiitsys"
+
+# Create via: wrangler d1 create nadiitsys
+[[d1_databases]]
+binding = "DB"
+database_name = "nadiitsys"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "nadiitsys-media"
+
+# Create via: wrangler kv namespace create RATE_LIMIT
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "YOUR_KV_NAMESPACE_ID"

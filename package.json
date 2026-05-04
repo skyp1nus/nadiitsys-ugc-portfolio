@@ -8,11 +8,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check": "bun run typecheck && bun run lint",
+    "build:worker": "opennextjs-cloudflare build",
+    "deploy:dry": "wrangler deploy --dry-run --outdir=.open-next/dry-run",
+    "test": "bun run check && bun run build && bun run build:worker && bun run deploy:dry",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "db:types": "wrangler types",
+    "db:schema": "wrangler d1 execute nadiitsys --remote --file=db/schema.sql",
+    "db:seed": "wrangler d1 execute nadiitsys --remote --file=db/seed.sql",
+    "db:local-reset": "wrangler d1 execute nadiitsys --local --file=db/schema.sql && wrangler d1 execute nadiitsys --local --file=db/seed.sql",
+    "secrets:list": "wrangler secret list"
   },
   "dependencies": {
-    "@octokit/rest": "^22.0.1",
     "bcryptjs": "^3.0.3",
     "jose": "^6.2.2",
     "next": "16.2.4",

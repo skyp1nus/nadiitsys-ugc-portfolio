@@ -19,7 +19,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       {children}
       <footer className="mt-auto border-t border-gray-100">
         <div className="max-w-5xl mx-auto px-4 h-12 flex items-center text-xs text-gray-400">
-          © {new Date().getFullYear()} Nadiia Tsysaruk
+          © {new Date().getFullYear()} Nadii Tsys
         </div>
       </footer>
     </>

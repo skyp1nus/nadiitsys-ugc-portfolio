@@ -4,7 +4,16 @@ import { cookies } from "next/headers";
 
 export const SESSION_COOKIE = "nd_session";
 
-const secret = new TextEncoder().encode(process.env.AUTH_SECRET ?? "dev-secret-change-me");
+let cachedSecret: Uint8Array | null = null;
+function getSecret(): Uint8Array {
+  if (cachedSecret) return cachedSecret;
+  const raw = process.env.AUTH_SECRET;
+  if (!raw) {
+    throw new Error("AUTH_SECRET environment variable is not set");
+  }
+  cachedSecret = new TextEncoder().encode(raw);
+  return cachedSecret;
+}
 
 export async function verifyPassword(input: string): Promise<boolean> {
   const hash = process.env.ADMIN_PASSWORD_HASH;
@@ -17,12 +26,12 @@ export async function signSession(): Promise<string> {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(secret);
+    .sign(getSecret());
 }
 
 export async function verifySession(token: string): Promise<boolean> {
   try {
-    const { payload } = await jwtVerify(token, secret);
+    const { payload } = await jwtVerify(token, getSecret());
     return payload["role"] === "admin";
   } catch {
     return false;
