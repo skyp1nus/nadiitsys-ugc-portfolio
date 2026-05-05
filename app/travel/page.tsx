@@ -13,6 +13,8 @@ import { Contact } from "@/components/travel/Contact";
 
 export const dynamic = "force-dynamic";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
+
 export default async function TravelPage() {
   const [data, photos, reels, heroImage, aboutVideo] = await Promise.all([
     loadTravelPage(),
@@ -22,8 +24,43 @@ export default async function TravelPage() {
     getSingleMedia("travel", "about-video"),
   ]);
   const { profile, hotels, countries, contact } = data;
+
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Travel & Hospitality UGC Content Creation",
+    provider: { "@id": `${SITE_URL}/#person` },
+    areaServed: countries.length
+      ? countries.map((c) => ({ "@type": "Country", name: c }))
+      : "Worldwide",
+    serviceType: "Travel UGC video and photography",
+    description: profile.bio,
+    url: `${SITE_URL}/travel`,
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Travel",
+        item: `${SITE_URL}/travel`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([serviceLd, breadcrumbLd]),
+        }}
+      />
       <Nav />
       <Hero
         name={profile.creatorName}

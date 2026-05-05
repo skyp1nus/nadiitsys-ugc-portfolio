@@ -25,20 +25,24 @@ const jbMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Media Kit — Nadii Tsys",
+  title: "Travel Media Kit",
   description:
-    "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+    "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands. Based in Warsaw, working worldwide.",
+  alternates: { canonical: "/travel" },
   openGraph: {
     type: "website",
-    title: "Media Kit — Nadii Tsys",
-    description: "Travel & Hospitality UGC Creator — Media Kit 2026.",
     siteName: "nadiitsys.com",
     locale: "en_US",
+    url: "/travel",
+    title: "Travel Media Kit — Nadii Tsys",
+    description:
+      "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Media Kit — Nadii Tsys",
-    description: "Travel & Hospitality UGC Creator — Media Kit 2026.",
+    title: "Travel Media Kit — Nadii Tsys",
+    description:
+      "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
   },
 };
 
