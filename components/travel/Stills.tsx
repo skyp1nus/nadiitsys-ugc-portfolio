@@ -16,8 +16,8 @@ const CELLS: Cell[] = [
   { col: "span 1", row: "span 2", tone: "dark", label: "corridor" },
   { col: "span 1", row: "span 1", tone: "cool", label: "ceramics" },
   { col: "span 1", row: "span 1", tone: "sand", label: "sandals" },
-  { col: "span 2", row: "span 1", tone: "warm", label: "balcony · morning" },
-  { col: "span 1", row: "span 1", tone: "dark", label: "silver" },
+  { col: "span 1", row: "span 2", tone: "warm", label: "doorway · light" },
+  { col: "span 2", row: "span 2", tone: "dark", label: "suite · wide" },
   { col: "span 1", row: "span 1", tone: "cool", label: "pool · overhead" },
 ];
 
@@ -67,6 +67,7 @@ export function Stills({ photos }: StillsProps) {
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gridAutoRows: 220,
+          gridAutoFlow: "dense",
           gap: 12,
         }}
       >
