@@ -1,5 +1,6 @@
 import { Placeholder, type PlaceholderTone } from "./Placeholder";
 import { Reveal } from "./Reveal";
+import { SkeletonImage } from "./SkeletonImage";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
 
@@ -81,20 +82,12 @@ export function Stills({ photos }: StillsProps) {
             <Reveal key={photo?.key ?? `ph-${i}`} style={wrapStyle}>
               <div className={styles.stillsCell} style={{ width: "100%", height: "100%" }}>
                 {photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <SkeletonImage
                     src={photo.url}
                     alt={photo.alt ?? c.label}
                     width={photo.width ?? undefined}
                     height={photo.height ?? undefined}
                     loading="lazy"
-                    decoding="async"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
                   />
                 ) : (
                   <Placeholder

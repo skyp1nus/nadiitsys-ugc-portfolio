@@ -161,6 +161,47 @@
   filter: brightness(1.02);
 }
 
+/* image skeleton — site-toned shimmer until the photo decodes */
+.skeletonWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--cream-2);
+}
+.skeletonShimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--cream-2);
+  background-image: linear-gradient(
+    100deg,
+    var(--cream-2) 20%,
+    var(--paper) 50%,
+    var(--cream-2) 80%
+  );
+  background-size: 200% 100%;
+  animation: skeletonSweep 1.5s ease-in-out infinite;
+  transition: opacity 0.45s ease;
+}
+.skeletonHidden {
+  opacity: 0;
+  animation: none;
+}
+@keyframes skeletonSweep {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -150% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeletonShimmer {
+    animation: none;
+  }
+}
+
 /* reel card lift on hover */
 .reelLift {
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),

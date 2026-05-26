@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Icon } from "./Icon";
 import { Placeholder } from "./Placeholder";
+import { SkeletonImage } from "./SkeletonImage";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
 
@@ -112,11 +113,10 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
                 ...delay(160),
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <SkeletonImage
                 src={heroImage.url}
                 alt={heroImage.alt ?? `${name} — hero portrait`}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                loading="eager"
               />
             </div>
           ) : (
