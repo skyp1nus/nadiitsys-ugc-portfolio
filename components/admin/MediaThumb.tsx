@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { derivePosterUrl } from "@/lib/posterUrl";
+import { useEffect, useRef } from "react";
+import { showFirstFrame } from "@/lib/videoFirstFrame";
 import type { MediaKind } from "@/lib/repos/media";
 
 interface Props {
@@ -49,70 +49,24 @@ export default function MediaThumb({ url, kind, alt, dimmed }: Props) {
 
 function ReelThumb({ url, alt }: { url: string; alt: string | null }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [posterOk, setPosterOk] = useState<boolean | null>(null);
-  const posterUrl = derivePosterUrl(url);
 
+  // Stored poster .jpgs are unreliable (often black), so paint a real frame
+  // from the video itself instead of trusting the poster attribute.
   useEffect(() => {
-    let cancelled = false;
-    const img = new Image();
-    img.onload = () => {
-      if (!cancelled) setPosterOk(true);
-    };
-    img.onerror = () => {
-      if (!cancelled) setPosterOk(false);
-    };
-    img.src = posterUrl;
-    return () => {
-      cancelled = true;
-    };
-  }, [posterUrl]);
-
-  useEffect(() => {
-    if (posterOk !== false) return;
     const v = videoRef.current;
     if (!v) return;
-    let triggered = false;
-    const onLoaded = () => {
-      triggered = true;
-      try {
-        v.pause();
-      } catch {
-        /* noop */
-      }
-    };
-    v.addEventListener("loadeddata", onLoaded, { once: true });
-    v.muted = true;
-    v.play().catch(() => {
-      /* needs gesture; stay black until user interacts elsewhere */
-    });
-    return () => {
-      v.removeEventListener("loadeddata", onLoaded);
-      if (!triggered) {
-        try {
-          v.pause();
-        } catch {
-          /* noop */
-        }
-      }
-    };
-  }, [posterOk]);
+    return showFirstFrame(v);
+  }, []);
 
-  if (posterOk === true) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={posterUrl} alt={alt ?? ""} style={fillStyle} />;
-  }
-  if (posterOk === false) {
-    return (
-      <video
-        ref={videoRef}
-        src={url}
-        muted
-        playsInline
-        preload="metadata"
-        aria-label={alt ?? ""}
-        style={fillStyle}
-      />
-    );
-  }
-  return null;
+  return (
+    <video
+      ref={videoRef}
+      src={url}
+      muted
+      playsInline
+      preload="metadata"
+      aria-label={alt ?? ""}
+      style={fillStyle}
+    />
+  );
 }

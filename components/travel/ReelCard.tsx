@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { MediaItem } from "@/lib/repos/media";
-import { derivePosterUrl } from "@/lib/posterUrl";
+import { showFirstFrame } from "@/lib/videoFirstFrame";
 import { PhoneFrame } from "./PhoneFrame";
 import { Icon } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
@@ -15,54 +15,14 @@ export function ReelCard({ reel }: ReelCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
-  const [posterOk, setPosterOk] = useState<boolean | null>(null);
 
-  const posterUrl = derivePosterUrl(reel.url);
-
+  // Stored poster .jpgs are unreliable (often black), so paint a real frame
+  // from the video itself instead of trusting the poster attribute.
   useEffect(() => {
-    let cancelled = false;
-    const img = new Image();
-    img.onload = () => {
-      if (!cancelled) setPosterOk(true);
-    };
-    img.onerror = () => {
-      if (!cancelled) setPosterOk(false);
-    };
-    img.src = posterUrl;
-    return () => {
-      cancelled = true;
-    };
-  }, [posterUrl]);
-
-  useEffect(() => {
-    if (posterOk !== false) return;
     const v = videoRef.current;
     if (!v) return;
-    let triggered = false;
-    const onLoaded = () => {
-      triggered = true;
-      try {
-        v.pause();
-      } catch {
-        /* noop */
-      }
-    };
-    v.addEventListener("loadeddata", onLoaded, { once: true });
-    v.muted = true;
-    v.play().catch(() => {
-      /* needs gesture; stay black until user clicks */
-    });
-    return () => {
-      v.removeEventListener("loadeddata", onLoaded);
-      if (!triggered) {
-        try {
-          v.pause();
-        } catch {
-          /* noop */
-        }
-      }
-    };
-  }, [posterOk]);
+    return showFirstFrame(v);
+  }, []);
 
   const tagsDisplay = reel.tags
     ? reel.tags
@@ -98,10 +58,9 @@ export function ReelCard({ reel }: ReelCardProps) {
       <video
         ref={videoRef}
         src={reel.url}
-        poster={posterUrl}
         muted
         playsInline
-        preload={posterOk === true ? "none" : "metadata"}
+        preload="metadata"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
