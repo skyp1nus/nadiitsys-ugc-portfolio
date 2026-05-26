@@ -90,8 +90,8 @@ export function Reels({ reels }: ReelsProps) {
           className={`${styles.grid4} ${styles.staggerChildren}`}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 28,
+            gridTemplateColumns: "repeat(5, 1fr)",
+            gap: 18,
           }}
         >
           {reels.map((r) => (
