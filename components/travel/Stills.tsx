@@ -1,5 +1,6 @@
 import { Placeholder, type PlaceholderTone } from "./Placeholder";
 import { Reveal } from "./Reveal";
+import { SkeletonImage } from "./SkeletonImage";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
 
@@ -16,8 +17,8 @@ const CELLS: Cell[] = [
   { col: "span 1", row: "span 2", tone: "dark", label: "corridor" },
   { col: "span 1", row: "span 1", tone: "cool", label: "ceramics" },
   { col: "span 1", row: "span 1", tone: "sand", label: "sandals" },
-  { col: "span 2", row: "span 1", tone: "warm", label: "balcony · morning" },
-  { col: "span 1", row: "span 1", tone: "dark", label: "silver" },
+  { col: "span 1", row: "span 2", tone: "warm", label: "doorway · light" },
+  { col: "span 2", row: "span 2", tone: "dark", label: "suite · wide" },
   { col: "span 1", row: "span 1", tone: "cool", label: "pool · overhead" },
 ];
 
@@ -67,6 +68,7 @@ export function Stills({ photos }: StillsProps) {
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gridAutoRows: 220,
+          gridAutoFlow: "dense",
           gap: 12,
         }}
       >
@@ -80,20 +82,12 @@ export function Stills({ photos }: StillsProps) {
             <Reveal key={photo?.key ?? `ph-${i}`} style={wrapStyle}>
               <div className={styles.stillsCell} style={{ width: "100%", height: "100%" }}>
                 {photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <SkeletonImage
                     src={photo.url}
                     alt={photo.alt ?? c.label}
                     width={photo.width ?? undefined}
                     height={photo.height ?? undefined}
                     loading="lazy"
-                    decoding="async"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
                   />
                 ) : (
                   <Placeholder

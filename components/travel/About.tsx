@@ -86,6 +86,24 @@ export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps
                   the hero.
                 </div>
               </Reveal>
+              <Reveal>
+                <div className={styles.monoXs} style={{ marginBottom: 10 }}>
+                  Values
+                </div>
+                <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
+                  Authenticity over perfection, respect for the place and its people,
+                  reliable on-brief delivery — content that still feels human.
+                </div>
+              </Reveal>
+              <Reveal>
+                <div className={styles.monoXs} style={{ marginBottom: 10 }}>
+                  Formats
+                </div>
+                <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
+                  Solo on-camera, couple, and family content — including my husband and our
+                  toddler — for warm, lived-in hospitality stories.
+                </div>
+              </Reveal>
             </div>
           </div>
 
