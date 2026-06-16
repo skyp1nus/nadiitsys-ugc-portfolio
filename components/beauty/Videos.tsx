@@ -65,23 +65,12 @@ export function Videos({ header, reels }: Props) {
 
   const recompute = useCallback(() => {
     const entries = [...registryRef.current.entries()];
-    const cap =
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 640px)").matches
-        ? 1
-        : 2;
-    const visible = entries
-      .filter(([, v]) => v.ratio >= 0.5)
-      .sort((a, b) => b[1].ratio - a[1].ratio);
-    const playSet = new Set(visible.slice(0, cap).map(([el]) => el));
-    // The soloed (user-tapped) reel always plays, regardless of cap.
-    for (const [el, v] of entries) {
-      if (v.key === soloKeyRef.current) playSet.add(el);
-    }
     const reduce = reducedMotionRef.current;
+    // Play every sufficiently-visible reel (a full row autoplays at once),
+    // plus the soloed (user-tapped) one. Muted unless soloed.
     for (const [el, v] of entries) {
       const isSolo = v.key === soloKeyRef.current;
-      const shouldPlay = playSet.has(el) && (!reduce || isSolo);
+      const shouldPlay = (v.ratio >= 0.5 || isSolo) && (!reduce || isSolo);
       el.muted = !isSolo;
       if (shouldPlay) {
         el.play().catch(() => {});

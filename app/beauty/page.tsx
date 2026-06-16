@@ -102,8 +102,8 @@ export default async function BeautyPage() {
       <Hero hero={data.hero} heroImage={heroImage} />
       <Marquee items={data.marquee} />
       <Videos header={data.videos} reels={reels} />
-      <Gallery header={data.gallery} photos={photos} />
       <About about={data.about} images={aboutPhotos} />
+      <Gallery header={data.gallery} photos={photos} />
       <Brands brands={data.brands} />
       <Services services={data.services} />
       <Contact contact={data.contact} />
