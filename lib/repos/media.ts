@@ -27,6 +27,7 @@ export interface MediaItem {
   location: string | null;
   tags: string | null;
   views: string | null;
+  category: string | null;
 }
 
 interface MediaRow {
@@ -44,6 +45,7 @@ interface MediaRow {
   location: string | null;
   tags: string | null;
   views: string | null;
+  category: string | null;
 }
 
 function rowToItem(row: MediaRow): MediaItem {
@@ -63,6 +65,7 @@ function rowToItem(row: MediaRow): MediaItem {
     location: row.location,
     tags: row.tags,
     views: row.views,
+    category: row.category,
   };
 }
 
@@ -74,7 +77,7 @@ export async function listMedia(
   const { results } = await db
     .prepare(
       `SELECT key, page_slug, kind, position, alt, caption, width, height,
-              size_bytes, mime, created_at, location, tags, views
+              size_bytes, mime, created_at, location, tags, views, category
        FROM media
        WHERE page_slug = ? AND kind = ?
        ORDER BY position ASC, created_at ASC`,
@@ -155,6 +158,7 @@ export async function uploadMedia(input: UploadInput): Promise<MediaItem> {
     location: null,
     tags: null,
     views: null,
+    category: null,
   };
 }
 
@@ -190,7 +194,7 @@ export async function getSingleMedia(
   const row = await db
     .prepare(
       `SELECT key, page_slug, kind, position, alt, caption, width, height,
-              size_bytes, mime, created_at, location, tags, views
+              size_bytes, mime, created_at, location, tags, views, category
        FROM media
        WHERE page_slug = ? AND kind = ?
        LIMIT 1`,
@@ -236,6 +240,7 @@ export async function updateMediaMeta(
     location?: string;
     tags?: string;
     views?: string;
+    category?: string;
   },
 ): Promise<void> {
   const db = await getDB();
@@ -260,6 +265,10 @@ export async function updateMediaMeta(
   if (patch.views !== undefined) {
     fields.push("views = ?");
     binds.push(patch.views);
+  }
+  if (patch.category !== undefined) {
+    fields.push("category = ?");
+    binds.push(patch.category === "" ? null : patch.category);
   }
   if (fields.length === 0) return;
   binds.push(key);

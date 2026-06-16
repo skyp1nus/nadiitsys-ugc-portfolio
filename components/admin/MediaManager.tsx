@@ -8,9 +8,11 @@ import {
   ListItem,
   MoveButtons,
   RemoveButton,
+  Select,
   TextInput,
 } from "./travel/_ui";
 import type { MediaItem, MediaKind, PageSlug } from "@/lib/repos/media";
+import { REEL_CATEGORIES } from "@/lib/categories";
 import { extractPoster } from "@/lib/posterFromVideo";
 import MediaThumb from "./MediaThumb";
 
@@ -72,6 +74,7 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB, title:
       location: null,
       tags: null,
       views: null,
+      category: null,
       _pending: true,
       _localId: localId,
     };
@@ -165,7 +168,7 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB, title:
     }
   }
 
-  type MetaField = "alt" | "location" | "tags" | "views";
+  type MetaField = "alt" | "location" | "tags" | "views" | "category" | "caption";
 
   function onMetaChange(item: LocalItem, field: MetaField, value: string) {
     if (item._pending) return;
@@ -297,6 +300,27 @@ export default function MediaManager({ pageSlug, kind, accept, maxSizeMB, title:
                   </Field>
                   {kind === "reel" && (
                     <>
+                      <Field label="Category" hint="Один з 7 — керує фільтром на сайті">
+                        <Select
+                          value={item.category ?? ""}
+                          onChange={(v) => onMetaChange(item, "category", v)}
+                          options={[
+                            { value: "", label: "— не вибрано —" },
+                            ...REEL_CATEGORIES.map((c) => ({
+                              value: c.slug,
+                              label: c.label,
+                            })),
+                          ]}
+                        />
+                      </Field>
+                      <Field label="Link (IG / TikTok)" hint="Опц. — іконка-лінк у кутку картки">
+                        <TextInput
+                          type="url"
+                          value={item.caption ?? ""}
+                          onChange={(v) => onMetaChange(item, "caption", v)}
+                          placeholder="напр. https://instagram.com/reel/…"
+                        />
+                      </Field>
                       <Field label="Location" hint="Підпис над reel у public view">
                         <TextInput
                           value={item.location ?? ""}

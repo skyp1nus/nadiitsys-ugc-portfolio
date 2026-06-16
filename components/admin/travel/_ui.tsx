@@ -66,6 +66,30 @@ export function TextInput({
   );
 }
 
+export function Select({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+}) {
+  return (
+    <select
+      className="admin-input"
+      value={value ?? ""}
+      onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e.target.value)}
+    >
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 export function Textarea({
   value,
   onChange,

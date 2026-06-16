@@ -7,7 +7,8 @@ import {
 } from "@/lib/repos/media";
 
 const ALLOWED_PAGE: PageSlug[] = ["travel", "beauty"];
-const ALLOWED_KIND: MediaKind[] = ["photo", "reel"];
+// list-kinds, які реально переставляються (singletons hero/about-video — ні).
+const ALLOWED_KIND: MediaKind[] = ["photo", "reel", "about-photo"];
 
 export async function POST(req: NextRequest): Promise<Response> {
   try {

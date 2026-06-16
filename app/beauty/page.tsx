@@ -101,11 +101,11 @@ export default async function BeautyPage() {
       <Nav nav={data.nav} />
       <Hero hero={data.hero} heroImage={heroImage} />
       <Marquee items={data.marquee} />
+      <Videos header={data.videos} reels={reels} />
+      <Gallery header={data.gallery} photos={photos} />
       <About about={data.about} images={aboutPhotos} />
       <Brands brands={data.brands} />
       <Services services={data.services} />
-      <Videos header={data.videos} reels={reels} />
-      <Gallery header={data.gallery} photos={photos} />
       <Contact contact={data.contact} />
       <Footer footer={data.footer} />
     </div>

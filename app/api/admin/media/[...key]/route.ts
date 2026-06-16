@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { requireAdmin } from "@/lib/auth";
 import { deleteMedia, updateMediaMeta } from "@/lib/repos/media";
+import { isReelCategory } from "@/lib/categories";
 
 export async function DELETE(
   req: NextRequest,
@@ -47,12 +48,25 @@ export async function PATCH(
     location?: string;
     tags?: string;
     views?: string;
+    category?: string;
   };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json(
       { ok: false, error: "Invalid JSON" },
+      { status: 400 },
+    );
+  }
+
+  // "" дозволяємо як «очистити категорію»; будь-що інше має бути валідним slug.
+  if (
+    body.category !== undefined &&
+    body.category !== "" &&
+    !isReelCategory(body.category)
+  ) {
+    return NextResponse.json(
+      { ok: false, error: "Invalid category" },
       { status: 400 },
     );
   }
