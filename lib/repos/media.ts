@@ -1,5 +1,6 @@
 import { getDB } from "@/lib/db";
 import { getR2, publicUrl } from "@/lib/r2";
+import { mockEnabled, getMockMedia, getMockSingle } from "@/lib/dev-fixtures";
 
 export type PageSlug = "travel" | "beauty";
 export type MediaKind = "photo" | "reel" | "hero" | "about-video" | "about-photo";
@@ -73,6 +74,7 @@ export async function listMedia(
   pageSlug: PageSlug,
   kind: MediaKind,
 ): Promise<MediaItem[]> {
+  if (mockEnabled()) return getMockMedia(pageSlug, kind);
   const db = await getDB();
   const { results } = await db
     .prepare(
@@ -190,6 +192,7 @@ export async function getSingleMedia(
   pageSlug: PageSlug,
   kind: SingletonKind,
 ): Promise<MediaItem | null> {
+  if (mockEnabled()) return getMockSingle(pageSlug, kind);
   const db = await getDB();
   const row = await db
     .prepare(

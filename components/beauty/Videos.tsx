@@ -28,15 +28,19 @@ interface RegEntry {
 
 export function Videos({ header, reels }: Props) {
   const gridRef = useRef<HTMLDivElement | null>(null);
-  const [intersected, setIntersected] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
+  // Always start false so server and client first render agree (no hydration
+  // mismatch). Reduced-motion visibility is guaranteed by CSS (.videoCard gets
+  // opacity:1 !important under the reduced-motion query), not by this flag.
+  const [intersected, setIntersected] = useState(false);
 
   const [active, setActive] = useState<string>("all");
   const [soloKey, setSoloKey] = useState<string | null>(null);
 
-  // ---- Reveal (entrance animation), unchanged behaviour ----
+  // ---- Reveal (entrance animation) ----
+  // threshold 0 + a timeout fallback: on mobile the single-column grid is taller
+  // than the viewport, so a fractional threshold (0.05) could never be reached and
+  // the cards stayed at opacity 0 until a filter change shrank the grid. Fire on
+  // any intersection, and reveal regardless after 1.5s so reels are never hidden.
   useEffect(() => {
     if (intersected) return;
     const el = gridRef.current;
@@ -51,10 +55,14 @@ export function Videos({ header, reels }: Props) {
           }
         }
       },
-      { threshold: 0.05, rootMargin: "0px 0px -80px 0px" },
+      { threshold: 0, rootMargin: "0px 0px -80px 0px" },
     );
     io.observe(el);
-    return () => io.disconnect();
+    const fallback = window.setTimeout(() => setIntersected(true), 1500);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, [intersected]);
 
   // ---- Autoplay-on-scroll: one shared observer + registry ----

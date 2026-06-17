@@ -3,6 +3,7 @@ import type { BeautySimpleSectionHeader } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";
+import { SkeletonImage } from "./SkeletonImage";
 
 const GRID_CLASSES = [
   styles.g1,
@@ -44,8 +45,13 @@ export function Gallery({ header, photos }: Props) {
               return (
                 <div key={photo?.key ?? `gallery-${i}`} className={`${styles.galleryItem} ${cls}`}>
                   {photo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={photo.url} alt={photo.alt ?? `Photo ${i + 1}`} loading="lazy" />
+                    <SkeletonImage
+                      src={photo.url}
+                      alt={photo.alt ?? `Photo ${i + 1}`}
+                      width={photo.width ?? undefined}
+                      height={photo.height ?? undefined}
+                      loading="lazy"
+                    />
                   ) : null}
                 </div>
               );

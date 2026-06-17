@@ -3,6 +3,7 @@ import type { BeautyAbout } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";
+import { SkeletonImage } from "./SkeletonImage";
 
 interface Props {
   about: BeautyAbout;
@@ -33,14 +34,24 @@ export function About({ about, images }: Props) {
             <div className={styles.aboutImages}>
               <div className={`${styles.aboutImg} ${styles.aboutImgFirst}`}>
                 {img1 ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={img1.url} alt={img1.alt ?? "About 1"} />
+                  <SkeletonImage
+                    src={img1.url}
+                    alt={img1.alt ?? "About 1"}
+                    width={img1.width ?? undefined}
+                    height={img1.height ?? undefined}
+                    loading="lazy"
+                  />
                 ) : null}
               </div>
               <div className={styles.aboutImg}>
                 {img2 ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={img2.url} alt={img2.alt ?? "About 2"} />
+                  <SkeletonImage
+                    src={img2.url}
+                    alt={img2.alt ?? "About 2"}
+                    width={img2.width ?? undefined}
+                    height={img2.height ?? undefined}
+                    loading="lazy"
+                  />
                 ) : null}
               </div>
             </div>

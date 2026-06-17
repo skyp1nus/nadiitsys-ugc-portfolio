@@ -3,6 +3,7 @@ import type { BeautyHero } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";
+import { SkeletonImage } from "./SkeletonImage";
 
 interface Props {
   hero: BeautyHero;
@@ -73,8 +74,13 @@ export function Hero({ hero, heroImage }: Props) {
             ) : null}
             <div className={styles.heroPortrait}>
               {heroImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroImage.url} alt={heroImage.alt ?? hero.titleLine1} />
+                <SkeletonImage
+                  src={heroImage.url}
+                  alt={heroImage.alt ?? hero.titleLine1}
+                  width={heroImage.width ?? undefined}
+                  height={heroImage.height ?? undefined}
+                  loading="eager"
+                />
               ) : (
                 <div
                   style={{

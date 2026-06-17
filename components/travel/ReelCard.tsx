@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { MediaItem } from "@/lib/repos/media";
 import { showFirstFrame } from "@/lib/videoFirstFrame";
+import { useVideoReady } from "@/lib/useVideoReady";
 import { PhoneFrame } from "./PhoneFrame";
 import { Icon } from "./Icon";
 import styles from "@/app/travel/travel.module.css";
@@ -15,6 +16,7 @@ export function ReelCard({ reel }: ReelCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  const ready = useVideoReady(videoRef);
 
   // Stored poster .jpgs are unreliable (often black), so paint a real frame
   // from the video itself instead of trusting the poster attribute.
@@ -78,6 +80,12 @@ export function ReelCard({ reel }: ReelCardProps) {
       >
         Your browser doesn&apos;t support video playback.
       </video>
+
+      {/* Loading skeleton — covers the black box until a real frame paints. */}
+      <span
+        aria-hidden
+        className={`${styles.skeletonShimmer}${ready ? ` ${styles.skeletonHidden}` : ""}`}
+      />
 
       {!playing && (
         <span

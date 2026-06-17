@@ -1,5 +1,6 @@
 import { Placeholder } from "./Placeholder";
 import { Reveal } from "./Reveal";
+import { SkeletonVideo } from "./SkeletonVideo";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
 
@@ -113,23 +114,11 @@ export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps
           >
             <Reveal variant="fade">
               {aboutVideo ? (
-                <div
-                  style={{
-                    width: "100%",
-                    aspectRatio: "4 / 5",
-                    overflow: "hidden",
-                    background: "var(--cream)",
-                  }}
-                >
-                  <video
-                    src={aboutVideo.url}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
+                <SkeletonVideo
+                  src={aboutVideo.url}
+                  ariaLabel="About portrait"
+                  style={{ aspectRatio: "4 / 5", overflow: "hidden" }}
+                />
               ) : (
                 <Placeholder
                   label="portrait · editorial"

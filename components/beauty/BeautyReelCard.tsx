@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import type { MediaItem } from "@/lib/repos/media";
 import { showFirstFrame } from "@/lib/videoFirstFrame";
+import { useVideoReady } from "@/lib/useVideoReady";
+import styles from "@/app/beauty/beauty.module.css";
 
 interface Props {
   reel: MediaItem;
@@ -27,6 +29,7 @@ export function BeautyReelCard({
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const ready = useVideoReady(videoRef);
 
   // Register with the container's shared IntersectionObserver; paint a real
   // first frame (stored poster .jpgs are often black). Pause + unregister on
@@ -87,6 +90,12 @@ export function BeautyReelCard({
       >
         Your browser doesn&apos;t support video playback.
       </video>
+
+      {/* Loading skeleton — covers the black box until a real frame paints. */}
+      <span
+        aria-hidden
+        className={`${styles.skeletonShimmer}${ready ? ` ${styles.skeletonHidden}` : ""}`}
+      />
 
       {/* Play indicator while paused (off-screen / reduced-motion / low-power). */}
       {!playing && (
