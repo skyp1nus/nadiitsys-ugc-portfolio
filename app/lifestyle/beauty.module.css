@@ -1412,10 +1412,15 @@ a.contactEmail:hover {
   }
   .hero {
     padding-top: 100px;
+    padding-left: 24px;
+    padding-right: 24px;
+    min-height: 0;
   }
   .heroGrid {
     grid-template-columns: 1fr;
     gap: 48px;
+    min-height: 0;
+    align-items: start;
   }
   .aboutGrid {
     grid-template-columns: 1fr;
@@ -1495,10 +1500,25 @@ a.contactEmail:hover {
     padding-bottom: 64px;
   }
   .hero {
-    padding-top: 88px;
+    padding: 92px 20px 56px;
+    min-height: 0;
   }
   .heroGrid {
-    gap: 32px;
+    gap: 36px;
+    min-height: 0;
+    align-items: start;
+  }
+  .heroTitle {
+    font-size: clamp(42px, 12vw, 68px);
+    margin-bottom: 24px;
+  }
+  .heroSub {
+    margin-bottom: 32px;
+  }
+  .heroMeta {
+    gap: 24px;
+    padding: 18px 0;
+    margin-bottom: 28px;
   }
   .brandsGrid {
     grid-template-columns: repeat(2, 1fr);
