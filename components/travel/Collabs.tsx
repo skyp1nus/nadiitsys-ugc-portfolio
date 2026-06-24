@@ -35,7 +35,7 @@ export function Collabs({ hotels }: CollabsProps) {
         >
           <Reveal>
             <div className={styles.monoXs} style={{ marginBottom: 8 }}>
-              § 03
+              § 05
             </div>
             <div
               className={styles.serif}

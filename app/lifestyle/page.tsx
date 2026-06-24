@@ -18,28 +18,28 @@ export const dynamic = "force-dynamic";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
 export const metadata: Metadata = {
-  title: "Beauty UGC — Media Kit",
+  title: "Lifestyle UGC — Media Kit",
   description:
-    "Beauty UGC content creator media kit — cinematic short-form video and photography for skincare, cosmetics and lifestyle brands. Based in Warsaw, working worldwide.",
-  alternates: { canonical: "/beauty" },
+    "Lifestyle UGC content creator media kit — cinematic short-form video and photography for lifestyle, fashion and home brands. Based in Warsaw, working worldwide.",
+  alternates: { canonical: "/lifestyle" },
   openGraph: {
     type: "website",
     siteName: "nadiitsys.com",
     locale: "en_US",
-    url: "/beauty",
-    title: "Beauty UGC — Media Kit | Nadii Tsys",
+    url: "/lifestyle",
+    title: "Lifestyle UGC — Media Kit | Nadii Tsys",
     description:
-      "Aesthetic beauty & lifestyle UGC for skincare, cosmetics and indie brands.",
+      "Aesthetic lifestyle UGC for fashion, home and indie brands.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beauty UGC — Media Kit | Nadii Tsys",
+    title: "Lifestyle UGC — Media Kit | Nadii Tsys",
     description:
-      "Aesthetic beauty & lifestyle UGC for skincare, cosmetics and indie brands.",
+      "Aesthetic lifestyle UGC for fashion, home and indie brands.",
   },
 };
 
-export default async function BeautyPage() {
+export default async function LifestylePage() {
   const [data, heroImage, aboutPhotos, photos, reels] = await Promise.all([
     loadBeautyPage(),
     getSingleMedia("beauty", "hero"),
@@ -51,15 +51,15 @@ export default async function BeautyPage() {
   const serviceLd = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Beauty UGC Content Creation",
+    name: "Lifestyle UGC Content Creation",
     provider: { "@id": `${SITE_URL}/#person` },
     areaServed: "Worldwide",
-    serviceType: "Beauty UGC video and photography",
+    serviceType: "Lifestyle UGC video and photography",
     description: data.about.lead.replace(/\*/g, ""),
-    url: `${SITE_URL}/beauty`,
+    url: `${SITE_URL}/lifestyle`,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Beauty UGC services",
+      name: "Lifestyle UGC services",
       itemListElement: data.services.items.map((s, i) => ({
         "@type": "Offer",
         position: i + 1,
@@ -83,8 +83,8 @@ export default async function BeautyPage() {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Beauty",
-        item: `${SITE_URL}/beauty`,
+        name: "Lifestyle",
+        item: `${SITE_URL}/lifestyle`,
       },
     ],
   };

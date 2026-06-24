@@ -1,4 +1,4 @@
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyAbout } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { AccentText } from "./AccentText";

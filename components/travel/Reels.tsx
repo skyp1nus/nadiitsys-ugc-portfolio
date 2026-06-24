@@ -26,7 +26,7 @@ export function Reels({ reels }: ReelsProps) {
       >
         <Reveal>
           <div className={styles.monoXs} style={{ marginBottom: 8 }}>
-            § 04
+            § 03
           </div>
           <div
             className={styles.serif}

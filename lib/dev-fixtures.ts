@@ -64,7 +64,7 @@ function item(seed: MediaSeed, i: number): MediaItem {
 const cat = (i: number) =>
   REEL_CATEGORIES[i % REEL_CATEGORIES.length]?.slug ?? "beauty";
 const REEL_META = [
-  { location: "Warsaw, PL", tags: "skincare, glow", views: "482K" },
+  { location: "Warsaw, PL", tags: "home, calm", views: "482K" },
   { location: "Milan, IT", tags: "fashion, edit", views: "1.2M" },
   { location: "Lisbon, PT", tags: "family, warm", views: "330K" },
   { location: "Vienna, AT", tags: "lifestyle", views: "210K" },
@@ -88,7 +88,7 @@ const MOCK_MEDIA: Record<PageSlug, Partial<Record<MediaKind, MediaItem[]>>> = {
       { pageSlug: "beauty", kind: "about-photo", url: PHOTO("beauty-about-2", 800, 1000), width: 800, height: 1000, alt: "About 2" },
     ]),
     photo: build(
-      Array.from({ length: 7 }, (_, i) => ({
+      Array.from({ length: 12 }, (_, i) => ({
         pageSlug: "beauty" as const,
         kind: "photo" as const,
         url: PHOTO(`beauty-photo-${i}`, 900, 900),

@@ -4,22 +4,22 @@ import HomeSplit from "./HomeSplit";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
 export const metadata: Metadata = {
-  title: "Nadii Tsys — Travel & Beauty UGC Creator",
+  title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
   description:
-    "Cinematic UGC content for hospitality and beauty brands. Based in Warsaw, working worldwide.",
+    "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "nadiitsys.com",
     locale: "en_US",
     url: "/",
-    title: "Nadii Tsys — Travel & Beauty UGC Creator",
-    description: "Cinematic UGC content for hospitality and beauty brands.",
+    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
+    description: "Cinematic UGC content for hospitality and lifestyle brands.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nadii Tsys — Travel & Beauty UGC Creator",
-    description: "Cinematic UGC content for hospitality and beauty brands.",
+    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
+    description: "Cinematic UGC content for hospitality and lifestyle brands.",
   },
 };
 
@@ -32,14 +32,14 @@ const personLd = {
   url: SITE_URL,
   jobTitle: "UGC Content Creator",
   description:
-    "Cinematic UGC creator producing short-form video and photography for hospitality and beauty brands.",
+    "Cinematic UGC creator producing short-form video and photography for hospitality and lifestyle brands.",
   knowsLanguage: ["en", "uk", "pl", "ru"],
   knowsAbout: [
     "UGC",
     "Short-form video",
     "Travel content",
     "Hospitality marketing",
-    "Beauty content",
+    "Lifestyle content",
     "Lifestyle photography",
   ],
   address: {
@@ -61,7 +61,7 @@ const serviceLd = {
   url: SITE_URL,
   image: `${SITE_URL}/icon.png`,
   description:
-    "UGC creation studio — cinematic short-form video and photography for hospitality (hotels, resorts, airlines) and beauty (skincare, cosmetics, lifestyle) brands.",
+    "UGC creation studio — cinematic short-form video and photography for hospitality (hotels, resorts, airlines) and lifestyle (fashion, home, wellness) brands.",
   areaServed: "Worldwide",
   serviceType: ["UGC video", "Short-form video", "Brand storytelling"],
   provider: { "@id": `${SITE_URL}/#person` },

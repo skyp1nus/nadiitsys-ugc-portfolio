@@ -1,4 +1,4 @@
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyContact } from "@/lib/schemas/beauty-page";
 import { AccentTextMultiline } from "./AccentText";
 import { Reveal } from "./Reveal";

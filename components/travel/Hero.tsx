@@ -33,7 +33,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
         className={`${styles.monoXs} ${styles.hideOnMobile}`}
         style={{ position: "absolute", top: 70, right: 48 }}
       >
-        N° 01 / 06
+        N° 01 / 07
       </div>
       <div
         className={`${styles.monoXs} ${styles.hideOnMobile}`}

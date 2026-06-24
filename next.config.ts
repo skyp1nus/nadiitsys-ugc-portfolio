@@ -35,6 +35,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/beauty",
+        destination: "/lifestyle",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 initOpenNextCloudflareForDev();

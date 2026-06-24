@@ -1,18 +1,20 @@
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautySimpleSectionHeader } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";
 import { SkeletonImage } from "./SkeletonImage";
 
-const GRID_CLASSES = [
-  styles.g1,
-  styles.g2,
-  styles.g3,
-  styles.g4,
-  styles.g5,
-  styles.g6,
-  styles.g7,
+// Masonry rhythm: one cycle of 6 tiles fills two full 12-column rows with no
+// gaps (6+3+3, then 4+4+4). The pattern repeats, so the grid grows gracefully
+// with however many photos are uploaded — N tiles for N photos, no empty holes.
+const GRID_PATTERN = [
+  styles.gA,
+  styles.gB,
+  styles.gC,
+  styles.gD,
+  styles.gE,
+  styles.gF,
 ];
 
 interface Props {
@@ -40,19 +42,17 @@ export function Gallery({ header, photos }: Props) {
 
         <Reveal delay={1}>
           <div className={styles.galleryGrid}>
-            {GRID_CLASSES.map((cls, i) => {
-              const photo = photos[i];
+            {photos.map((photo, i) => {
+              const cls = GRID_PATTERN[i % GRID_PATTERN.length];
               return (
-                <div key={photo?.key ?? `gallery-${i}`} className={`${styles.galleryItem} ${cls}`}>
-                  {photo ? (
-                    <SkeletonImage
-                      src={photo.url}
-                      alt={photo.alt ?? `Photo ${i + 1}`}
-                      width={photo.width ?? undefined}
-                      height={photo.height ?? undefined}
-                      loading="lazy"
-                    />
-                  ) : null}
+                <div key={photo.key ?? `gallery-${i}`} className={`${styles.galleryItem} ${cls}`}>
+                  <SkeletonImage
+                    src={photo.url}
+                    alt={photo.alt ?? `Photo ${i + 1}`}
+                    width={photo.width ?? undefined}
+                    height={photo.height ?? undefined}
+                    loading="lazy"
+                  />
                 </div>
               );
             })}

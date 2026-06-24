@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 
 interface SkeletonImageProps {
   src: string;

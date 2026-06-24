@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 
 /**
  * Renders text with `*accent*` → italic rose span. No HTML injection — pure split.

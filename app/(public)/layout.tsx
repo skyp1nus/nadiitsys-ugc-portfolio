@@ -8,8 +8,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           <Link href="/" className="font-semibold text-gray-900 tracking-tight">
             nadiitsys
           </Link>
-          <Link href="/beauty" className="text-sm text-gray-600 hover:text-gray-900">
-            Beauty
+          <Link href="/lifestyle" className="text-sm text-gray-600 hover:text-gray-900">
+            Lifestyle
           </Link>
           <Link href="/travel" className="text-sm text-gray-600 hover:text-gray-900">
             Travel

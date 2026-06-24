@@ -29,13 +29,13 @@
   },
   "hero": {
     "eyebrow": "Media Kit · 2026",
-    "titleLine1": "Beauty,",
+    "titleLine1": "Lifestyle,",
     "titleLine2": "*softly* told.",
-    "subtitle": "Hi, I'm Nadia — a beauty & lifestyle creator based in Warsaw, crafting aesthetic, relatable content for brands that care about how a story feels, not just how it looks.",
+    "subtitle": "Hi, I'm Nadia — a lifestyle creator based in Warsaw, crafting aesthetic, relatable content for brands that care about how a story feels, not just how it looks.",
     "metaBasedInLabel": "Based in",
     "metaBasedInValue": "Warsaw, PL",
     "metaNicheLabel": "Niche",
-    "metaNicheValue": "Beauty · Lifestyle",
+    "metaNicheValue": "Lifestyle · Everyday",
     "metaLanguagesLabel": "Languages",
     "metaLanguagesValue": "EN · UA · PL",
     "primaryCta": {
@@ -46,7 +46,7 @@
       "label": "View rates",
       "href": "#services"
     },
-    "badgeText": "UGC CREATOR · BEAUTY · LIFESTYLE · WARSAW · ",
+    "badgeText": "LIFESTYLE CREATOR · UGC · WARSAW · ",
     "badgeIcon": "★",
     "tagLabel": "Open for bookings",
     "tagOnline": true
@@ -65,7 +65,7 @@
       "italic": false
     },
     {
-      "text": "Beauty · Lifestyle",
+      "text": "Lifestyle · Everyday",
       "italic": true
     },
     {
@@ -80,17 +80,17 @@
   "about": {
     "eyebrowNum": "01",
     "eyebrowLabel": "About",
-    "title": "A creator with an eye for *soft*, *honest* beauty.",
+    "title": "A creator with an eye for the *soft*, *honest* everyday.",
     "lead": "I create content inspired by modern European lifestyle — *clean visuals*, natural storytelling, and a quiet, confident voice.",
     "paragraphs": [
       "My work is built around authentic product experience. Whether it's a 30-second reel or a series of stories, every frame is composed to feel intentional, warm, and at home in your audience's feed.",
-      "I'm open to beauty, lifestyle, and UGC collaborations with brands worldwide — from emerging indie launches to established names that want a softer, more human angle."
+      "I'm open to lifestyle, fashion, and UGC collaborations with brands worldwide — from emerging indie launches to established names that want a softer, more human angle."
     ],
     "categories": [
-      "Beauty & Make-up",
+      "Lifestyle & Home",
       "Reviews & Unboxings",
-      "Clothes & Accessories",
-      "Child & Family"
+      "Fashion & Accessories",
+      "Family & Wellness"
     ],
     "stats": [
       {
@@ -118,15 +118,15 @@
     "items": [
       {
         "corner": "01 · IG",
-        "name": "Beauty *brand*",
-        "category": "Skincare campaign",
+        "name": "Lifestyle *brand*",
+        "category": "Daily ritual",
         "link": "https://www.instagram.com/reel/DWlfNS-CH5S/",
         "isOpenSlot": false
       },
       {
         "corner": "02 · IG",
-        "name": "Family *care*",
-        "category": "Child & family",
+        "name": "Home *care*",
+        "category": "Family & home",
         "link": "https://www.instagram.com/reel/DWO2bTTiFfF/",
         "isOpenSlot": false
       },
@@ -139,21 +139,21 @@
       },
       {
         "corner": "04 · IG",
-        "name": "Footwear *brand*",
-        "category": "Clothes & accessories",
+        "name": "Fashion *brand*",
+        "category": "Fashion & style",
         "link": "https://www.instagram.com/reel/DNVm30Bs7n4/",
         "isOpenSlot": false
       },
       {
         "corner": "05 · IG",
-        "name": "Cosmetics *house*",
-        "category": "Make-up review",
+        "name": "Wellness *house*",
+        "category": "Self-care review",
         "link": "https://www.instagram.com/reel/C7bEPUstLHS/",
         "isOpenSlot": false
       },
       {
         "corner": "06 · IG",
-        "name": "Skincare *launch*",
+        "name": "Product *launch*",
         "category": "Unboxing & review",
         "link": "https://www.instagram.com/reel/DWipHTRiHh_/",
         "isOpenSlot": false
@@ -167,14 +167,14 @@
       },
       {
         "corner": "08 · TT",
-        "name": "Beauty *routine*",
+        "name": "Morning *routine*",
         "category": "TikTok review",
         "link": "https://vm.tiktok.com/ZNRXNgr2V/",
         "isOpenSlot": false
       },
       {
         "corner": "09 · TT",
-        "name": "Beauty *retail*",
+        "name": "Lifestyle *retail*",
         "category": "In-store haul",
         "link": "https://vm.tiktok.com/ZNRXN4YGE/",
         "isOpenSlot": false

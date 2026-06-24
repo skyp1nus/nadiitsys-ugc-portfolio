@@ -8,7 +8,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautySimpleSectionHeader } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
 import { REEL_CATEGORIES } from "@/lib/categories";

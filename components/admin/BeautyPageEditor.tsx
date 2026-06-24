@@ -103,7 +103,7 @@ export function BeautyPageEditor({ initial }: BeautyPageEditorProps) {
     const publicHost = host.startsWith("admin.")
       ? host.slice("admin.".length)
       : host;
-    const url = `${window.location.protocol}//${publicHost}/beauty`;
+    const url = `${window.location.protocol}//${publicHost}/lifestyle`;
     window.open(url, "_blank", "noopener,noreferrer");
   }, []);
 

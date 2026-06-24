@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyNav } from "@/lib/schemas/beauty-page";
 
 export function Nav({ nav }: { nav: BeautyNav }) {

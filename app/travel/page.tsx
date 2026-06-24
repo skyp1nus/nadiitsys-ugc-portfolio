@@ -69,7 +69,6 @@ export default async function TravelPage() {
         heroImage={heroImage}
       />
       <Marquee />
-      <Stills photos={photos} />
       <About
         bio={profile.bio}
         languages={profile.languages}
@@ -77,9 +76,10 @@ export default async function TravelPage() {
         delivery={profile.delivery}
         aboutVideo={aboutVideo}
       />
+      <Stills photos={photos} />
+      <Reels reels={reels} />
       <Offer />
       <Collabs hotels={hotels} />
-      <Reels reels={reels} />
       <TravelMap countries={countries} />
       <Contact name={profile.creatorName} contact={contact} />
     </>

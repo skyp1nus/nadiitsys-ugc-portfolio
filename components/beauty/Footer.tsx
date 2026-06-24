@@ -1,4 +1,4 @@
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyFooter } from "@/lib/schemas/beauty-page";
 
 export function Footer({ footer }: { footer: BeautyFooter }) {

@@ -54,7 +54,7 @@ export function Offer() {
       >
         <Reveal>
           <div className={styles.monoXs} style={{ marginBottom: 8 }}>
-            § 02
+            § 04
           </div>
           <div
             className={styles.serif}

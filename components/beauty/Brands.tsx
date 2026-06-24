@@ -1,4 +1,4 @@
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyBrands, BeautyBrandItem } from "@/lib/schemas/beauty-page";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";

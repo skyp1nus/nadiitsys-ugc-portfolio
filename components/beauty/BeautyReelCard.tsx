@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from
 import type { MediaItem } from "@/lib/repos/media";
 import { showFirstFrame } from "@/lib/videoFirstFrame";
 import { useVideoReady } from "@/lib/useVideoReady";
-import styles from "@/app/beauty/beauty.module.css";
+import styles from "@/app/lifestyle/beauty.module.css";
 
 interface Props {
   reel: MediaItem;

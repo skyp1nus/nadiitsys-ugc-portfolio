@@ -46,7 +46,7 @@ function SidePanel({
       style={{ flexBasis }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      aria-label={`Enter ${side}`}
+      aria-label={`Enter ${side === "beauty" ? "lifestyle" : side}`}
     >
       <div className={`${styles.content} ${intro ? styles.in : ""}`}>
         <span className={styles.kicker}>{kicker}</span>
@@ -102,13 +102,13 @@ export default function HomeSplit() {
       <div className={styles.split}>
         <SidePanel
           side="beauty"
-          href="/beauty"
+          href="/lifestyle"
           hover={hover}
           intro={intro}
           onEnter={() => setHover("beauty")}
           onLeave={() => setHover(null)}
-          kicker="N° 01 — BEAUTY"
-          headline="Beauty,"
+          kicker="N° 01 — LIFESTYLE"
+          headline="Lifestyle,"
           italic="softly told."
         />
         <SidePanel

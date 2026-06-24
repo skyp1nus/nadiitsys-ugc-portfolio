@@ -43,7 +43,7 @@ export function Stills({ photos }: StillsProps) {
       >
         <Reveal>
           <div className={styles.monoXs} style={{ marginBottom: 8 }}>
-            § 05
+            § 02
           </div>
           <div
             className={styles.serif}

@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/beauty`,
+      url: `${SITE_URL}/lifestyle`,
       lastModified,
       changeFrequency: "weekly",
       priority: 0.8,

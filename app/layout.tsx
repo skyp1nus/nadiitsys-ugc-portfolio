@@ -29,11 +29,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Nadii Tsys — Travel & Beauty UGC Creator",
+    default: "Nadii Tsys — Travel & Lifestyle UGC Creator",
     template: "%s — Nadii Tsys",
   },
   description:
-    "Cinematic UGC content for hospitality and beauty brands. Based in Warsaw, working worldwide.",
+    "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
   applicationName: "Nadiitsys",
   authors: [{ name: "Nadii Tsys", url: SITE_URL }],
   creator: "Nadii Tsys",
@@ -41,7 +41,8 @@ export const metadata: Metadata = {
   keywords: [
     "UGC creator",
     "travel content creator",
-    "beauty content creator",
+    "lifestyle content creator",
+    "home & lifestyle creator",
     "hospitality video",
     "short-form video",
     "Instagram Reels",
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
     "Warsaw",
     "Poland",
     "hotel UGC",
-    "skincare UGC",
+    "lifestyle UGC",
   ],
   category: "creative services",
   alternates: { canonical: "/" },
@@ -58,15 +59,15 @@ export const metadata: Metadata = {
     siteName: "nadiitsys.com",
     locale: "en_US",
     url: SITE_URL,
-    title: "Nadii Tsys — Travel & Beauty UGC Creator",
+    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
     description:
-      "Cinematic UGC content for hospitality and beauty brands. Based in Warsaw, working worldwide.",
+      "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
     // TODO: add og-default.jpg (1200×630) → images: ["/og-default.jpg"]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nadii Tsys — Travel & Beauty UGC Creator",
-    description: "Cinematic UGC content for hospitality and beauty brands.",
+    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
+    description: "Cinematic UGC content for hospitality and lifestyle brands.",
     creator: "@naditsys",
   },
   icons: {
