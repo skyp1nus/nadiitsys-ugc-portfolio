@@ -14,6 +14,7 @@ interface LocaleEditor<T> {
   data: T;
   setData: React.Dispatch<React.SetStateAction<T>>;
   switchLocale: (next: Locale) => void;
+  saveAll: () => Promise<void>;
   saveState: SaveState;
   saveMessage: string | undefined;
   toast: string | null;
@@ -36,12 +37,17 @@ export function useLocaleEditor<T>(slug: Slug, initialEn: T): LocaleEditor<T> {
 
   const enBaseRef = useRef<T>(initialEn);
   const localeRef = useRef<Locale>(locale);
+  const dataRef = useRef<T>(data);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const skipAutosaveRef = useRef(true);
 
   useEffect(() => {
     localeRef.current = locale;
   }, [locale]);
+
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
 
   // Keep the English base in sync with live edits so switching to an
   // untranslated locale (or back to en) never restores stale en content.
@@ -81,6 +87,33 @@ export function useLocaleEditor<T>(slug: Slug, initialEn: T): LocaleEditor<T> {
     },
     [showToast, slug]
   );
+
+  // "Apply to all languages": write the current page to every locale row.
+  const saveAll = useCallback(async () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    setSaveState("saving");
+    setSaveMessage(undefined);
+    try {
+      const res = await fetch(`/api/admin/save-page/${slug}?locale=all`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataRef.current),
+      });
+      if (res.ok) {
+        setSaveState("saved");
+        setExists(true);
+        showToast("Saved to all languages");
+      } else {
+        const text = await res.text();
+        setSaveState("error");
+        setSaveMessage(`Save failed (${res.status})`);
+        showToast(`Error: ${text.slice(0, 80)}`);
+      }
+    } catch (err) {
+      setSaveState("error");
+      setSaveMessage(err instanceof Error ? err.message : "Network error");
+    }
+  }, [showToast, slug]);
 
   useEffect(() => {
     if (skipAutosaveRef.current) {
@@ -154,6 +187,7 @@ export function useLocaleEditor<T>(slug: Slug, initialEn: T): LocaleEditor<T> {
     data,
     setData,
     switchLocale,
+    saveAll,
     saveState,
     saveMessage,
     toast,

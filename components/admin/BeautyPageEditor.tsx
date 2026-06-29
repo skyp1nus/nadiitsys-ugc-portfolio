@@ -99,6 +99,7 @@ export function BeautyPageEditor({ initial }: BeautyPageEditorProps) {
     data,
     setData,
     switchLocale,
+    saveAll,
     saveState,
     saveMessage,
     toast,
@@ -147,6 +148,7 @@ export function BeautyPageEditor({ initial }: BeautyPageEditorProps) {
           exists={exists}
           loading={loading}
           onSwitch={switchLocale}
+          onSaveAll={saveAll}
         />
         <h2>{TAB_LABELS[activeTab]}</h2>
         <p className="section-desc">{TAB_DESC[activeTab]}</p>

@@ -8,7 +8,7 @@ import {
   upsertBeautyPage,
   type PageSlug,
 } from "@/lib/repos/pages";
-import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
+import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "@/lib/i18n/config";
 
 const ALLOWED_SLUGS: PageSlug[] = ["travel", "beauty"];
 
@@ -35,14 +35,17 @@ export async function POST(
     );
   }
 
+  // `locale=all` writes the same content to every locale row ("apply to all
+  // languages"); otherwise a single locale.
   const localeParam = req.nextUrl.searchParams.get("locale") ?? DEFAULT_LOCALE;
-  if (!isLocale(localeParam)) {
+  const applyAll = localeParam === "all";
+  if (!applyAll && !isLocale(localeParam)) {
     return NextResponse.json(
       { ok: false, error: `Unknown locale: ${localeParam}` },
       { status: 400 }
     );
   }
-  const locale = localeParam;
+  const targets: Locale[] = applyAll ? [...LOCALES] : [localeParam as Locale];
 
   let body: unknown;
   try {
@@ -63,7 +66,8 @@ export async function POST(
           { status: 400 }
         );
       }
-      await upsertTravelPage({ ...parsed.data, updatedAt }, locale);
+      const data = { ...parsed.data, updatedAt };
+      for (const loc of targets) await upsertTravelPage(data, loc);
     } else {
       const parsed = BeautyPageSchema.safeParse(body);
       if (!parsed.success) {
@@ -73,9 +77,10 @@ export async function POST(
           { status: 400 }
         );
       }
-      await upsertBeautyPage({ ...parsed.data, updatedAt }, locale);
+      const data = { ...parsed.data, updatedAt };
+      for (const loc of targets) await upsertBeautyPage(data, loc);
     }
-    return NextResponse.json({ ok: true, locale });
+    return NextResponse.json({ ok: true, locales: targets });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ ok: false, error: message }, { status: 500 });

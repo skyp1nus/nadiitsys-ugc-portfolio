@@ -7,9 +7,19 @@ interface LocaleBarProps {
   exists: boolean;
   loading: boolean;
   onSwitch: (next: Locale) => void;
+  onSaveAll: () => void;
 }
 
-export function LocaleBar({ locale, exists, loading, onSwitch }: LocaleBarProps) {
+export function LocaleBar({ locale, exists, loading, onSwitch, onSaveAll }: LocaleBarProps) {
+  const handleSaveAll = () => {
+    if (
+      window.confirm(
+        "Copy the current page content to ALL languages? This overwrites every language's content with what you see now."
+      )
+    ) {
+      onSaveAll();
+    }
+  };
   const status =
     locale === DEFAULT_LOCALE
       ? "Editing English — the default version other locales fall back to."
@@ -74,6 +84,25 @@ export function LocaleBar({ locale, exists, loading, onSwitch }: LocaleBarProps)
       <span style={{ fontSize: 12.5, color: "var(--ink-2, #6b6258)" }}>
         {loading ? "Loading…" : status}
       </span>
+      <button
+        type="button"
+        disabled={loading}
+        onClick={handleSaveAll}
+        title="Save the current content to every language at once"
+        style={{
+          marginLeft: "auto",
+          padding: "7px 13px",
+          borderRadius: 7,
+          fontSize: 12,
+          cursor: loading ? "wait" : "pointer",
+          border: "1px solid var(--ink, #1a1714)",
+          background: "var(--ink, #1a1714)",
+          color: "var(--surface, #fff)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Save to all languages
+      </button>
     </div>
   );
 }
