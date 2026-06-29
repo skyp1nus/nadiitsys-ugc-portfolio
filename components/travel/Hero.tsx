@@ -4,10 +4,12 @@ import { Placeholder } from "./Placeholder";
 import { SkeletonImage } from "./SkeletonImage";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 const delay = (ms: number) => ({ ["--reveal-delay" as never]: `${ms}ms` } as CSSProperties);
 
 interface HeroProps {
+  t: TravelDict["hero"];
   name: string;
   tagline: string;
   location: string;
@@ -18,7 +20,7 @@ function HairRule({ w = "100%" }: { w?: string | number }) {
   return <div style={{ height: 1, background: "var(--hair)", width: w }} />;
 }
 
-export function Hero({ name, tagline, location, heroImage }: HeroProps) {
+export function Hero({ t, name, tagline, location, heroImage }: HeroProps) {
   return (
     <section
       className={styles.sectionPad}
@@ -39,7 +41,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
         className={`${styles.monoXs} ${styles.hideOnMobile}`}
         style={{ position: "absolute", top: 70, left: 48 }}
       >
-        Portfolio &amp; Rates
+        {t.portfolioRates}
       </div>
 
       <div
@@ -64,7 +66,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
             }}
           >
             <Icon name="plane" size={18} stroke={1.1} />
-            <div className={styles.monoXs}>Travel · Hospitality · Lifestyle</div>
+            <div className={styles.monoXs}>{t.eyebrow}</div>
           </div>
           <h1
             className={`${styles.serif} ${styles.heroEntry}`}
@@ -77,11 +79,11 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
               ...delay(80),
             }}
           >
-            The art of
+            {t.title1}
             <br />
-            <i style={{ fontWeight: 400 }}>slow</i> travel,
+            <i style={{ fontWeight: 400 }}>{t.titleItalic}</i> {t.title2}
             <br />
-            told in frames.
+            {t.title3}
           </h1>
           <div
             className={styles.heroEntry}
@@ -95,8 +97,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
           >
             <HairRule w={80} />
             <div style={{ fontSize: 15, color: "var(--ink-2)", maxWidth: 420, lineHeight: 1.6 }}>
-              {tagline}. I create cinematic UGC for hotels, resorts, airlines &amp; destination
-              brands — content that makes travellers pause.
+              {tagline}. {t.taglineSuffix}
             </div>
           </div>
         </div>
@@ -137,7 +138,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
             }}
           >
             <div className={styles.monoXs} style={{ marginBottom: 4 }}>
-              Latest shoot
+              {t.latestShoot}
             </div>
             <span className={styles.monoXs}>40.6340°N / 14.6027°E · Positano, IT</span>
           </div>
@@ -167,7 +168,7 @@ export function Hero({ name, tagline, location, heroImage }: HeroProps) {
                 textTransform: "uppercase",
               }}
             >
-              Est.
+              {t.est}
               <br />
               2021
             </div>

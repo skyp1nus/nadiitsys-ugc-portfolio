@@ -3,8 +3,16 @@
 import { useEffect, useState } from "react";
 import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautyNav } from "@/lib/schemas/beauty-page";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import type { Locale } from "@/lib/i18n/config";
 
-export function Nav({ nav }: { nav: BeautyNav }) {
+interface NavProps {
+  nav: BeautyNav;
+  locale: Locale;
+  switcherLabel: string;
+}
+
+export function Nav({ nav, locale, switcherLabel }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -42,6 +50,12 @@ export function Nav({ nav }: { nav: BeautyNav }) {
         <a href={nav.cta.href} className={styles.navCta}>
           {nav.cta.label}
         </a>
+        <LanguageSwitcher
+          locale={locale}
+          basePath="/lifestyle"
+          variant="beauty"
+          label={switcherLabel}
+        />
       </div>
     </nav>
   );

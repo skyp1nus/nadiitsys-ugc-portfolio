@@ -8,6 +8,7 @@ import {
   upsertBeautyPage,
   type PageSlug,
 } from "@/lib/repos/pages";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 
 const ALLOWED_SLUGS: PageSlug[] = ["travel", "beauty"];
 
@@ -34,6 +35,15 @@ export async function POST(
     );
   }
 
+  const localeParam = req.nextUrl.searchParams.get("locale") ?? DEFAULT_LOCALE;
+  if (!isLocale(localeParam)) {
+    return NextResponse.json(
+      { ok: false, error: `Unknown locale: ${localeParam}` },
+      { status: 400 }
+    );
+  }
+  const locale = localeParam;
+
   let body: unknown;
   try {
     body = await req.json();
@@ -53,7 +63,7 @@ export async function POST(
           { status: 400 }
         );
       }
-      await upsertTravelPage({ ...parsed.data, updatedAt });
+      await upsertTravelPage({ ...parsed.data, updatedAt }, locale);
     } else {
       const parsed = BeautyPageSchema.safeParse(body);
       if (!parsed.success) {
@@ -63,9 +73,9 @@ export async function POST(
           { status: 400 }
         );
       }
-      await upsertBeautyPage({ ...parsed.data, updatedAt });
+      await upsertBeautyPage({ ...parsed.data, updatedAt }, locale);
     }
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, locale });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json({ ok: false, error: message }, { status: 500 });

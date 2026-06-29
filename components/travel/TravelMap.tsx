@@ -5,8 +5,10 @@ import { DOTS } from "./travel-map-dots";
 import { PINS, COUNTRIES as DEFAULT_COUNTRIES, STATS } from "./travel-map-data";
 import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface TravelMapProps {
+  t: TravelDict["map"];
   countries?: string[];
 }
 
@@ -40,7 +42,7 @@ interface DragState {
   moved: boolean;
 }
 
-export function TravelMap({ countries }: TravelMapProps = {}) {
+export function TravelMap({ t, countries }: TravelMapProps) {
   const list = countries && countries.length > 0 ? countries : DEFAULT_COUNTRIES;
   const [view, setView] = useState<View>({ z: 1, tx: 0, ty: 0 });
   const [hover, setHover] = useState(-1);
@@ -117,7 +119,7 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
               className={styles.serif}
               style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
             >
-              Travels
+              {t.eyebrow}
             </div>
           </Reveal>
           <Reveal
@@ -137,14 +139,13 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
                 lineHeight: 1.6,
               }}
             >
-              Countries I’ve created content in — organically, and for clients. Scroll or drag
-              the map to explore — hover a pin to see its city.
+              {t.intro}
             </div>
             <div className={`${styles.monoXs}`} style={{ display: "flex", gap: 48 }}>
               {[
-                { n: list.length, l: "countries" },
-                { n: STATS.cities, l: "cities" },
-                { n: STATS.continents, l: "continents" },
+                { n: list.length, l: t.countries },
+                { n: STATS.cities, l: t.cities },
+                { n: STATS.continents, l: t.continents },
               ].map((s) => (
                 <div key={s.l}>
                   <div
@@ -314,16 +315,16 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
               zIndex: 30,
             }}
           >
-            <button onClick={zoomIn} style={mapBtn} aria-label="Zoom in">
+            <button onClick={zoomIn} style={mapBtn} aria-label={t.zoomIn}>
               +
             </button>
-            <button onClick={zoomOut} style={mapBtn} aria-label="Zoom out">
+            <button onClick={zoomOut} style={mapBtn} aria-label={t.zoomOut}>
               −
             </button>
             <button
               onClick={reset}
               style={{ ...mapBtn, fontSize: 9 }}
-              aria-label="Reset view"
+              aria-label={t.reset}
             >
               ⟲
             </button>
@@ -346,13 +347,13 @@ export function TravelMap({ countries }: TravelMapProps = {}) {
             className={styles.monoXs}
             style={{ position: "absolute", bottom: 12, left: 12 }}
           >
-            DRAG · SCROLL TO ZOOM
+            {t.dragHint}
           </div>
           <div
             className={styles.monoXs}
             style={{ position: "absolute", bottom: 12, right: 12 }}
           >
-            UPDATED APR 2026
+            {t.updated}
           </div>
           </div>
         </Reveal>

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import styles from "./travel.module.css";
 
@@ -24,27 +23,8 @@ const jbMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
-export const metadata: Metadata = {
-  title: "Travel Media Kit",
-  description:
-    "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands. Based in Warsaw, working worldwide.",
-  alternates: { canonical: "/travel" },
-  openGraph: {
-    type: "website",
-    siteName: "nadiitsys.com",
-    locale: "en_US",
-    url: "/travel",
-    title: "Travel Media Kit — Nadii Tsys",
-    description:
-      "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Travel Media Kit — Nadii Tsys",
-    description:
-      "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
-  },
-};
+// Page-level metadata (title, per-locale canonical + hreflang) lives in
+// app/travel/page.tsx via generateMetadata, so it can read the request locale.
 
 export default function TravelLayout({ children }: { children: React.ReactNode }) {
   return (

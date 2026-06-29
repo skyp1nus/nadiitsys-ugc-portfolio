@@ -1,0 +1,132 @@
+{
+  "switcher": {
+    "label": "Langue",
+    "ariaCurrent": "Langue actuelle"
+  },
+  "home": {
+    "brandSub": "UGC · Varsovie",
+    "enter": "Entrer",
+    "lifestyle": {
+      "kicker": "N° 01 — LIFESTYLE",
+      "headline": "Le lifestyle,",
+      "italic": "raconté en douceur.",
+      "enterAria": "Entrer dans l'univers lifestyle"
+    },
+    "travel": {
+      "kicker": "N° 02 — VOYAGE",
+      "headline": "Le slow",
+      "italic": "travel, en images.",
+      "enterAria": "Entrer dans l'univers voyage"
+    }
+  },
+  "travel": {
+    "nav": {
+      "mediaKit": "Media Kit · 2026",
+      "about": "À propos",
+      "services": "Services",
+      "work": "Réalisations",
+      "travels": "Voyages",
+      "contact": "Contact",
+      "cta": "Réserver une collab"
+    },
+    "hero": {
+      "portfolioRates": "Portfolio & Tarifs",
+      "eyebrow": "Voyage · Hôtellerie · Lifestyle",
+      "title1": "L'art du",
+      "titleItalic": "slow",
+      "title2": "travel,",
+      "title3": "raconté en images.",
+      "taglineSuffix": "Je crée du contenu UGC cinématographique pour les hôtels, resorts, compagnies aériennes et marques de destination — du contenu qui arrête le voyageur.",
+      "latestShoot": "Dernier tournage",
+      "est": "Depuis"
+    },
+    "marquee": [
+      "Hôtels",
+      "Resorts",
+      "Compagnies aériennes",
+      "Restaurants",
+      "Spa & Bien-être",
+      "Destinations",
+      "Lifestyle",
+      "Hôtellerie"
+    ],
+    "about": {
+      "eyebrow": "À propos",
+      "specialtyLabel": "Spécialité",
+      "specialty": "Vidéo verticale courte (Reels / TikTok), photographie éditoriale, storytelling hôtelier tout en atmosphère.",
+      "approachLabel": "Approche",
+      "approach": "Un rythme posé, une lumière naturelle, un luxe discret. Pas de montage tape-à-l'œil — c'est le lieu qui est la vedette.",
+      "valuesLabel": "Valeurs",
+      "values": "L'authenticité avant la perfection, le respect du lieu et de ses habitants, des livrables fidèles au brief et toujours dans les temps — du contenu qui reste profondément humain.",
+      "formatsLabel": "Formats",
+      "formats": "Du contenu en solo face caméra, en couple ou en famille — avec mon mari et notre tout-petit — pour des récits hôteliers chaleureux et habités.",
+      "onRotation": "En ce moment",
+      "languagesLabel": "Langues",
+      "gearLabel": "Matériel",
+      "deliveryLabel": "Livraison"
+    },
+    "stills": {
+      "eyebrow": "Photos",
+      "intro": "De la photographie capturée en parallèle de la vidéo — pour les feeds des réseaux, la presse, les brochures et les emplacements publicitaires."
+    },
+    "reels": {
+      "eyebrow": "Reels",
+      "intro": "Une sélection de mes dernières vidéos verticales. Chaque reel est mis en musique, rythmé et étalonné en interne.",
+      "avgReach": "Portée moy. · 480K",
+      "avgCompletion": "Complétion moy. · 71%",
+      "empty": "Aucun reel pour le moment"
+    },
+    "offer": {
+      "eyebrow": "Services",
+      "intro": "Quatre façons de collaborer. Chaque formule est sur mesure — écrivez-moi en DM ou par e-mail pour les détails.",
+      "items": [
+        {
+          "title": "Reels UGC",
+          "desc": "Vidéo verticale courte, montée et optimisée pour les Reels et TikTok. Des accroches qui voyagent."
+        },
+        {
+          "title": "Stories d'hôtel",
+          "desc": "Une couverture éditoriale du séjour complet — arrivée, chambre, prestations, petit-déjeuner, coucher de soleil. Option de livraison en 24 h."
+        },
+        {
+          "title": "Campagne de destination",
+          "desc": "Des tournages sur plusieurs jours pour les offices de tourisme et les destinations. Photo + vidéo + images fixes + voix off."
+        },
+        {
+          "title": "Compagnie & Lounge",
+          "desc": "Du contenu UGC en cabine et au sol pour les compagnies aériennes, les lounges et les boutiques d'aéroport. Discret, premium, fidèle à la marque."
+        }
+      ]
+    },
+    "collabs": {
+      "eyebrow": "Ils me font confiance",
+      "intro": "Les hôtels et établissements pour lesquels j'ai créé du contenu — et de nouvelles collaborations toujours les bienvenues."
+    },
+    "map": {
+      "eyebrow": "Voyages",
+      "intro": "Les pays où j'ai créé du contenu — de façon organique comme pour des clients. Faites défiler ou déplacez la carte pour explorer — survolez un point pour découvrir sa ville.",
+      "countries": "pays",
+      "cities": "villes",
+      "continents": "continents",
+      "dragHint": "DÉPLACER · DÉFILER POUR ZOOMER",
+      "updated": "MIS À JOUR AVR. 2026",
+      "zoomIn": "Zoom avant",
+      "zoomOut": "Zoom arrière",
+      "reset": "Réinitialiser la vue"
+    },
+    "contact": {
+      "letsWork": "Travaillons ensemble",
+      "title1": "Un lieu qui",
+      "title2": "mérite qu'on en",
+      "titleItalic": "raconte l'histoire ?",
+      "getInTouch": "Prendre contact",
+      "directChannels": "Canaux directs",
+      "emailLabel": "E-mail",
+      "soon": "bientôt",
+      "responseTime": "Délai de réponse",
+      "bookingWindow": "Période de réservation",
+      "mediaKit": "Media Kit v.3",
+      "rights": "Tous droits réservés"
+    }
+  }
+}

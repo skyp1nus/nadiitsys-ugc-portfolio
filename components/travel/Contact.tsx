@@ -2,8 +2,10 @@ import { Icon, type IconName } from "./Icon";
 import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
 import type { TravelContact } from "@/types/travel";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface ContactProps {
+  t: TravelDict["contact"];
   name: string;
   contact: TravelContact;
 }
@@ -16,9 +18,9 @@ interface Channel {
   soon?: boolean;
 }
 
-function buildChannels(c: TravelContact): Channel[] {
+function buildChannels(c: TravelContact, emailLabel: string): Channel[] {
   return [
-    { i: "mail", l: "Email", v: c.email, href: c.email ? `mailto:${c.email}` : null },
+    { i: "mail", l: emailLabel, v: c.email, href: c.email ? `mailto:${c.email}` : null },
     { i: "ig", l: "Instagram", v: c.instagram, href: c.instagramUrl || null },
     { i: "tt", l: "TikTok", v: c.tiktok, href: c.tiktokUrl || null },
     c.youtubeReady
@@ -27,8 +29,8 @@ function buildChannels(c: TravelContact): Channel[] {
   ];
 }
 
-export function Contact({ name, contact }: ContactProps) {
-  const channels = buildChannels(contact);
+export function Contact({ t, name, contact }: ContactProps) {
+  const channels = buildChannels(contact, t.emailLabel);
   const ctaHref = contact.email ? `mailto:${contact.email}` : "#";
   return (
     <section
@@ -48,7 +50,7 @@ export function Contact({ name, contact }: ContactProps) {
         <div className={styles.staggerChildren}>
           <Reveal variant="lift">
             <div className={styles.monoXs} style={{ marginBottom: 16 }}>
-              § 07 · Let’s work
+              § 07 · {t.letsWork}
             </div>
           </Reveal>
           <Reveal variant="lift">
@@ -61,11 +63,11 @@ export function Contact({ name, contact }: ContactProps) {
                 letterSpacing: "-0.02em",
               }}
             >
-              Have a place
+              {t.title1}
               <br />
-              worth telling
+              {t.title2}
               <br />
-              <i>a story about?</i>
+              <i>{t.titleItalic}</i>
             </div>
           </Reveal>
           <Reveal variant="lift">
@@ -84,7 +86,7 @@ export function Contact({ name, contact }: ContactProps) {
                   fontSize: 14,
                 }}
               >
-                {contact.email || "Get in touch"} <Icon name="arrow" size={14} stroke={1.4} />
+                {contact.email || t.getInTouch} <Icon name="arrow" size={14} stroke={1.4} />
               </a>
             </div>
           </Reveal>
@@ -95,7 +97,7 @@ export function Contact({ name, contact }: ContactProps) {
           style={{ border: "1px solid var(--hair)", padding: 32, background: "var(--paper)" }}
         >
           <div className={styles.monoXs} style={{ marginBottom: 24 }}>
-            Direct channels
+            {t.directChannels}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             {channels.map((r, i) => {
@@ -126,7 +128,7 @@ export function Contact({ name, contact }: ContactProps) {
                           background: "var(--cream)",
                         }}
                       >
-                        soon
+                        {t.soon}
                       </span>
                     ) : (
                       <span className={styles.arrowI}>
@@ -176,13 +178,13 @@ export function Contact({ name, contact }: ContactProps) {
           <div style={{ display: "flex", justifyContent: "space-between", gap: 16 }}>
             <div>
               <div className={styles.monoXs} style={{ marginBottom: 6 }}>
-                Response time
+                {t.responseTime}
               </div>
               <div style={{ fontSize: 14 }}>{contact.responseTime}</div>
             </div>
             <div style={{ textAlign: "right" }}>
               <div className={styles.monoXs} style={{ marginBottom: 6 }}>
-                Booking window
+                {t.bookingWindow}
               </div>
               <div style={{ fontSize: 14 }}>{contact.bookingWindow}</div>
             </div>
@@ -205,7 +207,7 @@ export function Contact({ name, contact }: ContactProps) {
           {name}
         </div>
         <div className={styles.monoXs} style={{ textAlign: "right" }}>
-          © {new Date().getFullYear()} · Media Kit v.3 · All rights reserved
+          © {new Date().getFullYear()} · {t.mediaKit} · {t.rights}
         </div>
       </Reveal>
     </section>

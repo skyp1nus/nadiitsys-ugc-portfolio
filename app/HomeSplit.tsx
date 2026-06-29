@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import { localizedPath, type Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionary-types";
 
 const HOVER_RATIO = 62;
 
@@ -18,6 +21,8 @@ type SidePanelProps = {
   kicker: string;
   headline: string;
   italic: string;
+  cta: string;
+  ariaLabel: string;
 };
 
 function SidePanel({
@@ -30,6 +35,8 @@ function SidePanel({
   kicker,
   headline,
   italic,
+  cta,
+  ariaLabel,
 }: SidePanelProps) {
   const isHovered = hover === side;
   const otherHovered = hover !== null && hover !== side;
@@ -46,7 +53,7 @@ function SidePanel({
       style={{ flexBasis }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      aria-label={`Enter ${side === "beauty" ? "lifestyle" : side}`}
+      aria-label={ariaLabel}
     >
       <div className={`${styles.content} ${intro ? styles.in : ""}`}>
         <span className={styles.kicker}>{kicker}</span>
@@ -55,7 +62,7 @@ function SidePanel({
           <em className={styles.italic}>{italic}</em>
         </div>
         <span className={styles.cta}>
-          <span>Enter</span>
+          <span>{cta}</span>
           <span className={styles.ctaArrow} aria-hidden>
             →
           </span>
@@ -65,7 +72,13 @@ function SidePanel({
   );
 }
 
-export default function HomeSplit() {
+interface HomeSplitProps {
+  dict: Dictionary["home"];
+  locale: Locale;
+  switcherLabel: string;
+}
+
+export default function HomeSplit({ dict, locale, switcherLabel }: HomeSplitProps) {
   const [hover, setHover] = useState<Side | null>(null);
   const [intro, setIntro] = useState(false);
 
@@ -95,32 +108,51 @@ export default function HomeSplit() {
 
   return (
     <div className={styles.stage}>
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          right: 20,
+          zIndex: 40,
+        }}
+      >
+        <LanguageSwitcher
+          locale={locale}
+          basePath="/"
+          variant="home"
+          label={switcherLabel}
+        />
+      </div>
       <div className={`${styles.brand} ${intro ? styles.in : ""}`}>
         <span className={styles.brandName}>Nadii Tsys</span>
-        <span className={styles.brandSub}>UGC · Warsaw</span>
+        <span className={styles.brandSub}>{dict.brandSub}</span>
       </div>
       <div className={styles.split}>
         <SidePanel
           side="beauty"
-          href="/lifestyle"
+          href={localizedPath("/lifestyle", locale)}
           hover={hover}
           intro={intro}
           onEnter={() => setHover("beauty")}
           onLeave={() => setHover(null)}
-          kicker="N° 01 — LIFESTYLE"
-          headline="Lifestyle,"
-          italic="softly told."
+          kicker={dict.lifestyle.kicker}
+          headline={dict.lifestyle.headline}
+          italic={dict.lifestyle.italic}
+          cta={dict.enter}
+          ariaLabel={dict.lifestyle.enterAria}
         />
         <SidePanel
           side="travel"
-          href="/travel"
+          href={localizedPath("/travel", locale)}
           hover={hover}
           intro={intro}
           onEnter={() => setHover("travel")}
           onLeave={() => setHover(null)}
-          kicker="N° 02 — TRAVEL"
-          headline="Slow"
-          italic="travel, in frames."
+          kicker={dict.travel.kicker}
+          headline={dict.travel.headline}
+          italic={dict.travel.italic}
+          cta={dict.enter}
+          ariaLabel={dict.travel.enterAria}
         />
       </div>
     </div>

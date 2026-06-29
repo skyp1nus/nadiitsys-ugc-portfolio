@@ -1,27 +1,35 @@
 import type { Metadata } from "next";
 import HomeSplit from "./HomeSplit";
+import { getI18n, getLocale } from "@/lib/i18n/server";
+import { buildAlternates } from "@/lib/i18n/seo";
+import { OG_LOCALE } from "@/lib/i18n/config";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
-export const metadata: Metadata = {
-  title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
-  description:
-    "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: "nadiitsys.com",
-    locale: "en_US",
-    url: "/",
-    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
-    description: "Cinematic UGC content for hospitality and lifestyle brands.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
-    description: "Cinematic UGC content for hospitality and lifestyle brands.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    // Absolute opts out of the root layout's "%s — Nadii Tsys" template
+    // (otherwise the brand would be duplicated).
+    title: { absolute: "Nadii Tsys — Travel & Lifestyle UGC Creator" },
+    description:
+      "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
+    alternates: buildAlternates("/", locale),
+    openGraph: {
+      type: "website",
+      siteName: "nadiitsys.com",
+      locale: OG_LOCALE[locale],
+      url: buildAlternates("/", locale).canonical,
+      title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
+      description: "Cinematic UGC content for hospitality and lifestyle brands.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
+      description: "Cinematic UGC content for hospitality and lifestyle brands.",
+    },
+  };
+}
 
 const personLd = {
   "@context": "https://schema.org",
@@ -72,17 +80,19 @@ const serviceLd = {
   },
 };
 
-const websiteLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${SITE_URL}/#website`,
-  url: SITE_URL,
-  name: "Nadii Tsys — UGC Portfolio",
-  inLanguage: "en",
-  publisher: { "@id": `${SITE_URL}/#person` },
-};
+export default async function HomePage() {
+  const { locale, dict } = await getI18n();
 
-export default function HomePage() {
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: "Nadii Tsys — UGC Portfolio",
+    inLanguage: locale,
+    publisher: { "@id": `${SITE_URL}/#person` },
+  };
+
   return (
     <>
       <script
@@ -92,7 +102,7 @@ export default function HomePage() {
           __html: JSON.stringify([personLd, serviceLd, websiteLd]),
         }}
       />
-      <HomeSplit />
+      <HomeSplit dict={dict.home} locale={locale} switcherLabel={dict.switcher.label} />
     </>
   );
 }

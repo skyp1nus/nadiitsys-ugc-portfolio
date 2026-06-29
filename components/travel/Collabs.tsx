@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface Brand {
   name: string;
@@ -8,10 +9,11 @@ interface Brand {
 }
 
 interface CollabsProps {
+  t: TravelDict["collabs"];
   hotels: Brand[];
 }
 
-export function Collabs({ hotels }: CollabsProps) {
+export function Collabs({ t, hotels }: CollabsProps) {
   const BRANDS = hotels;
   return (
     <section
@@ -41,15 +43,14 @@ export function Collabs({ hotels }: CollabsProps) {
               className={styles.serif}
               style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
             >
-              Trusted by
+              {t.eyebrow}
             </div>
           </Reveal>
           <Reveal>
             <div
               style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
             >
-              Hotels and properties I’ve created content for — with new collaborations always
-              welcome.
+              {t.intro}
             </div>
           </Reveal>
         </div>

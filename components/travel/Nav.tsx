@@ -2,9 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { Icon } from "./Icon";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
+import type { Locale } from "@/lib/i18n/config";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 import styles from "@/app/travel/travel.module.css";
 
-export function Nav() {
+interface NavProps {
+  t: TravelDict["nav"];
+  locale: Locale;
+  switcherLabel: string;
+}
+
+export function Nav({ t, locale, switcherLabel }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -67,43 +76,51 @@ export function Nav() {
             <Icon name="compass" size={16} stroke={1} />
           </div>
           <div className={styles.monoXs} style={{ color: "var(--ink)" }}>
-            Media Kit · 2026
+            {t.mediaKit}
           </div>
         </div>
 
         <div className={`${styles.monoXs} ${styles.navLinks}`} style={{ display: "flex", gap: 40 }}>
           <a className={styles.navLink} href="#about">
-            About
+            {t.about}
           </a>
           <a className={styles.navLink} href="#offer">
-            Services
+            {t.services}
           </a>
           <a className={styles.navLink} href="#work">
-            Work
+            {t.work}
           </a>
           <a className={styles.navLink} href="#map">
-            Travels
+            {t.travels}
           </a>
           <a className={styles.navLink} href="#contact">
-            Contact
+            {t.contact}
           </a>
         </div>
 
-        <a
-          href="#contact"
-          className={`${styles.monoXs} ${styles.navCta}`}
-          style={{
-            padding: "10px 18px",
-            border: "1px solid var(--ink)",
-            borderRadius: 999,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            whiteSpace: "nowrap",
-          }}
-        >
-          Book a collab <Icon name="arrow" size={12} stroke={1.4} />
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <LanguageSwitcher
+            locale={locale}
+            basePath="/travel"
+            variant="travel"
+            label={switcherLabel}
+          />
+          <a
+            href="#contact"
+            className={`${styles.monoXs} ${styles.navCta}`}
+            style={{
+              padding: "10px 18px",
+              border: "1px solid var(--ink)",
+              borderRadius: 999,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {t.cta} <Icon name="arrow" size={12} stroke={1.4} />
+          </a>
+        </div>
       </div>
     </nav>
   );

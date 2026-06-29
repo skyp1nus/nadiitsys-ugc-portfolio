@@ -1,0 +1,132 @@
+{
+  "switcher": {
+    "label": "Idioma",
+    "ariaCurrent": "Idioma actual"
+  },
+  "home": {
+    "brandSub": "UGC · Varsovia",
+    "enter": "Entrar",
+    "lifestyle": {
+      "kicker": "N° 01 — LIFESTYLE",
+      "headline": "Lifestyle,",
+      "italic": "contado con suavidad.",
+      "enterAria": "Entrar a lifestyle"
+    },
+    "travel": {
+      "kicker": "N° 02 — VIAJES",
+      "headline": "Slow",
+      "italic": "travel, en fotogramas.",
+      "enterAria": "Entrar a viajes"
+    }
+  },
+  "travel": {
+    "nav": {
+      "mediaKit": "Media Kit · 2026",
+      "about": "Sobre mí",
+      "services": "Servicios",
+      "work": "Proyectos",
+      "travels": "Viajes",
+      "contact": "Contacto",
+      "cta": "Reserva una colaboración"
+    },
+    "hero": {
+      "portfolioRates": "Portfolio y tarifas",
+      "eyebrow": "Viajes · Hospitalidad · Lifestyle",
+      "title1": "El arte del",
+      "titleItalic": "slow",
+      "title2": "travel,",
+      "title3": "contado en fotogramas.",
+      "taglineSuffix": "Creo UGC cinematográfico para hoteles, resorts, aerolíneas y marcas de destino — contenido que hace que los viajeros se detengan.",
+      "latestShoot": "Última sesión",
+      "est": "Est."
+    },
+    "marquee": [
+      "Hoteles",
+      "Resorts",
+      "Aerolíneas",
+      "Restaurantes",
+      "Spa y bienestar",
+      "Destinos",
+      "Lifestyle",
+      "Hospitalidad"
+    ],
+    "about": {
+      "eyebrow": "Sobre mí",
+      "specialtyLabel": "Especialidad",
+      "specialty": "Vídeo vertical de formato corto (Reels / TikTok), fotografía editorial y storytelling atmosférico de hospitalidad.",
+      "approachLabel": "Enfoque",
+      "approach": "Ritmo pausado, luz natural, lujo discreto. Sin ediciones estridentes: el protagonista es el lugar.",
+      "valuesLabel": "Valores",
+      "values": "Autenticidad antes que perfección, respeto por el lugar y su gente, entregas fieles al brief y de fiar — contenido que sigue sintiéndose humano.",
+      "formatsLabel": "Formatos",
+      "formats": "Contenido en solitario frente a cámara, en pareja y en familia — con mi marido y nuestro pequeño — para historias de hospitalidad cálidas y cercanas.",
+      "onRotation": "En rotación",
+      "languagesLabel": "Idiomas",
+      "gearLabel": "Equipo",
+      "deliveryLabel": "Entrega"
+    },
+    "stills": {
+      "eyebrow": "Fotos fijas",
+      "intro": "Fotografía capturada junto al vídeo — para feeds sociales, prensa, folletos y espacios publicitarios."
+    },
+    "reels": {
+      "eyebrow": "Reels",
+      "intro": "Una selección de mi trabajo reciente en vídeo vertical. Cada reel se musicaliza, se monta con ritmo y se etalona en color de forma interna.",
+      "avgReach": "Alcance medio · 480K",
+      "avgCompletion": "Finalización media · 71%",
+      "empty": "Aún no hay reels"
+    },
+    "offer": {
+      "eyebrow": "Servicios",
+      "intro": "Cuatro formas de trabajar juntos. Cada paquete es a medida — escríbeme por DM o email para más detalles.",
+      "items": [
+        {
+          "title": "UGC Reels",
+          "desc": "Vídeo vertical de formato corto, editado y optimizado para Reels y TikTok. Ganchos que viajan."
+        },
+        {
+          "title": "Historias de hotel",
+          "desc": "Cobertura editorial de toda la estancia — llegada, habitación, instalaciones, desayuno, atardecer. Opción de entrega en 24 h."
+        },
+        {
+          "title": "Campaña de destino",
+          "desc": "Sesiones de varios días para oficinas de turismo y destinos. Foto + vídeo + fotos fijas + locución."
+        },
+        {
+          "title": "Aerolínea y lounge",
+          "desc": "UGC a bordo y en tierra para aerolíneas, salas VIP y comercios de aeropuerto. Discreto, premium y fiel a la marca."
+        }
+      ]
+    },
+    "collabs": {
+      "eyebrow": "Confían en mí",
+      "intro": "Hoteles y alojamientos para los que he creado contenido — y siempre con las puertas abiertas a nuevas colaboraciones."
+    },
+    "map": {
+      "eyebrow": "Viajes",
+      "intro": "Países en los que he creado contenido — de forma orgánica y para clientes. Desplázate o arrastra el mapa para explorar — pasa el cursor sobre un pin para ver su ciudad.",
+      "countries": "países",
+      "cities": "ciudades",
+      "continents": "continentes",
+      "dragHint": "ARRASTRA · DESPLAZA PARA AMPLIAR",
+      "updated": "ACTUALIZADO ABR 2026",
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "reset": "Restablecer vista"
+    },
+    "contact": {
+      "letsWork": "Trabajemos juntos",
+      "title1": "¿Tienes un lugar",
+      "title2": "que merece",
+      "titleItalic": "una historia?",
+      "getInTouch": "Ponte en contacto",
+      "directChannels": "Canales directos",
+      "emailLabel": "Email",
+      "soon": "pronto",
+      "responseTime": "Tiempo de respuesta",
+      "bookingWindow": "Periodo de reservas",
+      "mediaKit": "Media Kit v.3",
+      "rights": "Todos los derechos reservados"
+    }
+  }
+}

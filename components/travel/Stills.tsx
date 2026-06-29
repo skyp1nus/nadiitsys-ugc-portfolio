@@ -3,6 +3,7 @@ import { Reveal } from "./Reveal";
 import { SkeletonImage } from "./SkeletonImage";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface Cell {
   col: string;
@@ -23,10 +24,11 @@ const CELLS: Cell[] = [
 ];
 
 interface StillsProps {
+  t: TravelDict["stills"];
   photos: MediaItem[];
 }
 
-export function Stills({ photos }: StillsProps) {
+export function Stills({ t, photos }: StillsProps) {
   return (
     <section
       className={styles.sectionPad}
@@ -49,15 +51,14 @@ export function Stills({ photos }: StillsProps) {
             className={styles.serif}
             style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
           >
-            Stills
+            {t.eyebrow}
           </div>
         </Reveal>
         <Reveal>
           <div
             style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
           >
-            Photography shot alongside video — for social grids, press, brochures and ad
-            placements.
+            {t.intro}
           </div>
         </Reveal>
       </div>

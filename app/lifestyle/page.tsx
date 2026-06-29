@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { loadBeautyPage } from "@/lib/content";
 import { listMedia, getSingleMedia } from "@/lib/repos/media";
+import { getI18n, getLocale } from "@/lib/i18n/server";
+import { buildAlternates } from "@/lib/i18n/seo";
+import { OG_LOCALE } from "@/lib/i18n/config";
 import styles from "./beauty.module.css";
 import { Nav } from "@/components/beauty/Nav";
 import { Hero } from "@/components/beauty/Hero";
@@ -17,31 +20,34 @@ export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
-export const metadata: Metadata = {
-  title: "Lifestyle UGC — Media Kit",
-  description:
-    "Lifestyle UGC content creator media kit — cinematic short-form video and photography for lifestyle, fashion and home brands. Based in Warsaw, working worldwide.",
-  alternates: { canonical: "/lifestyle" },
-  openGraph: {
-    type: "website",
-    siteName: "nadiitsys.com",
-    locale: "en_US",
-    url: "/lifestyle",
-    title: "Lifestyle UGC — Media Kit | Nadii Tsys",
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const alternates = buildAlternates("/lifestyle", locale);
+  return {
+    title: "Lifestyle UGC — Media Kit",
     description:
-      "Aesthetic lifestyle UGC for fashion, home and indie brands.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Lifestyle UGC — Media Kit | Nadii Tsys",
-    description:
-      "Aesthetic lifestyle UGC for fashion, home and indie brands.",
-  },
-};
+      "Lifestyle UGC content creator media kit — cinematic short-form video and photography for lifestyle, fashion and home brands. Based in Warsaw, working worldwide.",
+    alternates,
+    openGraph: {
+      type: "website",
+      siteName: "nadiitsys.com",
+      locale: OG_LOCALE[locale],
+      url: alternates.canonical,
+      title: "Lifestyle UGC — Media Kit | Nadii Tsys",
+      description: "Aesthetic lifestyle UGC for fashion, home and indie brands.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Lifestyle UGC — Media Kit | Nadii Tsys",
+      description: "Aesthetic lifestyle UGC for fashion, home and indie brands.",
+    },
+  };
+}
 
 export default async function LifestylePage() {
+  const { locale, dict } = await getI18n();
   const [data, heroImage, aboutPhotos, photos, reels] = await Promise.all([
-    loadBeautyPage(),
+    loadBeautyPage(locale),
     getSingleMedia("beauty", "hero"),
     listMedia("beauty", "about-photo"),
     listMedia("beauty", "photo"),
@@ -98,7 +104,7 @@ export default async function LifestylePage() {
           __html: JSON.stringify([serviceLd, breadcrumbLd]),
         }}
       />
-      <Nav nav={data.nav} />
+      <Nav nav={data.nav} locale={locale} switcherLabel={dict.switcher.label} />
       <Hero hero={data.hero} heroImage={heroImage} />
       <Marquee items={data.marquee} />
       <About about={data.about} images={aboutPhotos} />

@@ -3,8 +3,10 @@ import { Reveal } from "./Reveal";
 import { SkeletonVideo } from "./SkeletonVideo";
 import styles from "@/app/travel/travel.module.css";
 import type { MediaItem } from "@/lib/repos/media";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface AboutProps {
+  t: TravelDict["about"];
   bio: string;
   languages: string[];
   gear: string;
@@ -12,7 +14,7 @@ interface AboutProps {
   aboutVideo?: MediaItem | null;
 }
 
-export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps) {
+export function About({ t, bio, languages, gear, delivery, aboutVideo }: AboutProps) {
   return (
     <section
       id="about"
@@ -31,7 +33,7 @@ export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps
             className={styles.serif}
             style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
           >
-            About
+            {t.eyebrow}
           </div>
         </Reveal>
 
@@ -71,38 +73,34 @@ export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps
             >
               <Reveal>
                 <div className={styles.monoXs} style={{ marginBottom: 10 }}>
-                  Specialty
+                  {t.specialtyLabel}
                 </div>
                 <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
-                  Short-form vertical video (Reels / TikTok), editorial photography,
-                  atmospheric hospitality storytelling.
+                  {t.specialty}
                 </div>
               </Reveal>
               <Reveal>
                 <div className={styles.monoXs} style={{ marginBottom: 10 }}>
-                  Approach
+                  {t.approachLabel}
                 </div>
                 <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
-                  Calm pacing, natural light, understated luxury. No loud edits — the place is
-                  the hero.
+                  {t.approach}
                 </div>
               </Reveal>
               <Reveal>
                 <div className={styles.monoXs} style={{ marginBottom: 10 }}>
-                  Values
+                  {t.valuesLabel}
                 </div>
                 <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
-                  Authenticity over perfection, respect for the place and its people,
-                  reliable on-brief delivery — content that still feels human.
+                  {t.values}
                 </div>
               </Reveal>
               <Reveal>
                 <div className={styles.monoXs} style={{ marginBottom: 10 }}>
-                  Formats
+                  {t.formatsLabel}
                 </div>
                 <div style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)" }}>
-                  Solo on-camera, couple, and family content — including my husband and our
-                  toddler — for warm, lived-in hospitality stories.
+                  {t.formats}
                 </div>
               </Reveal>
             </div>
@@ -137,25 +135,25 @@ export function About({ bio, languages, gear, delivery, aboutVideo }: AboutProps
                 }}
               >
                 <div className={styles.monoXs} style={{ marginBottom: 12 }}>
-                  On rotation
+                  {t.onRotation}
                 </div>
                 <div
                   style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 14 }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                    <span>Languages</span>
+                    <span>{t.languagesLabel}</span>
                     <span className={styles.mono} style={{ fontSize: 12 }}>
                       {languages.join(" · ")}
                     </span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                    <span>Gear</span>
+                    <span>{t.gearLabel}</span>
                     <span className={styles.mono} style={{ fontSize: 12 }}>
                       {gear}
                     </span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                    <span>Delivery</span>
+                    <span>{t.deliveryLabel}</span>
                     <span className={styles.mono} style={{ fontSize: 12 }}>
                       {delivery}
                     </span>

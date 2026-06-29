@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
 import { loadTravelPage } from "@/lib/content";
 import { listMedia, getSingleMedia } from "@/lib/repos/media";
+import { getI18n, getLocale } from "@/lib/i18n/server";
+import { buildAlternates } from "@/lib/i18n/seo";
+import { OG_LOCALE } from "@/lib/i18n/config";
 import { Nav } from "@/components/travel/Nav";
 import { Hero } from "@/components/travel/Hero";
 import { Marquee } from "@/components/travel/Marquee";
@@ -15,15 +19,43 @@ export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const alternates = buildAlternates("/travel", locale);
+  return {
+    title: "Travel Media Kit",
+    description:
+      "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands. Based in Warsaw, working worldwide.",
+    alternates,
+    openGraph: {
+      type: "website",
+      siteName: "nadiitsys.com",
+      locale: OG_LOCALE[locale],
+      url: alternates.canonical,
+      title: "Travel Media Kit — Nadii Tsys",
+      description:
+        "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Travel Media Kit — Nadii Tsys",
+      description:
+        "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+    },
+  };
+}
+
 export default async function TravelPage() {
+  const { locale, dict } = await getI18n();
   const [data, photos, reels, heroImage, aboutVideo] = await Promise.all([
-    loadTravelPage(),
+    loadTravelPage(locale),
     listMedia("travel", "photo"),
     listMedia("travel", "reel"),
     getSingleMedia("travel", "hero"),
     getSingleMedia("travel", "about-video"),
   ]);
   const { profile, hotels, countries, contact } = data;
+  const t = dict.travel;
 
   const serviceLd = {
     "@context": "https://schema.org",
@@ -61,27 +93,29 @@ export default async function TravelPage() {
           __html: JSON.stringify([serviceLd, breadcrumbLd]),
         }}
       />
-      <Nav />
+      <Nav t={t.nav} locale={locale} switcherLabel={dict.switcher.label} />
       <Hero
+        t={t.hero}
         name={profile.creatorName}
         tagline={profile.tagline}
         location={profile.location}
         heroImage={heroImage}
       />
-      <Marquee />
+      <Marquee items={t.marquee} />
       <About
+        t={t.about}
         bio={profile.bio}
         languages={profile.languages}
         gear={profile.gear}
         delivery={profile.delivery}
         aboutVideo={aboutVideo}
       />
-      <Stills photos={photos} />
-      <Reels reels={reels} />
-      <Offer />
-      <Collabs hotels={hotels} />
-      <TravelMap countries={countries} />
-      <Contact name={profile.creatorName} contact={contact} />
+      <Stills t={t.stills} photos={photos} />
+      <Reels t={t.reels} reels={reels} />
+      <Offer t={t.offer} />
+      <Collabs t={t.collabs} hotels={hotels} />
+      <TravelMap t={t.map} countries={countries} />
+      <Contact t={t.contact} name={profile.creatorName} contact={contact} />
     </>
   );
 }

@@ -1,13 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import type { BeautyPageInput } from "@/lib/schemas/beauty-page";
 import {
   AdminShell,
   type PageLink,
-  type SaveState,
   type TabItem,
 } from "@/components/admin/AdminShell";
+import { LocaleBar } from "@/components/admin/LocaleBar";
+import { useLocaleEditor } from "@/components/admin/useLocaleEditor";
+import { localizedPath } from "@/lib/i18n/config";
 import { NavTab } from "@/components/admin/beauty/tabs/NavTab";
 import { HeroTab } from "@/components/admin/beauty/tabs/HeroTab";
 import { MarqueeTab } from "@/components/admin/beauty/tabs/MarqueeTab";
@@ -90,70 +92,27 @@ interface BeautyPageEditorProps {
 }
 
 export function BeautyPageEditor({ initial }: BeautyPageEditorProps) {
-  const [data, setData] = useState<BeautyPageInput>(initial);
+  const {
+    locale,
+    exists,
+    loading,
+    data,
+    setData,
+    switchLocale,
+    saveState,
+    saveMessage,
+    toast,
+  } = useLocaleEditor<BeautyPageInput>("beauty", initial);
   const [activeTab, setActiveTab] = useState<TabKey>("hero");
-  const [saveState, setSaveState] = useState<SaveState>("idle");
-  const [saveMessage, setSaveMessage] = useState<string | undefined>(undefined);
-  const [toast, setToast] = useState<string | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const skipAutosaveRef = useRef(true);
 
   const openPreview = useCallback(() => {
     const host = window.location.host;
     const publicHost = host.startsWith("admin.")
       ? host.slice("admin.".length)
       : host;
-    const url = `${window.location.protocol}//${publicHost}/lifestyle`;
+    const url = `${window.location.protocol}//${publicHost}${localizedPath("/lifestyle", locale)}`;
     window.open(url, "_blank", "noopener,noreferrer");
-  }, []);
-
-  const showToast = useCallback((msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 1800);
-  }, []);
-
-  const doSave = useCallback(
-    async (payload: BeautyPageInput, silent: boolean) => {
-      try {
-        const res = await fetch(`/api/admin/save-page/beauty`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (res.ok) {
-          setSaveState("saved");
-          setSaveMessage(undefined);
-          if (!silent) showToast("Saved");
-        } else {
-          const text = await res.text();
-          setSaveState("error");
-          setSaveMessage(`Save failed (${res.status})`);
-          if (!silent) showToast(`Error: ${text.slice(0, 80)}`);
-        }
-      } catch (err) {
-        setSaveState("error");
-        setSaveMessage(err instanceof Error ? err.message : "Network error");
-      }
-    },
-    [showToast]
-  );
-
-  useEffect(() => {
-    if (skipAutosaveRef.current) {
-      skipAutosaveRef.current = false;
-      return;
-    }
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    setSaveState("dirty");
-    setSaveMessage(undefined);
-    debounceRef.current = setTimeout(() => {
-      setSaveState("saving");
-      void doSave(data, true);
-    }, 800);
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, [data, doSave]);
+  }, [locale]);
 
   const tabs: TabItem[] = TABS_ORDER.map((k) => ({
     key: k,
@@ -183,6 +142,12 @@ export function BeautyPageEditor({ initial }: BeautyPageEditorProps) {
         saveMessage={saveMessage}
         onOpenPreview={openPreview}
       >
+        <LocaleBar
+          locale={locale}
+          exists={exists}
+          loading={loading}
+          onSwitch={switchLocale}
+        />
         <h2>{TAB_LABELS[activeTab]}</h2>
         <p className="section-desc">{TAB_DESC[activeTab]}</p>
 

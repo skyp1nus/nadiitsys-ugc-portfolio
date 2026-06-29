@@ -1,16 +1,5 @@
 import styles from "@/app/travel/travel.module.css";
 
-const ITEMS = [
-  "Hotels",
-  "Resorts",
-  "Airlines",
-  "Restaurants",
-  "Spa & Wellness",
-  "Destinations",
-  "Lifestyle",
-  "Hospitality",
-];
-
 function Dot() {
   return (
     <span
@@ -25,8 +14,8 @@ function Dot() {
   );
 }
 
-export function Marquee() {
-  const full = [...ITEMS, ...ITEMS, ...ITEMS];
+export function Marquee({ items }: { items: readonly string[] }) {
+  const full = [...items, ...items, ...items];
   return (
     <div
       className={styles.marqueeWrap}

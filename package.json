@@ -19,7 +19,9 @@
     "db:types": "wrangler types",
     "db:schema": "wrangler d1 execute nadiitsys --remote --file=db/schema.sql",
     "db:seed": "wrangler d1 execute nadiitsys --remote --file=db/seed.sql",
-    "db:local-reset": "wrangler d1 execute nadiitsys --local --file=db/schema.sql && wrangler d1 execute nadiitsys --local --file=db/seed.sql",
+    "db:seed-locales": "wrangler d1 execute nadiitsys --remote --file=db/seed-locales.sql",
+    "db:migrate-locale": "wrangler d1 execute nadiitsys --remote --file=db/migrations/006_pages_per_locale.sql",
+    "db:local-reset": "wrangler d1 execute nadiitsys --local --file=db/schema.sql && wrangler d1 execute nadiitsys --local --file=db/seed.sql && wrangler d1 execute nadiitsys --local --file=db/seed-locales.sql",
     "secrets:list": "wrangler secret list"
   },
   "dependencies": {

@@ -1,0 +1,132 @@
+{
+  "switcher": {
+    "label": "Language",
+    "ariaCurrent": "Current language"
+  },
+  "home": {
+    "brandSub": "UGC · Warsaw",
+    "enter": "Enter",
+    "lifestyle": {
+      "kicker": "N° 01 — LIFESTYLE",
+      "headline": "Lifestyle,",
+      "italic": "softly told.",
+      "enterAria": "Enter lifestyle"
+    },
+    "travel": {
+      "kicker": "N° 02 — TRAVEL",
+      "headline": "Slow",
+      "italic": "travel, in frames.",
+      "enterAria": "Enter travel"
+    }
+  },
+  "travel": {
+    "nav": {
+      "mediaKit": "Media Kit · 2026",
+      "about": "About",
+      "services": "Services",
+      "work": "Work",
+      "travels": "Travels",
+      "contact": "Contact",
+      "cta": "Book a collab"
+    },
+    "hero": {
+      "portfolioRates": "Portfolio & Rates",
+      "eyebrow": "Travel · Hospitality · Lifestyle",
+      "title1": "The art of",
+      "titleItalic": "slow",
+      "title2": "travel,",
+      "title3": "told in frames.",
+      "taglineSuffix": "I create cinematic UGC for hotels, resorts, airlines & destination brands — content that makes travellers pause.",
+      "latestShoot": "Latest shoot",
+      "est": "Est."
+    },
+    "marquee": [
+      "Hotels",
+      "Resorts",
+      "Airlines",
+      "Restaurants",
+      "Spa & Wellness",
+      "Destinations",
+      "Lifestyle",
+      "Hospitality"
+    ],
+    "about": {
+      "eyebrow": "About",
+      "specialtyLabel": "Specialty",
+      "specialty": "Short-form vertical video (Reels / TikTok), editorial photography, atmospheric hospitality storytelling.",
+      "approachLabel": "Approach",
+      "approach": "Calm pacing, natural light, understated luxury. No loud edits — the place is the hero.",
+      "valuesLabel": "Values",
+      "values": "Authenticity over perfection, respect for the place and its people, reliable on-brief delivery — content that still feels human.",
+      "formatsLabel": "Formats",
+      "formats": "Solo on-camera, couple, and family content — including my husband and our toddler — for warm, lived-in hospitality stories.",
+      "onRotation": "On rotation",
+      "languagesLabel": "Languages",
+      "gearLabel": "Gear",
+      "deliveryLabel": "Delivery"
+    },
+    "stills": {
+      "eyebrow": "Stills",
+      "intro": "Photography shot alongside video — for social grids, press, brochures and ad placements."
+    },
+    "reels": {
+      "eyebrow": "Reels",
+      "intro": "A selection of recent vertical video work. Each reel is scored, paced, and colour-graded in-house.",
+      "avgReach": "Avg. reach · 480K",
+      "avgCompletion": "Avg. completion · 71%",
+      "empty": "No reels yet"
+    },
+    "offer": {
+      "eyebrow": "Services",
+      "intro": "Four ways we can work together. Every package is tailored — reach out via DM or email for details.",
+      "items": [
+        {
+          "title": "UGC Reels",
+          "desc": "Vertical short-form video, edited & optimised for Reels and TikTok. Hooks that travel."
+        },
+        {
+          "title": "Hotel Stories",
+          "desc": "Full-stay editorial coverage — arrival, room, amenities, breakfast, sunset. 24h delivery option."
+        },
+        {
+          "title": "Destination Campaign",
+          "desc": "Multi-day shoots for tourism boards and destinations. Photo + video + stills + voiceover."
+        },
+        {
+          "title": "Airline & Lounge",
+          "desc": "In-cabin and ground UGC for airlines, lounges, airport retail. Discreet, premium, on-brand."
+        }
+      ]
+    },
+    "collabs": {
+      "eyebrow": "Trusted by",
+      "intro": "Hotels and properties I've created content for — with new collaborations always welcome."
+    },
+    "map": {
+      "eyebrow": "Travels",
+      "intro": "Countries I've created content in — organically, and for clients. Scroll or drag the map to explore — hover a pin to see its city.",
+      "countries": "countries",
+      "cities": "cities",
+      "continents": "continents",
+      "dragHint": "DRAG · SCROLL TO ZOOM",
+      "updated": "UPDATED APR 2026",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "reset": "Reset view"
+    },
+    "contact": {
+      "letsWork": "Let's work",
+      "title1": "Have a place",
+      "title2": "worth telling",
+      "titleItalic": "a story about?",
+      "getInTouch": "Get in touch",
+      "directChannels": "Direct channels",
+      "emailLabel": "Email",
+      "soon": "soon",
+      "responseTime": "Response time",
+      "bookingWindow": "Booking window",
+      "mediaKit": "Media Kit v.3",
+      "rights": "All rights reserved"
+    }
+  }
+}

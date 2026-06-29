@@ -1,42 +1,17 @@
 import { Icon, type IconName } from "./Icon";
 import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
-interface Item {
-  n: string;
-  icon: IconName;
-  title: string;
-  desc: string;
-}
-
-const ITEMS: Item[] = [
-  {
-    n: "I",
-    icon: "camera",
-    title: "UGC Reels",
-    desc: "Vertical short-form video, edited & optimised for Reels and TikTok. Hooks that travel.",
-  },
-  {
-    n: "II",
-    icon: "hotel",
-    title: "Hotel Stories",
-    desc: "Full-stay editorial coverage — arrival, room, amenities, breakfast, sunset. 24h delivery option.",
-  },
-  {
-    n: "III",
-    icon: "palm",
-    title: "Destination Campaign",
-    desc: "Multi-day shoots for tourism boards and destinations. Photo + video + stills + voiceover.",
-  },
-  {
-    n: "IV",
-    icon: "plane",
-    title: "Airline & Lounge",
-    desc: "In-cabin and ground UGC for airlines, lounges, airport retail. Discreet, premium, on-brand.",
-  },
+const META: { n: string; icon: IconName }[] = [
+  { n: "I", icon: "camera" },
+  { n: "II", icon: "hotel" },
+  { n: "III", icon: "palm" },
+  { n: "IV", icon: "plane" },
 ];
 
-export function Offer() {
+export function Offer({ t }: { t: TravelDict["offer"] }) {
+  const items = META.map((m, i) => ({ ...m, ...t.items[i] }));
   return (
     <section
       id="offer"
@@ -60,13 +35,12 @@ export function Offer() {
             className={styles.serif}
             style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
           >
-            Services
+            {t.eyebrow}
           </div>
         </Reveal>
         <Reveal>
           <div style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}>
-            Four ways we can work together. Every package is tailored — reach out via DM or email
-            for details.
+            {t.intro}
           </div>
         </Reveal>
       </div>
@@ -80,7 +54,7 @@ export function Offer() {
           borderLeft: "1px solid var(--hair)",
         }}
       >
-        {ITEMS.map((it, i) => (
+        {items.map((it, i) => (
           <Reveal key={i}>
             <div
               className={styles.cellHover}

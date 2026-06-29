@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -98,14 +100,17 @@ export const viewport: Viewport = {
   colorScheme: "dark light",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // `x-locale` is injected by middleware.ts; admin/api requests fall back to `en`.
+  const headerLocale = (await headers()).get("x-locale");
+  const lang = isLocale(headerLocale) ? headerLocale : DEFAULT_LOCALE;
   return (
     <html
-      lang="en"
+      lang={lang}
       className={`h-full antialiased ${cormorant.variable} ${inter.variable} ${jbMono.variable}`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

@@ -3,12 +3,14 @@ import { ReelCard } from "./ReelCard";
 import { PhoneFrame } from "./PhoneFrame";
 import { Reveal } from "./Reveal";
 import styles from "@/app/travel/travel.module.css";
+import type { TravelDict } from "@/lib/i18n/dictionary-types";
 
 interface ReelsProps {
+  t: TravelDict["reels"];
   reels: MediaItem[];
 }
 
-export function Reels({ reels }: ReelsProps) {
+export function Reels({ t, reels }: ReelsProps) {
   return (
     <section
       id="work"
@@ -32,7 +34,7 @@ export function Reels({ reels }: ReelsProps) {
             className={styles.serif}
             style={{ fontSize: 40, lineHeight: 1, fontStyle: "italic" }}
           >
-            Reels
+            {t.eyebrow}
           </div>
         </Reveal>
         <Reveal>
@@ -48,13 +50,12 @@ export function Reels({ reels }: ReelsProps) {
             <div
               style={{ maxWidth: 560, fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6 }}
             >
-              A selection of recent vertical video work. Each reel is scored, paced, and
-              colour-graded in-house.
+              {t.intro}
             </div>
             <div className={styles.monoXs} style={{ textAlign: "right" }}>
-              Avg. reach · 480K
+              {t.avgReach}
               <br />
-              Avg. completion · 71%
+              {t.avgCompletion}
             </div>
           </div>
         </Reveal>
@@ -80,7 +81,7 @@ export function Reels({ reels }: ReelsProps) {
                   color: "rgba(255,255,255,0.6)",
                 }}
               >
-                No reels yet
+                {t.empty}
               </div>
             </PhoneFrame>
           </div>

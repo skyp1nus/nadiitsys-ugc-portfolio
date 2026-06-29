@@ -1,0 +1,132 @@
+{
+  "switcher": {
+    "label": "Język",
+    "ariaCurrent": "Bieżący język"
+  },
+  "home": {
+    "brandSub": "UGC · Warszawa",
+    "enter": "Wejdź",
+    "lifestyle": {
+      "kicker": "N° 01 — LIFESTYLE",
+      "headline": "Lifestyle,",
+      "italic": "opowiedziany delikatnie.",
+      "enterAria": "Wejdź do lifestyle"
+    },
+    "travel": {
+      "kicker": "N° 02 — PODRÓŻE",
+      "headline": "Powolne",
+      "italic": "podróże, w kadrach.",
+      "enterAria": "Wejdź do podróży"
+    }
+  },
+  "travel": {
+    "nav": {
+      "mediaKit": "Media Kit · 2026",
+      "about": "O mnie",
+      "services": "Usługi",
+      "work": "Realizacje",
+      "travels": "Podróże",
+      "contact": "Kontakt",
+      "cta": "Umów współpracę"
+    },
+    "hero": {
+      "portfolioRates": "Portfolio i cennik",
+      "eyebrow": "Podróże · Hotelarstwo · Lifestyle",
+      "title1": "Sztuka",
+      "titleItalic": "powolnych",
+      "title2": "podróży,",
+      "title3": "opowiedziana w kadrach.",
+      "taglineSuffix": "Tworzę filmowe treści UGC dla hoteli, resortów, linii lotniczych i marek turystycznych — materiały, przy których podróżni zatrzymują wzrok.",
+      "latestShoot": "Najnowsza sesja",
+      "est": "Od"
+    },
+    "marquee": [
+      "Hotele",
+      "Resorty",
+      "Linie lotnicze",
+      "Restauracje",
+      "Spa i wellness",
+      "Destynacje",
+      "Lifestyle",
+      "Hotelarstwo"
+    ],
+    "about": {
+      "eyebrow": "O mnie",
+      "specialtyLabel": "Specjalizacja",
+      "specialty": "Pionowe wideo w krótkiej formie (Reels / TikTok), fotografia editorialowa, klimatyczne opowieści o hotelarstwie.",
+      "approachLabel": "Podejście",
+      "approach": "Spokojny rytm, naturalne światło, dyskretny luksus. Bez krzykliwego montażu — bohaterem jest miejsce.",
+      "valuesLabel": "Wartości",
+      "values": "Autentyczność ponad perfekcję, szacunek dla miejsca i jego ludzi, niezawodna realizacja zgodna z briefem — treści, które wciąż są ludzkie.",
+      "formatsLabel": "Formaty",
+      "formats": "Materiały solo przed kamerą, w parze i z rodziną — z moim mężem i naszym maluchem — dla ciepłych, autentycznych opowieści o hotelarstwie.",
+      "onRotation": "W rotacji",
+      "languagesLabel": "Języki",
+      "gearLabel": "Sprzęt",
+      "deliveryLabel": "Realizacja"
+    },
+    "stills": {
+      "eyebrow": "Fotografie",
+      "intro": "Zdjęcia robione równolegle z wideo — do feedów w social mediach, prasy, broszur i reklam."
+    },
+    "reels": {
+      "eyebrow": "Reels",
+      "intro": "Wybór najnowszych pionowych realizacji wideo. Każdy reel ma własną muzykę, rytm i autorską korekcję kolorów.",
+      "avgReach": "Śr. zasięg · 480K",
+      "avgCompletion": "Śr. ukończenie · 71%",
+      "empty": "Jeszcze brak reelsów"
+    },
+    "offer": {
+      "eyebrow": "Usługi",
+      "intro": "Cztery sposoby na współpracę. Każdy pakiet dopasowuję indywidualnie — napisz w DM lub mailowo po szczegóły.",
+      "items": [
+        {
+          "title": "UGC Reels",
+          "desc": "Pionowe wideo w krótkiej formie, zmontowane i zoptymalizowane pod Reels i TikTok. Haki, które niosą się dalej."
+        },
+        {
+          "title": "Hotelowe historie",
+          "desc": "Editorialowe ujęcie całego pobytu — przyjazd, pokój, udogodnienia, śniadanie, zachód słońca. Opcja realizacji w 24h."
+        },
+        {
+          "title": "Kampania destynacyjna",
+          "desc": "Kilkudniowe sesje dla organizacji turystycznych i destynacji. Zdjęcia + wideo + kadry + lektor."
+        },
+        {
+          "title": "Linie lotnicze i lounge",
+          "desc": "Treści UGC na pokładzie i na ziemi dla linii lotniczych, saloników i sklepów lotniskowych. Dyskretnie, premium, w duchu marki."
+        }
+      ]
+    },
+    "collabs": {
+      "eyebrow": "Zaufali mi",
+      "intro": "Hotele i obiekty, dla których tworzyłam treści — a na nowe współprace zawsze jestem otwarta."
+    },
+    "map": {
+      "eyebrow": "Podróże",
+      "intro": "Kraje, w których tworzyłam treści — organicznie i dla klientów. Przewijaj lub przeciągaj mapę, aby ją odkrywać — najedź na pinezkę, aby zobaczyć miasto.",
+      "countries": "krajów",
+      "cities": "miast",
+      "continents": "kontynentów",
+      "dragHint": "PRZECIĄGNIJ · PRZEWIŃ, BY PRZYBLIŻYĆ",
+      "updated": "AKTUALIZACJA KWI 2026",
+      "zoomIn": "Powiększ",
+      "zoomOut": "Pomniejsz",
+      "reset": "Resetuj widok"
+    },
+    "contact": {
+      "letsWork": "Działajmy razem",
+      "title1": "Masz miejsce,",
+      "title2": "o którym warto",
+      "titleItalic": "opowiedzieć?",
+      "getInTouch": "Skontaktuj się",
+      "directChannels": "Kanały bezpośrednie",
+      "emailLabel": "E-mail",
+      "soon": "wkrótce",
+      "responseTime": "Czas odpowiedzi",
+      "bookingWindow": "Dostępność rezerwacji",
+      "mediaKit": "Media Kit v.3",
+      "rights": "Wszelkie prawa zastrzeżone"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "switcher": {
+    "label": "Sprache",
+    "ariaCurrent": "Aktuelle Sprache"
+  },
+  "home": {
+    "brandSub": "UGC · Warschau",
+    "enter": "Eintreten",
+    "lifestyle": {
+      "kicker": "N° 01 — LIFESTYLE",
+      "headline": "Lifestyle,",
+      "italic": "leise erzählt.",
+      "enterAria": "Lifestyle betreten"
+    },
+    "travel": {
+      "kicker": "N° 02 — REISEN",
+      "headline": "Langsames",
+      "italic": "Reisen, in Bildern.",
+      "enterAria": "Reisen betreten"
+    }
+  },
+  "travel": {
+    "nav": {
+      "mediaKit": "Media Kit · 2026",
+      "about": "Über mich",
+      "services": "Leistungen",
+      "work": "Arbeiten",
+      "travels": "Reisen",
+      "contact": "Kontakt",
+      "cta": "Kooperation anfragen"
+    },
+    "hero": {
+      "portfolioRates": "Portfolio & Preise",
+      "eyebrow": "Reisen · Hospitality · Lifestyle",
+      "title1": "Die Kunst des",
+      "titleItalic": "langsamen",
+      "title2": "Reisens,",
+      "title3": "in Bildern erzählt.",
+      "taglineSuffix": "Ich gestalte filmisches UGC für Hotels, Resorts, Airlines & Destination-Marken — Content, der Reisende innehalten lässt.",
+      "latestShoot": "Neuestes Shooting",
+      "est": "Est."
+    },
+    "marquee": [
+      "Hotels",
+      "Resorts",
+      "Airlines",
+      "Restaurants",
+      "Spa & Wellness",
+      "Destinationen",
+      "Lifestyle",
+      "Hospitality"
+    ],
+    "about": {
+      "eyebrow": "Über mich",
+      "specialtyLabel": "Spezialität",
+      "specialty": "Vertikale Kurzvideos (Reels / TikTok), Editorial-Fotografie, atmosphärisches Hospitality-Storytelling.",
+      "approachLabel": "Ansatz",
+      "approach": "Ruhiges Tempo, natürliches Licht, dezenter Luxus. Keine lauten Schnitte — der Ort steht im Mittelpunkt.",
+      "valuesLabel": "Werte",
+      "values": "Authentizität vor Perfektion, Respekt für den Ort und seine Menschen, zuverlässige Umsetzung nach Briefing — Content, der menschlich bleibt.",
+      "formatsLabel": "Formate",
+      "formats": "Content solo vor der Kamera, als Paar und als Familie — mit meinem Mann und unserem Kleinkind — für warme, lebendige Hospitality-Geschichten.",
+      "onRotation": "Im Einsatz",
+      "languagesLabel": "Sprachen",
+      "gearLabel": "Equipment",
+      "deliveryLabel": "Lieferzeit"
+    },
+    "stills": {
+      "eyebrow": "Stills",
+      "intro": "Fotografie, parallel zum Video aufgenommen — für Social-Feeds, Presse, Broschüren und Anzeigenplatzierungen."
+    },
+    "reels": {
+      "eyebrow": "Reels",
+      "intro": "Eine Auswahl aktueller vertikaler Videoarbeiten. Jedes Reel wird vertont, getaktet und farblich abgestimmt — alles aus einer Hand.",
+      "avgReach": "Ø Reichweite · 480K",
+      "avgCompletion": "Ø Abschlussrate · 71%",
+      "empty": "Noch keine Reels"
+    },
+    "offer": {
+      "eyebrow": "Leistungen",
+      "intro": "Vier Wege, wie wir zusammenarbeiten können. Jedes Paket ist individuell — meld dich per DM oder E-Mail für Details.",
+      "items": [
+        {
+          "title": "UGC Reels",
+          "desc": "Vertikale Kurzvideos, geschnitten & optimiert für Reels und TikTok. Hooks, die ankommen."
+        },
+        {
+          "title": "Hotel Stories",
+          "desc": "Redaktionelle Begleitung des gesamten Aufenthalts — Ankunft, Zimmer, Ausstattung, Frühstück, Sonnenuntergang. 24h-Lieferung optional."
+        },
+        {
+          "title": "Destination-Kampagne",
+          "desc": "Mehrtägige Shootings für Tourismusverbände und Destinationen. Foto + Video + Stills + Voiceover."
+        },
+        {
+          "title": "Airline & Lounge",
+          "desc": "UGC an Bord und am Boden für Airlines, Lounges und Airport-Retail. Diskret, premium, markengerecht."
+        }
+      ]
+    },
+    "collabs": {
+      "eyebrow": "Vertraut von",
+      "intro": "Hotels und Häuser, für die ich Content erstellt habe — neue Kooperationen sind jederzeit willkommen."
+    },
+    "map": {
+      "eyebrow": "Reisen",
+      "intro": "Länder, in denen ich Content erstellt habe — organisch und für Kunden. Scroll oder zieh die Karte zum Erkunden — fahr über einen Pin, um die Stadt zu sehen.",
+      "countries": "Länder",
+      "cities": "Städte",
+      "continents": "Kontinente",
+      "dragHint": "ZIEHEN · ZUM ZOOMEN SCROLLEN",
+      "updated": "STAND APR 2026",
+      "zoomIn": "Vergrößern",
+      "zoomOut": "Verkleinern",
+      "reset": "Ansicht zurücksetzen"
+    },
+    "contact": {
+      "letsWork": "Arbeiten wir zusammen",
+      "title1": "Hast du einen Ort,",
+      "title2": "der eine",
+      "titleItalic": "Geschichte verdient?",
+      "getInTouch": "Kontakt aufnehmen",
+      "directChannels": "Direkte Kanäle",
+      "emailLabel": "E-Mail",
+      "soon": "bald",
+      "responseTime": "Antwortzeit",
+      "bookingWindow": "Buchungszeitraum",
+      "mediaKit": "Media Kit v.3",
+      "rights": "Alle Rechte vorbehalten"
+    }
+  }
+}
