@@ -13,8 +13,17 @@ function isNumericPrice(price: string): boolean {
   return /^\d+([.,]\d+)?$/.test(price.trim());
 }
 
-function ServiceCard({ item, contactHref }: { item: BeautyServiceItem; contactHref: string }) {
+function ServiceCard({
+  item,
+  contactHref,
+  priceFrom,
+}: {
+  item: BeautyServiceItem;
+  contactHref: string;
+  priceFrom?: string;
+}) {
   const cls = `${styles.serviceCard} ${variantClass(item.variant)}`.trim();
+  const showPrice = isNumericPrice(item.price) && item.currency;
   return (
     <a className={cls} href={contactHref}>
       <div className={styles.cardTop}>
@@ -29,7 +38,21 @@ function ServiceCard({ item, contactHref }: { item: BeautyServiceItem; contactHr
         <div
           className={`${styles.servicePrice}${isNumericPrice(item.price) ? "" : ` ${styles.servicePriceTalk}`}`}
         >
-          {isNumericPrice(item.price) && item.currency ? (
+          {showPrice && priceFrom ? (
+            <span
+              style={{
+                fontSize: "0.55em",
+                fontWeight: 400,
+                opacity: 0.7,
+                marginRight: 5,
+                textTransform: "lowercase",
+                letterSpacing: "0.02em",
+              }}
+            >
+              {priceFrom}
+            </span>
+          ) : null}
+          {showPrice ? (
             <span className={styles.servicePriceCur}>{item.currency}</span>
           ) : null}
           {item.price}
@@ -43,9 +66,11 @@ function ServiceCard({ item, contactHref }: { item: BeautyServiceItem; contactHr
 export function Services({
   services,
   contactHref = "#contact",
+  priceFrom,
 }: {
   services: BeautyServices;
   contactHref?: string;
+  priceFrom?: string;
 }) {
   return (
     <section id="services" className={`${styles.services} ${styles.section}`}>
@@ -70,7 +95,7 @@ export function Services({
         <Reveal delay={1}>
           <div className={styles.servicesList}>
             {services.items.map((it, i) => (
-              <ServiceCard key={i} item={it} contactHref={contactHref} />
+              <ServiceCard key={i} item={it} contactHref={contactHref} priceFrom={priceFrom} />
             ))}
           </div>
         </Reveal>

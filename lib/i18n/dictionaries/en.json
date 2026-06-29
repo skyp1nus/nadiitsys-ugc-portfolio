@@ -128,5 +128,8 @@
       "mediaKit": "Media Kit v.3",
       "rights": "All rights reserved"
     }
+  },
+  "lifestyle": {
+    "priceFrom": "from"
   }
 }
