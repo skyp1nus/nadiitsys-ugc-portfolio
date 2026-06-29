@@ -114,12 +114,12 @@ export function About({ t, bio, languages, gear, delivery, aboutVideo }: AboutPr
               {aboutVideo ? (
                 <SkeletonVideo
                   src={aboutVideo.url}
-                  ariaLabel="About portrait"
+                  ariaLabel={t.portraitAlt}
                   style={{ aspectRatio: "4 / 5", overflow: "hidden" }}
                 />
               ) : (
                 <Placeholder
-                  label="portrait · editorial"
+                  label={t.portraitAlt}
                   ratio="4/5"
                   tone="warm"
                   patternId="about-portrait"

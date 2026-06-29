@@ -150,7 +150,7 @@ export function Contact({ t, name, contact }: ContactProps) {
               };
               if (r.soon || !r.href) {
                 return (
-                  <div key={i} style={rowStyle} title="Coming soon">
+                  <div key={i} style={rowStyle} title={t.comingSoon}>
                     {inner}
                   </div>
                 );

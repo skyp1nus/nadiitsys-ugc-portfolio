@@ -38,7 +38,8 @@
       "title3": "opowiedziana w kadrach.",
       "taglineSuffix": "Tworzę filmowe treści UGC dla hoteli, resortów, linii lotniczych i marek turystycznych — materiały, przy których podróżni zatrzymują wzrok.",
       "latestShoot": "Najnowsza sesja",
-      "est": "Od"
+      "est": "Od",
+      "heroAlt": "Portret główny"
     },
     "marquee": [
       "Hotele",
@@ -63,7 +64,8 @@
       "onRotation": "W rotacji",
       "languagesLabel": "Języki",
       "gearLabel": "Sprzęt",
-      "deliveryLabel": "Realizacja"
+      "deliveryLabel": "Realizacja",
+      "portraitAlt": "Portret"
     },
     "stills": {
       "eyebrow": "Fotografie",
@@ -126,7 +128,8 @@
       "responseTime": "Czas odpowiedzi",
       "bookingWindow": "Dostępność rezerwacji",
       "mediaKit": "Media Kit v.3",
-      "rights": "Wszelkie prawa zastrzeżone"
+      "rights": "Wszelkie prawa zastrzeżone",
+      "comingSoon": "Wkrótce"
     }
   },
   "lifestyle": {
@@ -143,7 +146,16 @@
         "food-drinks": "Jedzenie i napoje",
         "home-living": "Dom i wnętrza",
         "fitness-wellness": "Fitness i wellness"
-      }
+      },
+      "openAria": "Otwórz na Instagramie / TikToku"
     }
+  },
+  "meta": {
+    "homeTitle": "Nadii Tsys — twórczyni UGC: podróże i lifestyle",
+    "homeDesc": "Filmowy content UGC dla marek z branży hospitality i lifestyle. Z siedzibą w Warszawie, współpraca na całym świecie.",
+    "travelTitle": "Media Kit — podróże",
+    "travelDesc": "Twórczyni UGC: podróże i hospitality — Media Kit 2026. Filmowe krótkie wideo dla hoteli, resortów, linii lotniczych i marek turystycznych. Z siedzibą w Warszawie, współpraca na całym świecie.",
+    "lifestyleTitle": "UGC lifestyle — Media Kit",
+    "lifestyleDesc": "Media kit twórczyni UGC lifestyle — filmowe krótkie wideo i fotografia dla marek lifestyle, modowych i wnętrzarskich. Z siedzibą w Warszawie, współpraca na całym świecie."
   }
 }

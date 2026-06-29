@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { loadBeautyPage } from "@/lib/content";
 import { listMedia, getSingleMedia } from "@/lib/repos/media";
 import { getI18n, getLocale } from "@/lib/i18n/server";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { buildAlternates } from "@/lib/i18n/seo";
 import { OG_LOCALE } from "@/lib/i18n/config";
 import styles from "./beauty.module.css";
@@ -22,24 +23,24 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
+  const m = getDictionary(locale).meta;
   const alternates = buildAlternates("/lifestyle", locale);
   return {
-    title: "Lifestyle UGC — Media Kit",
-    description:
-      "Lifestyle UGC content creator media kit — cinematic short-form video and photography for lifestyle, fashion and home brands. Based in Warsaw, working worldwide.",
+    title: m.lifestyleTitle,
+    description: m.lifestyleDesc,
     alternates,
     openGraph: {
       type: "website",
       siteName: "nadiitsys.com",
       locale: OG_LOCALE[locale],
       url: alternates.canonical,
-      title: "Lifestyle UGC — Media Kit | Nadii Tsys",
-      description: "Aesthetic lifestyle UGC for fashion, home and indie brands.",
+      title: `${m.lifestyleTitle} | Nadii Tsys`,
+      description: m.lifestyleDesc,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Lifestyle UGC — Media Kit | Nadii Tsys",
-      description: "Aesthetic lifestyle UGC for fashion, home and indie brands.",
+      title: `${m.lifestyleTitle} | Nadii Tsys`,
+      description: m.lifestyleDesc,
     },
   };
 }

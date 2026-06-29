@@ -122,7 +122,7 @@ export function Hero({ t, name, tagline, location, heroImage }: HeroProps) {
             </div>
           ) : (
             <div className={styles.heroEntry} style={delay(160)}>
-              <Placeholder label="hero portrait · Amalfi" ratio="3/4" tone="sand" />
+              <Placeholder label={t.heroAlt} ratio="3/4" tone="sand" />
             </div>
           )}
           <div

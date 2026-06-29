@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import HomeSplit from "./HomeSplit";
 import { getI18n, getLocale } from "@/lib/i18n/server";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { buildAlternates } from "@/lib/i18n/seo";
 import { OG_LOCALE } from "@/lib/i18n/config";
 
@@ -8,25 +9,26 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
+  const m = getDictionary(locale).meta;
+  const alternates = buildAlternates("/", locale);
   return {
     // Absolute opts out of the root layout's "%s — Nadii Tsys" template
     // (otherwise the brand would be duplicated).
-    title: { absolute: "Nadii Tsys — Travel & Lifestyle UGC Creator" },
-    description:
-      "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
-    alternates: buildAlternates("/", locale),
+    title: { absolute: m.homeTitle },
+    description: m.homeDesc,
+    alternates,
     openGraph: {
       type: "website",
       siteName: "nadiitsys.com",
       locale: OG_LOCALE[locale],
-      url: buildAlternates("/", locale).canonical,
-      title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
-      description: "Cinematic UGC content for hospitality and lifestyle brands.",
+      url: alternates.canonical,
+      title: m.homeTitle,
+      description: m.homeDesc,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Nadii Tsys — Travel & Lifestyle UGC Creator",
-      description: "Cinematic UGC content for hospitality and lifestyle brands.",
+      title: m.homeTitle,
+      description: m.homeDesc,
     },
   };
 }

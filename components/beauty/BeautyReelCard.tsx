@@ -15,6 +15,7 @@ interface Props {
   onToggleSound: (key: string) => void;
   className?: string;
   style?: CSSProperties;
+  openAria?: string;
 }
 
 export function BeautyReelCard({
@@ -26,6 +27,7 @@ export function BeautyReelCard({
   onToggleSound,
   className,
   style,
+  openAria = "Open on Instagram / TikTok",
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -135,7 +137,7 @@ export function BeautyReelCard({
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          aria-label="Open on Instagram / TikTok"
+          aria-label={openAria}
           style={{
             position: "absolute",
             left: 8,

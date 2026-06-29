@@ -290,6 +290,7 @@ export function Videos({ header, reels, t }: Props) {
                     register={register}
                     unregister={unregister}
                     onToggleSound={onToggleSound}
+                    openAria={t.openAria}
                     className={styles.videoCard}
                     style={style}
                   />

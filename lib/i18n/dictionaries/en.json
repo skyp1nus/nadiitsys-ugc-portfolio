@@ -38,7 +38,8 @@
       "title3": "told in frames.",
       "taglineSuffix": "I create cinematic UGC for hotels, resorts, airlines & destination brands — content that makes travellers pause.",
       "latestShoot": "Latest shoot",
-      "est": "Est."
+      "est": "Est.",
+      "heroAlt": "Hero portrait"
     },
     "marquee": [
       "Hotels",
@@ -63,7 +64,8 @@
       "onRotation": "On rotation",
       "languagesLabel": "Languages",
       "gearLabel": "Gear",
-      "deliveryLabel": "Delivery"
+      "deliveryLabel": "Delivery",
+      "portraitAlt": "Portrait"
     },
     "stills": {
       "eyebrow": "Stills",
@@ -126,7 +128,8 @@
       "responseTime": "Response time",
       "bookingWindow": "Booking window",
       "mediaKit": "Media Kit v.3",
-      "rights": "All rights reserved"
+      "rights": "All rights reserved",
+      "comingSoon": "Coming soon"
     }
   },
   "lifestyle": {
@@ -143,7 +146,16 @@
         "food-drinks": "Food & Drinks",
         "home-living": "Home & Living",
         "fitness-wellness": "Fitness & Wellness"
-      }
+      },
+      "openAria": "Open on Instagram / TikTok"
     }
+  },
+  "meta": {
+    "homeTitle": "Nadii Tsys — Travel & Lifestyle UGC Creator",
+    "homeDesc": "Cinematic UGC content for hospitality and lifestyle brands. Based in Warsaw, working worldwide.",
+    "travelTitle": "Travel Media Kit",
+    "travelDesc": "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands. Based in Warsaw, working worldwide.",
+    "lifestyleTitle": "Lifestyle UGC — Media Kit",
+    "lifestyleDesc": "Lifestyle UGC content creator media kit — cinematic short-form video and photography for lifestyle, fashion and home brands. Based in Warsaw, working worldwide."
   }
 }

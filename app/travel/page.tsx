@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { loadTravelPage } from "@/lib/content";
 import { listMedia, getSingleMedia } from "@/lib/repos/media";
 import { getI18n, getLocale } from "@/lib/i18n/server";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { buildAlternates } from "@/lib/i18n/seo";
 import { OG_LOCALE } from "@/lib/i18n/config";
 import { Nav } from "@/components/travel/Nav";
@@ -21,26 +22,24 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nadiitsys.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
+  const m = getDictionary(locale).meta;
   const alternates = buildAlternates("/travel", locale);
   return {
-    title: "Travel Media Kit",
-    description:
-      "Travel & Hospitality UGC Creator — Media Kit 2026. Cinematic short-form video for hotels, resorts, airlines and destination brands. Based in Warsaw, working worldwide.",
+    title: m.travelTitle,
+    description: m.travelDesc,
     alternates,
     openGraph: {
       type: "website",
       siteName: "nadiitsys.com",
       locale: OG_LOCALE[locale],
       url: alternates.canonical,
-      title: "Travel Media Kit — Nadii Tsys",
-      description:
-        "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+      title: `${m.travelTitle} — Nadii Tsys`,
+      description: m.travelDesc,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Travel Media Kit — Nadii Tsys",
-      description:
-        "Cinematic short-form video for hotels, resorts, airlines and destination brands.",
+      title: `${m.travelTitle} — Nadii Tsys`,
+      description: m.travelDesc,
     },
   };
 }
