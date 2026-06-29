@@ -130,6 +130,20 @@
     }
   },
   "lifestyle": {
-    "priceFrom": "da"
+    "priceFrom": "da",
+    "reels": {
+      "all": "Tutti",
+      "filterHint": "Tocca per filtrare",
+      "categoriesAria": "Categorie dei reel",
+      "categories": {
+        "beauty": "Beauty",
+        "fashion": "Moda & Accessori",
+        "family-kids": "Famiglia & Bambini",
+        "couple-lifestyle": "Coppia / Lifestyle",
+        "food-drinks": "Cibo & Bevande",
+        "home-living": "Casa & Living",
+        "fitness-wellness": "Fitness & Benessere"
+      }
+    }
   }
 }

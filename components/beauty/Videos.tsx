@@ -11,14 +11,18 @@ import {
 import styles from "@/app/lifestyle/beauty.module.css";
 import type { BeautySimpleSectionHeader } from "@/lib/schemas/beauty-page";
 import type { MediaItem } from "@/lib/repos/media";
+import type { Dictionary } from "@/lib/i18n/dictionary-types";
 import { REEL_CATEGORIES } from "@/lib/categories";
 import { AccentText } from "./AccentText";
 import { Reveal } from "./Reveal";
 import { BeautyReelCard } from "./BeautyReelCard";
 
+type ReelsDict = Dictionary["lifestyle"]["reels"];
+
 interface Props {
   header: BeautySimpleSectionHeader;
   reels: MediaItem[];
+  t: ReelsDict;
 }
 
 interface RegEntry {
@@ -26,7 +30,32 @@ interface RegEntry {
   ratio: number;
 }
 
-export function Videos({ header, reels }: Props) {
+const HINT_SEEN_KEY = "nd_reels_filter_hint_seen";
+
+export function Videos({ header, reels, t }: Props) {
+  // One-time affordance: hint that the category chips are tappable. Dismissed
+  // on first interaction and remembered, so it never nags returning visitors.
+  const [hintDone, setHintDone] = useState(false);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(HINT_SEEN_KEY)) {
+        // Mount-time sync with localStorage (unavailable during SSR/render),
+        // so the server and first client render agree on showing the hint.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setHintDone(true);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  const dismissHint = useCallback(() => {
+    setHintDone(true);
+    try {
+      localStorage.setItem(HINT_SEEN_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
   const gridRef = useRef<HTMLDivElement | null>(null);
   // Always start false so server and client first render agree (no hydration
   // mismatch). Reduced-motion visibility is guaranteed by CSS (.videoCard gets
@@ -184,7 +213,11 @@ export function Videos({ header, reels }: Props) {
 
         {visibleCats.length > 0 && (
           <Reveal delay={1}>
-            <div className={styles.filterBar} role="tablist" aria-label="Reel categories">
+            <div
+              className={`${styles.filterBar}${hintDone ? "" : ` ${styles.filterBarHinting}`}`}
+              role="tablist"
+              aria-label={t.categoriesAria}
+            >
               <button
                 type="button"
                 role="tab"
@@ -193,9 +226,10 @@ export function Videos({ header, reels }: Props) {
                 onClick={() => {
                   setActive("all");
                   setSoloKey(null);
+                  dismissHint();
                 }}
               >
-                All
+                {t.all}
               </button>
               {visibleCats.map((c) => (
                 <button
@@ -207,11 +241,33 @@ export function Videos({ header, reels }: Props) {
                   onClick={() => {
                     setActive(c.slug);
                     setSoloKey(null);
+                    dismissHint();
                   }}
                 >
-                  {c.label}
+                  {t.categories[c.slug as keyof ReelsDict["categories"]] ?? c.label}
                 </button>
               ))}
+
+              {!hintDone && (
+                <span className={styles.filterHint} aria-hidden="true">
+                  <span className={styles.filterHintDot} />
+                  {t.filterHint}
+                  <span className={styles.filterHintSwipe}>
+                    <svg
+                      width="15"
+                      height="9"
+                      viewBox="0 0 15 9"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M1 4.5h12M9 1l4 3.5L9 8" />
+                    </svg>
+                  </span>
+                </span>
+              )}
             </div>
           </Reveal>
         )}

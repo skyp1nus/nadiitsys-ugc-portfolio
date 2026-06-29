@@ -108,7 +108,7 @@ export default async function LifestylePage() {
       <Hero hero={data.hero} heroImage={heroImage} />
       <Marquee items={data.marquee} />
       <About about={data.about} images={aboutPhotos} />
-      <Videos header={data.videos} reels={reels} />
+      <Videos header={data.videos} reels={reels} t={dict.lifestyle.reels} />
       <Gallery header={data.gallery} photos={photos} />
       <Brands brands={data.brands} />
       <Services services={data.services} priceFrom={dict.lifestyle.priceFrom} />

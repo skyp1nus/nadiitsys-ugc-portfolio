@@ -972,6 +972,82 @@
   color: var(--cream);
 }
 
+/* ── Category-filter affordance ────────────────────────────────────────────
+   Many visitors don't realise the chips are tappable. A gentle, one-time cue
+   (a pulsing "tap to filter" pill + a soft invite on the chips) makes it
+   obvious; both stop once the visitor interacts (see Videos.tsx). */
+.filterHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px dashed var(--rose-deep);
+  background: color-mix(in srgb, var(--rose-deep) 9%, transparent);
+  color: var(--rose-deep);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  animation: filterHintFloat 2.6s ease-in-out infinite;
+}
+
+.filterHintDot {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rose-deep);
+}
+
+.filterHintDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--rose-deep);
+  animation: filterHintRipple 1.8s ease-out infinite;
+}
+
+.filterHintSwipe {
+  display: inline-flex;
+  animation: filterHintSwipe 1.6s ease-in-out infinite;
+}
+
+.filterBarHinting .filterChip:not(.filterChipActive) {
+  animation: filterChipInvite 2.6s ease-in-out infinite;
+}
+
+@keyframes filterHintFloat {
+  0%, 100% { transform: translateY(0); opacity: 0.85; }
+  50% { transform: translateY(-2px); opacity: 1; }
+}
+@keyframes filterHintRipple {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes filterHintSwipe {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+@keyframes filterChipInvite {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--rose-deep) 12%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filterHint,
+  .filterHintDot::after,
+  .filterHintSwipe,
+  .filterBarHinting .filterChip:not(.filterChipActive) {
+    animation: none;
+  }
+}
+
 .videoGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
