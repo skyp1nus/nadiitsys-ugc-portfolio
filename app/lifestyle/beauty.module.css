@@ -1552,8 +1552,8 @@ a.contactEmail:hover {
     gap: 24px;
   }
   .statsRow {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
   .footer {
     flex-direction: column;
@@ -1640,6 +1640,21 @@ a.contactEmail:hover {
   }
   .serviceCard {
     padding: 24px 20px;
+  }
+  /* Keep the 3 stats side-by-side (no left-hugging column with empty space);
+     shrink the numerals so they fit a phone width. */
+  .statsRow {
+    gap: 10px;
+    margin-top: 32px;
+    padding-top: 32px;
+  }
+  .statNum {
+    font-size: 32px;
+  }
+  .statLabel {
+    margin-top: 6px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
   }
 }
 
